@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#5cc8ff"/>
+      <stop offset="1" stop-color="#a0ff6b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="#0b0d10"/>
+  <g transform="translate(0,0)">
+    <circle cx="300" cy="200" r="180" fill="url(#g)" opacity="0.18"/>
+    <circle cx="900" cy="220" r="160" fill="url(#g)" opacity="0.15"/>
+  </g>
+  <text x="60" y="240" font-family="system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+        font-weight="800" font-size="64" fill="#e6edf3">Old Man Yells at HEMA</text>
+</svg>

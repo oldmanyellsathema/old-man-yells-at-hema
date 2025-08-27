@@ -1,0 +1,25 @@
+title: Old Man Yells at HEMA
+description: Essays, sparring notes, and art from the practice floor.
+url: "" # e.g., https://your-username.github.io or https://proveitwithiron.com
+baseurl: "" # e.g., /project-name for project pages; leave blank for user/organization site
+theme: minima
+minima:
+  skin: dark
+
+author:
+  name: Geoffrey Harrington
+
+# Add top‑nav pages (files must exist in repo root)
+header_pages:
+  - about.md
+  - gallery.md
+
+# Plugins supported by GitHub Pages
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Markdown + permalinks
+markdown: kramdown
+permalink: /:categories/:year/:month/:day/:title/
