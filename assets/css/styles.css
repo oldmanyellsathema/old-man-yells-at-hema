@@ -73,8 +73,8 @@ body{
 .post-title{font-family:"Cormorant Garamond", serif; font-weight:600}
 .post-date{font-size:.95rem; opacity:.8}
 
-.post-excerpt{margin:.2rem 0 1rem}
-.post-excerpt .post-title{margin:.2rem 0 .4rem}
+.post-excerpt .post-title,
+.post-excerpt p {text-align: center;}
 
 /* Divider with centered dots */
 .deco-divider{
