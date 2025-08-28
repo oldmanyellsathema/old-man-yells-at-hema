@@ -1,0 +1,87 @@
+/* ===== Global page look ===== */
+html, body {
+  margin: 0;
+}
+body {
+  background: #f0f0f0; /* light gray page background */
+  color: #222;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ===== Banner (top, black) ===== */
+.site-banner {
+  background: #000;
+  border-bottom: 4px solid #d4af37; /* thin gold stripe */
+  padding: 1rem 2rem;
+}
+
+.banner-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* image left, title right */
+  gap: 1rem;
+}
+
+.banner-logo {
+  max-height: 64px;
+  width: auto;
+  border-radius: 4px;
+  display: block;
+}
+
+.banner-title {
+  color: #d4af37; /* gold */
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: right; /* align title to the right */
+}
+
+/* ===== Separate black nav strip (below banner) ===== */
+.nav-strip {
+  background: #000;
+  border-bottom: 1px solid #222; /* subtle separator */
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.6rem 1.2rem;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.nav-inner a {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-weight: 700;
+}
+.nav-inner a:hover,
+.nav-inner a:focus {
+  color: #d4af37; /* gold hover */
+  text-decoration: underline;
+}
+
+/* ===== Content container tweaks (optional polish) ===== */
+.site-header, .site-nav { display: none; } /* hide any leftover Minima bits if present */
+.page-content {
+  padding: 1.5rem;
+}
+.post-title { font-weight: 800; }
+
+/* ===== Mobile stack ===== */
+@media (max-width: 640px) {
+  .banner-top {
+    flex-direction: row;      /* keep row on mobile */
+    align-items: center;
+  }
+  .banner-title {
+    font-size: 1.6rem;
+  }
+  .nav-inner {
+    justify-content: center;  /* center links on small screens */
+  }
+}
