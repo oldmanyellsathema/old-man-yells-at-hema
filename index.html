@@ -1,27 +1,28 @@
+---
+layout: null
+---
+
 <!doctype html>
 <html lang="en">
 <head>
   <title>Old Man Yells at HEMA — A Deco Salon</title>
-  <meta name="description" content="An Art Deco, Gatsby‑dark starter template for a blog/portfolio." />
-  
+  <meta name="description" content="An Art Deco, Gatsby-dark starter template for a blog/portfolio." />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Poiret+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css" />
-
+  <link rel="stylesheet" href="{{ '/css/styles.css' | relative_url }}" />
 </head>
 <body>
-  
   <header class="nav">
     <div class="wrap">
       <div class="brand-left" aria-hidden="true"></div>
       <a class="skip" href="#main">Skip to content</a>
       <nav class="menu" aria-label="Primary">
-        <a href="index.html" class="menu-link">Home</a>
-        <a href="posts.html" class="menu-link">Posts</a>
-        <a href="about.html" class="menu-link">About</a>
+        <a href="{{ '/about/'  | relative_url }}"  class="menu-link">About</a>
+        <a href="{{ '/posts/'  | relative_url }}"  class="menu-link">Posts</a>
+        <a href="{{ '/gallery/'| relative_url }}"  class="menu-link">Gallery</a>
       </nav>
       <h1 class="site-title">Old Man Yells at HEMA</h1>
     </div>
@@ -34,23 +35,23 @@
       <span class="corner bl" aria-hidden="true"></span>
       <span class="corner br" aria-hidden="true"></span>
 
-      <header class="invite">
-        <div class="invite-topline text-align: center;">— A Private Invitation —</div>
-        <h2 class="invite-title" text-align: center;>An Event of Bladework & Art</h2>
-        <div class="invite-sub" text-align: center;>at the House of Quiet Arguments</div>
+      <header class="invite" style="text-align:center;">
+        <div class="invite-topline">— A Private Invitation —</div>
+        <h2 class="invite-title">An Event of Bladework & Art</h2>
+        <div class="invite-sub">at the House of Quiet Arguments</div>
       </header>
 
-      <p text-align: center;>
+      <p style="text-align:center;">
         Welcome to a salon for the spirited and the particular. Expect fencing rants, HEMA curiosities,
-        and occasional illustrations, poured neat,no chaser. Dress code is <em>decided opinions</em> and
+        and occasional illustrations, poured neat, no chaser. Dress code is <em>decided opinions</em> and
         <em>sharpened curiosity</em>.
       </p>
 
       <div class="deco-divider" role="separator" aria-label="decorative divider"></div>
 
-      <div class="cta-row" text-align: center;>
-        <a class="btn" href="posts.html">Peruse the Program</a>
-        <a class="btn ghost" href="about.html">House Rules</a>
+      <div class="cta-row" style="text-align:center;">
+        <a class="btn" href="{{ '/posts/' | relative_url }}">Peruse the Program</a>
+        <a class="btn ghost" href="{{ '/about/' | relative_url }}">House Rules</a>
       </div>
     </section>
 
@@ -60,36 +61,30 @@
       <span class="corner bl" aria-hidden="true"></span>
       <span class="corner br" aria-hidden="true"></span>
 
-      <header class="invite small" text-align: center;>
-        <div class="invite-topline" text-align: center;>— Latest Dispatches —</div>
-        <h2 class="invite-title" text-align: center;>This Week’s Whispered Topics</h2>
+      <header class="invite small" style="text-align:center;">
+        <div class="invite-topline">— Latest Dispatches —</div>
+        <h2 class="invite-title">This Week’s Whispered Topics</h2>
       </header>
 
-      <ul class="post-list">
-        <li>
-          <a href="#" class="post-link">
-            <span class="post-title" text-align: center;>On Winding: Spirals in Cold Steel</span>
-            <time datetime="2025-08-21" class="post-date">Aug 21, 2025</time>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="post-link">
-            <span class="post-title" text-align: center;>The Rose Revisited: A Diagram That Bites Back</span>
-            <time datetime="2025-08-12" class="post-date">Aug 12, 2025</time>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="post-link">
-            <span class="post-title" text-align: center;>The House Lights Dim: Notes on Form & Function</span>
-            <time datetime="2025-08-03" class="post-date">Aug 3, 2025</time>
-          </a>
-        </li>
-      </ul>
+      <!-- (Static placeholders are fine; swap to a loop later if you want) -->
+    <ul class="post-list">
+  {% for post in site.posts limit:3 %}
+    <li>
+      <a href="{{ post.url | relative_url }}" class="post-link">
+        <span class="post-title">{{ post.title }}</span>
+        <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">
+          {{ post.date | date: "%b %e, %Y" }}
+        </time>
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
 
       <p class="fineprint">Programs updated irregularly.</p>
     </section>
   </main>
-  
+
   <footer class="site-foot">
     <div class="wrap">
       <div class="foot-grid">
@@ -100,12 +95,12 @@
         <div class="foot-right">
           <a class="foot-link" href="mailto:hello@example.com">RSVP</a>
           <span aria-hidden>·</span>
-          <a class="foot-link" href="about.html">Imprint</a>
+          <a class="foot-link" href="{{ '/about/' | relative_url }}">Imprint</a>
         </div>
       </div>
     </div>
   </footer>
-  <script src="assets/js/main.js" defer></script>
 
+  <script src="{{ '/js/main.js' | relative_url }}" defer></script>
 </body>
 </html>
