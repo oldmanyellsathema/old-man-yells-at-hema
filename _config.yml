@@ -1,7 +1,7 @@
 title: Old Man Yells at HEMA
-description: Essays, sparring notes, and art from the practice floor.
-url: "" # e.g., https://your-username.github.io or https://proveitwithiron.com
-baseurl: "" # e.g., /project-name for project pages; leave blank for user/organization site
+description: Things I think, Art, Why you are wrong.
+url: "" # e.g., https://oldmanyellsathema.github.io or https://proveitwithiron.com
+baseurl: "" # e.g., /old-man-yells-at-hema for project pages; leave blank for user/organization site
 theme: minima
 minima:
   skin: dark
