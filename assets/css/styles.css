@@ -45,16 +45,14 @@ body{
 .deco-card.alt{background:linear-gradient(180deg, rgba(17,12,17,.8), rgba(91,18,26,.16)), #0e0c0f}
 
 /* Corner ornaments (5 ribs) */
-.corner{
-  position:absolute;
+.corner{position:absolute;
   width:54px;
   height:54px;
   pointer-events:none;
   opacity:.95;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='54' height='54' viewBox='0 0 54 54'><g fill='none' stroke='%23cba135' stroke-width='2'><path d='M2 8 V2 H8'/><path d='M2 20 V2 H20'/><path d='M2 32 V2 H32'/><path d='M2 44 V2 H44'/><path d='M2 52 V2 H52'/></g></svg>");
   background-repeat:no-repeat;
-  background-size:100% 100%;
-}
+  background-size:100% 100%;}
 .tl{top:-1px;left:-1px}
 .tr{top:-1px;right:-1px;transform:scaleX(-1)}
 .bl{bottom:-1px;left:-1px;transform:scaleY(-1)}
