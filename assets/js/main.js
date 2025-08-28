@@ -1,1 +1,1 @@
-// Placeholder for future enhancements (e.g., theme toggle, mobile menu)
+// Placeholder for future enhancements
