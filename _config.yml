@@ -13,6 +13,8 @@ author:
 header_pages:
   - about.md
   - gallery.md
+  - posts.html
+
 
 # Plugins supported by GitHub Pages
 plugins:
