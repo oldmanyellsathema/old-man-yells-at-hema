@@ -1,3 +1,4 @@
+
 :root{
   --ink: #f4ead7;
   --bg: #0a0a0c;
@@ -18,13 +19,14 @@ body{
   letter-spacing:.2px;
 }
 .wrap{max-width:1100px;margin:0 auto;padding: clamp(16px, 3vw, 32px)}
+
+/* --- Top nav with cohesive flourish --- */
 .nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.72);backdrop-filter:saturate(120%) blur(6px);border-bottom:2px solid var(--gold)}
-.nav .wrap{display:grid;grid-template-columns: 140px 1fr auto;gap:1rem;align-items:center}
-.brand-left{height:56px;background:
-  linear-gradient(135deg, transparent 18px, var(--gold) 18px, var(--gold) 20px, transparent 20px),
-  linear-gradient(225deg, transparent 18px, var(--gold) 18px, var(--gold) 20px, transparent 20px);
-  background-size:56px 56px; background-repeat:no-repeat; background-position:left top, left bottom;
-  border-left:2px solid var(--gold); border-right:2px solid var(--gold)
+.nav .wrap{display:grid;grid-template-columns: 160px 1fr auto;gap:1rem;align-items:center}
+.brand-left{
+  height:56px; width:140px;
+  background-image: url("data:image/svg+xml;utf8,  <svg xmlns='http://www.w3.org/2000/svg' width='140' height='56' viewBox='0 0 140 56'>    <rect x='1' y='1' width='138' height='54' fill='none' stroke='%23cba135' stroke-width='2'/>    <g fill='none' stroke='%23cba135' stroke-width='2'>      <path d='M8 6 H34'/><path d='M8 16 H50'/><path d='M8 28 H66'/><path d='M8 40 H50'/><path d='M8 50 H34'/>      <path d='M132 6 H106'/><path d='M132 16 H90'/><path d='M132 28 H74'/><path d='M132 40 H90'/><path d='M132 50 H106'/>      <polygon points='70,20 78,28 70,36 62,28' fill='none' stroke='%23cba135'/>    </g>  </svg>");
+  background-size:100% 100%; background-repeat:no-repeat;
 }
 .site-title{margin:0;justify-self:end;font-family:"Cinzel", serif;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
 .menu{display:flex;gap:1rem;align-items:center;justify-self:center}
@@ -33,6 +35,13 @@ body{
 .skip{position:absolute;left:-9999px;top:auto}
 .skip:focus{left:1rem;top:1rem;background:#000;color:#fff;padding:.4rem .6rem}
 
+/* Center text in the homepage cards */
+.deco-card {
+  text-align: center;
+}
+
+
+/* --- Cards with Deco corners --- */
 .deco-card{position:relative;margin: clamp(16px, 3vw, 28px) 0; padding:clamp(18px, 3.2vw, 36px);
   background:linear-gradient(180deg, rgba(91,18,26,.22), rgba(17,12,17,.72)),
              radial-gradient(1000px 600px at 110% -10%, rgba(203,161,53,.09), transparent 60%),
@@ -41,46 +50,78 @@ body{
 }
 .deco-card.alt{background:linear-gradient(180deg, rgba(17,12,17,.8), rgba(91,18,26,.16)), #0e0c0f}
 
-.corner{position:absolute;width:54px;height:54px;pointer-events:none;opacity:.95;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='54' height='54' viewBox='0 0 54 54'><g fill='none' stroke='%23cba135' stroke-width='2'><path d='M2 20 V2 H20'/><path d='M2 32 V2 H32'/><path d='M2 44 V2 H44'/></g></svg>");
-  background-repeat:no-repeat;background-size:100% 100%}
+/* Corner ornaments (5 ribs) */
+.corner{position:absolute;
+  width:54px;
+  height:54px;
+  pointer-events:none;
+  opacity:.95;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='54' height='54' viewBox='0 0 54 54'><g fill='none' stroke='%23cba135' stroke-width='2'><path d='M2 8 V2 H8'/><path d='M2 20 V2 H20'/><path d='M2 32 V2 H32'/><path d='M2 44 V2 H44'/><path d='M2 52 V2 H52'/></g></svg>");
+  background-repeat:no-repeat;
+  background-size:100% 100%;}
 .tl{top:-1px;left:-1px}
 .tr{top:-1px;right:-1px;transform:scaleX(-1)}
 .bl{bottom:-1px;left:-1px;transform:scaleY(-1)}
 .br{bottom:-1px;right:-1px;transform:scale(-1)}
+}
 
+/* Invitation header styling */
 .invite{ text-align:center; margin: .5rem 0 1.2rem }
 .invite.small{ margin:.25rem 0 1rem }
 .invite-topline{font-family:"Poiret One", cursive; text-transform:uppercase; letter-spacing:3px; color:var(--gold); opacity:.9}
 .invite-title{font-family:"Cinzel", serif; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin:.25rem 0 .4rem}
 .invite-sub{font-style:italic; opacity:.85}
 
+/* Post list */
 .post-list{list-style:none;margin:0;padding:0}
 .post-link{display:flex;align-items:baseline;justify-content:space-between;gap:1rem; padding:.6rem .2rem; border-bottom:1px dashed rgba(203,161,53,.28); text-decoration:none; color:var(--ink)}
 .post-link:hover .post-title{color:var(--gold)}
 .post-title{font-family:"Cormorant Garamond", serif; font-weight:600}
 .post-date{font-size:.95rem; opacity:.8}
 
-.post-excerpt{margin:.2rem 0 1rem}
-.post-excerpt .post-title{margin:.2rem 0 .4rem}
+.post-excerpt .post-title,
+.post-excerpt p {text-align: center;}
 
-.deco-divider{ --w: 2px; --gap:6px; position:relative; height:18px; margin: 18px 0;}
-.deco-divider::before, .deco-divider::after{content:""; position:absolute; left:0; right:0; height:var(--w); background:linear-gradient(90deg, transparent, var(--gold), transparent)}
-.deco-divider::before{top:0}
-.deco-divider::after{bottom:0}
-.deco-divider:has(+ *){background:
-  linear-gradient(90deg, transparent, var(--gold), transparent) center/100% var(--w) no-repeat,
-  linear-gradient(90deg, transparent, rgba(203,161,53,.65), transparent) center/100% calc(var(--w)) no-repeat}
-.deco-divider::marker{content:""}
-.deco-divider::after{box-shadow:0 -6px 0 0 var(--gold-2)}
+/* Divider with centered dots */
+.deco-divider{
+  --w: 2px;
+  position:relative;
+  height:18px;
+  margin: 18px 0;
+  background:
+    linear-gradient(90deg, transparent, var(--gold), transparent) center / 100% var(--w) no-repeat;
+}
+.deco-divider::after{
+  content:"• • •";
+  display:block;
+  text-align:center;
+  color:var(--gold);
+  font-family:"Cinzel", serif;
+  font-size:1.15rem;
+  margin-top:6px;
+  letter-spacing:0.5rem;
+}
 
+/* Buttons */
 .btn{display:inline-block; font-family:"Poiret One", cursive; text-transform:uppercase; letter-spacing:2px; text-decoration:none; padding:.55rem .9rem; border:1.5px solid var(--gold); color:var(--ink)}
 .btn:hover{background:rgba(203,161,53,.08); color:var(--gold)}
 .btn.ghost{border-color:rgba(203,161,53,.6); opacity:.9}
 .btn.tiny{font-size:.85rem; padding:.35rem .6rem}
 
-.cta-row{display:flex; gap:.6rem; flex-wrap:wrap}
+..cta-row {
+  display: flex; 
+  gap: .6rem;
+  flex-wrap: wrap; 
+  justify-content: center;
+  /* ✅ centers the buttons */}
 
+/* 🔹 On smaller screens, stack buttons vertically but still center them */
+@media (max-width: 600px) {
+  .cta-row { flex-direction: column; align-items: center; /* keeps them centered */}
+}
+
+
+/* Footer */
 .site-foot{border-top:2px solid var(--gold); background:linear-gradient(180deg, rgba(0,0,0,.8), rgba(59,13,18,.25)), #000}
 .foot-grid{display:grid; grid-template-columns:1fr auto; gap:1rem; align-items:center}
 .foot-title{font-family:"Cinzel", serif; color:var(--gold); letter-spacing:2px; text-transform:uppercase}
@@ -89,11 +130,14 @@ body{
 .foot-link{color:var(--ink); text-decoration:none}
 .foot-link:hover{color:var(--gold)}
 
+/* Links */
 a{color:#e9d29a}
 a:hover{color:var(--gold)}
 
+/* Misc */
 .colophon{margin:.4rem 0 0 1.2rem}
 
+/* Responsive tweak */
 @media (max-width:780px){
   .nav .wrap{grid-template-columns: 1fr auto; gap:.6rem}
   .brand-left{display:none}
