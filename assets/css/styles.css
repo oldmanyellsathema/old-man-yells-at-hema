@@ -108,7 +108,18 @@ body{
 .btn.ghost{border-color:rgba(203,161,53,.6); opacity:.9}
 .btn.tiny{font-size:.85rem; padding:.35rem .6rem}
 
-.cta-row{display:flex; gap:.6rem; flex-wrap:wrap}
+..cta-row {
+  display: flex; 
+  gap: .6rem;
+  flex-wrap: wrap; 
+  justify-content: center;
+  /* ✅ centers the buttons */}
+
+/* 🔹 On smaller screens, stack buttons vertically but still center them */
+@media (max-width: 600px) {
+  .cta-row { flex-direction: column; align-items: center; /* keeps them centered */}
+}
+
 
 /* Footer */
 .site-foot{border-top:2px solid var(--gold); background:linear-gradient(180deg, rgba(0,0,0,.8), rgba(59,13,18,.25)), #000}
