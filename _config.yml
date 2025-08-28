@@ -23,3 +23,7 @@ plugins:
 # Markdown + permalinks
 markdown: kramdown
 permalink: /:categories/:year/:month/:day/:title/
+
+future: true
+timezone: America/Los_Angeles
+
