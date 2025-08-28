@@ -1,0 +1,45 @@
+---
+layout: site
+title: Posts
+permalink: /posts/
+---
+
+<section class="deco-card">
+  <span class="corner tl" aria-hidden="true"></span>
+  <span class="corner tr" aria-hidden="true"></span>
+  <span class="corner bl" aria-hidden="true"></span>
+  <span class="corner br" aria-hidden="true"></span>
+
+  <header class="invite small" style="text-align:center;">
+    <div class="invite-topline">— The Program —</div>
+    <h2 class="invite-title">Collected Dispatches</h2>
+  </header>
+
+  {% if site.posts and site.posts != empty %}
+    {% for post in site.posts %}
+      <article class="post-excerpt" style="text-align:center;">
+        <h3 class="post-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h3>
+        <p style="opacity:.8;margin:.2rem 0 1rem 0;">
+          {{ post.date | date: "%B %d, %Y" }}
+          {% if post.author %} • {{ post.author }}{% endif %}
+          {% if post.categories and post.categories != empty %} • {{ post.categories | join: ", " }}{% endif %}
+        </p>
+        {% if post.description %}
+          <p>{{ post.description }}</p>
+        {% else %}
+          <p>{{ post.excerpt | strip_html | truncate: 200 }}</p>
+        {% endif %}
+        <a class="btn tiny" href="{{ post.url | relative_url }}">Read</a>
+      </article>
+      {% unless forloop.last %}
+        <div class="deco-divider"></div>
+      {% endunless %}
+    {% endfor %}
+  {% else %}
+    <article class="post-excerpt" style="text-align:center;">
+      <p>No posts yet. Add files to <code>_posts/</code> named <code>YYYY-MM-DD-title.md</code>.</p>
+    </article>
+  {% endif %}
+</section>
