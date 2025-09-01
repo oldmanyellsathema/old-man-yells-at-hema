@@ -7,9 +7,6 @@ title: Old Man Yells at HEMA
 description: Things I think that are probably wrong, Art, and why you are also probably wrong.
 url: "https://oldmanyellsathema.github.io"   # no trailing slash
 baseurl: "/old-man-yells-at-hema"            # leading slash, no trailing slash e.g., /old-man-yells-at-hema for project pages; leave blank for user/organization site
-theme: minima
-minima:
-  skin: dark
 
 author:
   name: Me
