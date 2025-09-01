@@ -1,5 +1,6 @@
+
 ---
-layout: site
+layout: default
 title: Gallery
 permalink: /gallery/
 ---
