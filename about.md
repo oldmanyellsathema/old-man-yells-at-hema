@@ -13,8 +13,8 @@ permalink: /about/
   <h2>About This Project</h2>
    <p>
     This space is pretty simple: it’s where I dump thoughts about HEMA, fencing, 
-    and whatever else rattles around my head. A lot of it will be me, but not all— 
-    other people’s ideas, rants, and links might wander in too.  
+    and whatever else rattles around my head. A lot of it will be me, but not all.
+    Other people’s ideas, rants, and links might wander in too if I find them intresting.  
   </p>
   <p>
     Don’t expect a straight line. One week it might be a rant about tournament rules, 
