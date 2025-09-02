@@ -178,3 +178,11 @@ a:hover{color:var(--gold)}
 }
 .dropdown-item:hover{border-color:var(--gold); color:var(--gold)}
 
+/* Keep the site title from hyphenating or breaking weirdly */
+.site-title{
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  word-break: normal;
+  white-space: nowrap; /* keep one line; remove if you want it to wrap */
+}
