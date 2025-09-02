@@ -155,3 +155,26 @@ a:hover{color:var(--gold)}
   .site-title{font-size:1.02rem; letter-spacing:1.6px}
   .menu{justify-self:start; gap:.4rem}
 }
+/* --- Library dropdown --- */
+.dropdown{position:relative}
+.dropdown-toggle{cursor:pointer}
+.dropdown-menu{
+  position:absolute; top:100%; left:0;
+  min-width: 220px;
+  display:none; z-index:20;
+  background:rgba(10,10,12,.95);
+  border:1.5px solid var(--gold);
+  box-shadow:0 10px 28px rgba(0,0,0,.45);
+  padding:.35rem;
+}
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu{display:block}
+
+.dropdown-item{
+  display:block; text-decoration:none;
+  padding:.45rem .6rem; border:1px solid transparent;
+  font-family:"Poiret One", cursive; text-transform:uppercase; letter-spacing:1px;
+  color:var(--ink); opacity:.95;
+}
+.dropdown-item:hover{border-color:var(--gold); color:var(--gold)}
+
