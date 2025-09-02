@@ -25,14 +25,18 @@ body{
 
 /* --- Top nav with cohesive flourish --- */
 .nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.72);backdrop-filter:saturate(120%) blur(6px);border-bottom:2px solid var(--gold)}
-.nav .wrap{display:grid;grid-template-columns: 160px 1fr auto;gap:1rem;align-items:center}
-.brand-left{
-width: clamp(72px, 8vw, 112px);
-  height: clamp(72px, 8vw, 112px);
-  background-image:url("{{ '/assets/images/deco-rose-gold.png' | relative_url }}");
-  background-repeat:no-repeat;
-  background-size:contain;
-  background-position:center;
+.nav .wrap{
+  display:grid;
+  grid-template-columns: minmax(80px,140px) 1fr max-content; /* title column sizes to its content */
+  gap:1rem; align-items:center;
+}
+
+.menu{
+  display:flex;
+  gap:.9rem;
+  align-items:center;
+  justify-self:start;      /* was center — this was forcing collisions with the title */
+  flex-wrap:wrap;          /* allows menu to wrap within its own column before pushing the title down */
 }
 @media (max-width:780px){
   .brand-left{ width:40px; height:40px; }
