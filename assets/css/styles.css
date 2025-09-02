@@ -25,10 +25,14 @@ body{
 
 /* --- Top nav with cohesive flourish --- */
 .nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.72);backdrop-filter:saturate(120%) blur(6px);border-bottom:2px solid var(--gold)}
-.nav .wrap{
-  display:grid;
-  grid-template-columns: 160px 1fr auto;
-  gap:1rem; align-items:center;
+.nav .wrap{display:grid;grid-template-columns: 160px 1fr auto;gap:1rem;align-items:center}
+.brand-left{
+width: clamp(72px, 8vw, 112px);
+  height: clamp(72px, 8vw, 112px);
+  background-image:url("{{ '/assets/images/deco-rose-gold.png' | relative_url }}");
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
 }
 .menu{display:flex; gap:1rem; align-items:center; justify-self:center}
 @media (max-width:780px){
