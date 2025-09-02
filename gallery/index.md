@@ -1,8 +1,6 @@
-
 ---
 layout: default
 title: Gallery
-permalink: /gallery/
 ---
 
 <section class="deco-card">
@@ -12,7 +10,7 @@ permalink: /gallery/
   <span class="corner br" aria-hidden="true"></span>
 
   <h2>Gallery</h2>
-   <p>
+    <p>
     This is where I drop images—some end up here, some end up on Instagram. 
     They don’t always overlap, so if you actually care you might want to check both.  
   </p>
