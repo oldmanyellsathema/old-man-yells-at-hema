@@ -24,9 +24,16 @@ body{
 .nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.72);backdrop-filter:saturate(120%) blur(6px);border-bottom:2px solid var(--gold)}
 .nav .wrap{display:grid;grid-template-columns: 160px 1fr auto;gap:1rem;align-items:center}
 .brand-left{
-  height:56px; width:140px;
-  background-image: url("data:image/svg+xml;utf8,  <svg xmlns='http://www.w3.org/2000/svg' width='140' height='56' viewBox='0 0 140 56'>    <rect x='1' y='1' width='138' height='54' fill='none' stroke='%23cba135' stroke-width='2'/>    <g fill='none' stroke='%23cba135' stroke-width='2'>      <path d='M8 6 H34'/><path d='M8 16 H50'/><path d='M8 28 H66'/><path d='M8 40 H50'/><path d='M8 50 H34'/>      <path d='M132 6 H106'/><path d='M132 16 H90'/><path d='M132 28 H74'/><path d='M132 40 H90'/><path d='M132 50 H106'/>      <polygon points='70,20 78,28 70,36 62,28' fill='none' stroke='%23cba135'/>    </g>  </svg>");
-  background-size:100% 100%; background-repeat:no-repeat;
+  width:56px; height:56px;
+  background-image:url("{{ '/assets/images/deco-rose-gold.png' | relative_url }}");
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
+}
+@media (max-width:780px){
+  .brand-left{ width:40px; height:40px; }
+}
+
 }
 .site-title{margin:0;justify-self:end;font-family:"Cinzel", serif;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
 .menu{display:flex;gap:1rem;align-items:center;justify-self:center}
