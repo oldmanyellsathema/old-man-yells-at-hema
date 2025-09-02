@@ -1,3 +1,6 @@
+---
+
+---
 
 :root{
   --ink: #f4ead7;
@@ -34,7 +37,7 @@ body{
   .brand-left{ width:40px; height:40px; }
 }
 
-}
+
 .site-title{margin:0;justify-self:end;font-family:"Cinzel", serif;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
 .menu{display:flex;gap:1rem;align-items:center;justify-self:center}
 .menu-link{font-family:"Poiret One", cursive;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:.9;padding:.35rem .6rem;border:1px solid transparent}
