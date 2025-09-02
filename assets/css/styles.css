@@ -187,4 +187,6 @@ a:hover{color:var(--gold)}
   word-break: keep-all;
   white-space: nowrap; /* keep title on one line */
 }
-
+@media (min-width: 1px){
+  .site-title{ letter-spacing: 2.2px; } /* tiny reduction can help some renderers */
+}
