@@ -191,3 +191,21 @@ a:hover{color:var(--gold)}
 @media (min-width: 1px){
   .site-title{ letter-spacing: 2.2px; } /* tiny reduction can help some renderers */
 }
+@media (max-width:780px){
+  .nav .wrap{
+    grid-template-columns: auto 1fr auto; /* logo | menu | title */
+    align-items:center;
+    gap:.4rem;
+  }
+  .menu{
+    justify-self:start;
+    flex-wrap:wrap;   /* let links wrap instead of pushing the title */
+    gap:.6rem;
+  }
+  .site-title{
+    font-size:1rem;
+    letter-spacing:1.6px;
+    white-space:nowrap;
+  }
+}
+
