@@ -1,18 +1,28 @@
 ---
 layout: default
 ---
-<section>
+<section class="deco-card">
   <h1>{{ page.title }}</h1>
-  {% assign items = site.library | sort: "date" | reverse %}
-  {% if items.size == 0 %}<p>No entries yet.</p>{% endif %}
-  <ul>
-    {% for item in items %}
-      <li>
-        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
-        {% if item.date %}<small> — {{ item.date | date: "%b %-d, %Y" }}</small>{% endif %}
-        {% if item.excerpt %}<div>{{ item.excerpt | strip_html }}</div>{% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+
+  {% if site.library and site.library.size > 0 %}
+    {% assign items = site.library | sort: "date" | reverse %}
+    <ul class="post-list">
+      {% for item in items %}
+        <li class="post-excerpt">
+          <a class="post-link" href="{{ item.url | relative_url }}">
+            <span class="post-title">{{ item.title }}</span>
+            {% if item.date %}
+              <time class="post-date" datetime="{{ item.date | date_to_xmlschema }}">
+                {{ item.date | date: "%b %-d, %Y" }}
+              </time>
+            {% endif %}
+          </a>
+          {% if item.excerpt %}<p>{{ item.excerpt | strip_html }}</p>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No Library items yet or collection not configured.</p>
+  {% endif %}
 </section>
 
