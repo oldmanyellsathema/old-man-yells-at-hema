@@ -1,17 +1,14 @@
---- 
-layout: default 
----
 title: Old Man Yells at HEMA
 description: Things I think that are probably wrong, Art, and why you are also probably wrong.
 url: "https://oldmanyellsathema.github.io"   # no trailing slash
-baseurl: "/old-man-yells-at-hema"            # leading slash, no trailing slash e.g., /old-man-yells-at-hema for project pages; leave blank for user/organization site
+baseurl: "/old-man-yells-at-hema"            # leading slash, no trailing slash
 
 author:
   name: Me
 
 # Add top-nav pages (files must exist in repo root)
 header_pages:
-  - library.md     # Library hub (new name, replaces resources.md)
+  - library.md     # Library hub
   - posts.html
 
 # Collections
@@ -39,5 +36,6 @@ permalink: /:categories/:year/:month/:day/:title/
 
 future: true
 timezone: America/Los_Angeles
+
 
 
