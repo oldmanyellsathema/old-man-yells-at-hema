@@ -2,6 +2,7 @@
 layout: default
 title: Recipes
 permalink: /library/recipes/
+section: Recipes
 ---
 
 <section class="deco-card">
