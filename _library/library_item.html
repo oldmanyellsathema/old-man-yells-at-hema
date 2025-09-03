@@ -1,0 +1,35 @@
+---
+layout: default
+---
+
+<article class="deco-card">
+  <header>
+    <h1>{{ page.title }}</h1>
+    {% if page.date %}
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+    {% endif %}
+  </header>
+
+  <div class="content">
+    {{ content }}
+  </div>
+
+  <!-- Prev/Next within the same section (posts-like behavior) -->
+  {% assign all = site.library | where: "section", page.section | sort: "date" %}
+  {% assign idx = 0 %}
+  {% for it in all %}
+    {% if it.url == page.url %}
+      {% assign idx = forloop.index0 %}
+    {% endif %}
+  {% endfor %}
+  <nav class="post-nav">
+    {% if idx > 0 %}
+      {% assign prev = all[idx | minus: 1] %}
+      <a class="prev" href="{{ prev.url | relative_url }}">&larr; {{ prev.title }}</a>
+    {% endif %}
+    {% if idx < all.size | minus: 1 %}
+      {% assign next = all[idx | plus: 1] %}
+      <a class="next" href="{{ next.url | relative_url }}">{{ next.title }} &rarr;</a>
+    {% endif %}
+  </nav>
+</article>
