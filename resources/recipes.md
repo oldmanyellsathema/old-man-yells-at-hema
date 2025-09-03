@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Recipes (Tournament Ideas)
-permalink: /resources/recipes/
+permalink: /library/recipes/
 ---
 
 <section class="deco-card">
@@ -10,8 +10,13 @@ permalink: /resources/recipes/
   <h2>Recipes</h2>
   <p>Formats, scoring quirks, and ways to make people mad in a useful way.</p>
   <ul class="post-list">
-    <li><a class="post-link" href="#">Pool → Microbrackets (No Silly Ties)</a></li>
-    <li><a class="post-link" href="#">Win by Winden: Priority on Bind Work</a></li>
-    <li><a class="post-link" href="#">Cut Quality First, Then Points</a></li>
+    {% for r in site.recipes %}
+      <li>
+        <a class="post-link" href="{{ r.url | relative_url }}">
+          {{ r.title }}
+        </a>
+      </li>
+    {% endfor %}
   </ul>
 </section>
+
