@@ -1,8 +1,7 @@
 ---
-title: Test Item
+title: Test File
 date: 2025-09-03
-excerpt: "If you see this on /library/, collections are working."
+excerpt: "Testing if the Library renders."
 ---
 Hello Library.
-
 
