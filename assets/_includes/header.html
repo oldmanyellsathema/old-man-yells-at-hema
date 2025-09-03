@@ -15,13 +15,17 @@ layout: null
 </header>
 
 <!-- Separate black strip for navigation -->
-<nav class="nav-strip" aria-label="Primary">
-  <div class="nav-inner">
-    <a href="{{ site.baseurl }}/">Home</a>
-    <a href="{{ site.baseurl }}/about/">About</a>
-    <a href="{{ site.baseurl }}/gallery/">Gallery</a>
-    <!-- Optional:
-    <a href="{{ site.baseurl }}/contact/">Contact</a>
-    -->
+<nav class="menu" aria-label="Primary">
+  <a href="{{ '/posts/'   | relative_url }}" class="menu-link">Posts</a>
+
+  <div class="dropdown">
+    <a href="{{ '/resources/' | relative_url }}" class="menu-link dropdown-toggle">Library ▾</a>
+    <div class="dropdown-menu" role="menu" aria-label="Library">
+      <a class="dropdown-item" href="{{ '/resources/about/'   | relative_url }}">About</a>
+      <a class="dropdown-item" href="{{ '/resources/recipes/' | relative_url }}">Recipes</a>
+      <a class="dropdown-item" href="{{ '/gallery/'           | relative_url }}">Gallery</a>
+      <a class="dropdown-item" href="{{ '/resources/list/'    | relative_url }}">Resources</a>
+    </div>
   </div>
 </nav>
+

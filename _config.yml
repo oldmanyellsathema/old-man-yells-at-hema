@@ -12,9 +12,9 @@ author:
   name: Me
 
 # Add top‑nav pages (files must exist in repo root)
+# _config.yml
 header_pages:
-  - about.md
-  - gallery.md
+  - resources.md   # Library hub (new)
   - posts.html
 
 
