@@ -1,18 +1,11 @@
-<!-- _layouts/library_index.html -->
 ---
 layout: default
 ---
 <section class="deco-card">
-  <span class="corner tl" aria-hidden="true"></span>
-  <span class="corner tr" aria-hidden="true"></span>
-  <span class="corner bl" aria-hidden="true"></span>
-  <span class="corner br" aria-hidden="true"></span>
+  <h1>{{ page.title }}</h1>
 
-  <h1 class="invite-title" style="text-align:center;margin-top:0;">{{ page.title }}</h1>
-
-  {% assign coll = site[page.collection] | default: site.library %}
-  {% if coll and coll.size > 0 %}
-    {% assign items = coll | sort: "date" | reverse %}
+  {% if site.library and site.library.size > 0 %}
+    {% assign items = site.library | sort: "date" | reverse %}
     <ul class="post-list">
       {% for item in items %}
         <li class="post-excerpt">
@@ -29,7 +22,7 @@ layout: default
       {% endfor %}
     </ul>
   {% else %}
-    <p style="text-align:center;">No items yet.</p>
+    <p>No Library items yet or collection not configured.</p>
   {% endif %}
 </section>
 
