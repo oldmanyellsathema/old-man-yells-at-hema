@@ -24,6 +24,38 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+  title: Old Man Yells at HEMA
+url: "https://oldmanyellsathema.github.io"
+baseurl: "/old-man-yells-at-hema"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Library collection
+collections:
+  library:
+    output: true
+    permalink: /library/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: library
+    values:
+      layout: library_item
+
+markdown: kramdown
+permalink: /:categories/:year/:month/:day/:title/
+timezone: America/Los_Angeles
+
+# Top nav (point at files that actually exist)
+header_pages:
+  - library/index.md
+  - posts.html
+
+
 # Markdown + permalinks
 markdown: kramdown
 permalink: /:categories/:year/:month/:day/:title/
