@@ -13,7 +13,6 @@ layout: default
   <div class="content">
     {{ content }}
   </div>
-
   <!-- Prev/Next within the same section (posts-like behavior) -->
   {% assign all = site.library | where: "section", page.section | sort: "date" %}
   {% assign idx = 0 %}
