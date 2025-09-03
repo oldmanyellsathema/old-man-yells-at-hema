@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<section>
+  <h1>{{ page.title }}</h1>
+  {% assign items = site.library | sort: "date" | reverse %}
+  {% if items.size == 0 %}<p>No entries yet.</p>{% endif %}
+  <ul>
+    {% for item in items %}
+      <li>
+        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+        {% if item.date %}<small> — {{ item.date | date: "%b %-d, %Y" }}</small>{% endif %}
+        {% if item.excerpt %}<div>{{ item.excerpt | strip_html }}</div>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
