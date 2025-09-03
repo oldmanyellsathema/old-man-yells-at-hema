@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Hello All, This is My First Blog Post"
-date: 2025-09-03
+title: "Hello All"
+date: 2025-08-20
 categories: [Introduction, HEMA]
 author: Me
 ---
