@@ -11,7 +11,7 @@ permalink: /library/
   <header class="invite" style="text-align:center;">
     <div class="invite-topline">— The Stacks —</div>
     <h2 class="invite-title" style="margin:0;">Library</h2>
-    <div class="invite-sub">Pick a shelf below.Do they make sence? Sometimes. Should you read it? Yeah. I worte 'em</div>
+    <div class="invite-sub">Pick a shelf below. Do they make sence? Sometimes. Should you read it all? Yeah. I worte 'em</div>
   </header>
 
   <div class="deco-divider" role="separator" aria-label="decorative divider"></div>
