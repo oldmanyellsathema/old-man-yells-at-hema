@@ -90,3 +90,10 @@ body {
 .post-body p{ line-height:1.6; }
 .post-body img{ max-width:100%; height:auto; border:1px solid var(--gold-soft); box-shadow:0 6px 18px rgba(0,0,0,.35); }
 .deco-divider{ height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent); margin:1.2rem 0; }
+
+/* Library hub tiles */
+.hub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.9rem; }
+.hub-tile { display:block; text-align:center; padding:1rem 1.25rem; border:1px solid var(--ink-20);
+  border-radius:10px; text-decoration:none; }
+.hub-tile:hover { border-color:var(--ink-40); transform:translateY(-1px); transition:.15s ease; }
+
