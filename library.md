@@ -10,9 +10,11 @@ permalink: /library/
 
   <header class="invite" style="text-align:center;">
     <div class="invite-topline">— The Stacks —</div>
-    <h2 class="invite-title">Library Hub</h2>
+    <h2 class="invite-title" style="margin:0;">Library</h2>
     <div class="invite-sub">Pick a shelf below.</div>
   </header>
+
+  <div class="deco-divider" role="separator" aria-label="decorative divider"></div>
 
   <div class="cta-row" style="justify-content:center; gap:.75rem; flex-wrap:wrap;">
     <a class="btn" href="{{ '/library/recipes/' | relative_url }}">Recipes</a>
@@ -20,3 +22,4 @@ permalink: /library/
     <a class="btn ghost" href="{{ '/library/about/' | relative_url }}">About</a>
   </div>
 </section>
+
