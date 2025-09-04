@@ -1,22 +1,12 @@
----
-layout: default
-
----
-
 title: Old Man Yells at HEMA
 description: Things I think that are probably wrong, Art, and why you are also probably wrong.
-url: "https://oldmanyellsathema.github.io"   # no trailing slash
-baseurl: "/old-man-yells-at-hema"            # leading slash, no trailing slash e.g., /old-man-yells-at-hema for project pages; leave blank for user/organization site
+url: "https://oldmanyellsathema.github.io"
+baseurl: "/old-man-yells-at-hema"
 
-author:
-  name: Me
-
-# Add top‑nav pages (files must exist in repo root)
-# _config.yml
+# Top nav — make sure these files actually exist
 header_pages:
-  - resources.md   # Library hub (new)
+  - library/index.md
   - posts.html
-
 
 # Plugins supported by GitHub Pages
 plugins:
@@ -24,10 +14,39 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+# Library collection
+collections:
+  library:
+    output: true
+    permalink: /library/:title/
+  gallery:
+    output: true
+    permalink: /gallery/:title/
+  recipes:
+    output: true
+    permalink: /recipes/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: library
+    values:
+      layout: library_item
+  - scope:
+      path: ""
+      type: gallery
+    values:
+      layout: gallery_item
+  - scope:
+      path: ""
+      type: recipes
+    values:
+      layout: recipes_item
+
+
 # Markdown + permalinks
 markdown: kramdown
 permalink: /:categories/:year/:month/:day/:title/
-
 future: true
 timezone: America/Los_Angeles
 
