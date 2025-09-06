@@ -207,5 +207,12 @@ a:hover{color:var(--gold)}
     letter-spacing:1.6px;
     white-space:nowrap;
   }
+  .post-body img,
+.deco-card img,
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 }
 
