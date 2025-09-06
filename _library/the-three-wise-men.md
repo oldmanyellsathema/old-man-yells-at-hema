@@ -13,6 +13,7 @@ Thus our solution was born: we will gauge for martial quality! Was it flat or no
 Now this is fine. I don’t want to say it’s the worst way to score anything. I think it’s a great solution, but it’s not the only one.
 
 So behold!  
+
 **The Three Wise Men.**
 
 This is a scoring format and not a tournament format. You can apply it to anything, and it’s dreadfully simple.
@@ -30,8 +31,11 @@ You can keep any scoring for each of these you’d like. Do you want a thrust to
 Here’s the trick: you only get points for the first thrust, cut, and slice you land. Unless you want to substitute a higher-value thrust for some such modification. Heck, you can give the matches a time limit and take the highest point total of whatever combination of these three are landed if you want.
 
 But this is why I don’t think you should. We already fight for points, but we don’t fight for techniques. You can watch five different tournaments and never see a slice. Why? Because we don’t value them in the point system. Yet a slice is one third of the possible ways to wound someone. In all our pressure testing we have neglected not just a way to wound, but all the mechanics it takes to even land it. We just default into throws, or nonsense — but no slices.  
+
 Odd.
 
-Now you might find this scoring structure brings about more ties in a pool format than you like. I don't know that it will, but it might. So the next mechanic you need is a clock. IF two or more people at the end of pools have the same point totals. Then TIME to get those point totals is used to break the Tie. IE person A took an aggregate time of 6 minutes throughout their matches and person B took 5. Person B is the winner. If they are still tied, I don’t know. Think of something, have ‘em box or something.
+Now you might find this scoring structure brings about more ties in a pool format than you like. I don't know that it will, but it might. So the next mechanic you need is a clock. 
+
+IF two or more people at the end of pools have the same point totals. Then TIME to get those point totals is used to break the Tie. IE person A took an aggregate time of 6 minutes throughout their matches and person B took 5. Person B is the winner. If they are still tied, I don’t know. Think of something, have ‘em box or something.
 
 Anyway, try it out. Let me know what you think, and Prove it with Iron.
