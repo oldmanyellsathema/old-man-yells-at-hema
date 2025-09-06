@@ -4,13 +4,13 @@ section: recipes
 author: Me
 ---
 
-This is a silly name, but hey, I’m a somewhat silly person. One of my continued issues with the tournament scene — as I’m sure you’re all aware of by now — is that I don’t care for how we score things.
+This is a silly name, but hey, I’m a somewhat silly person. One of my continued issues with the tournament scene, as I’m sure you’re all aware of by now, is that I don’t care for how we score things.
 
 On one hand you have standard Olympic scoring, which is: if you get touched in one region by one part of the sword, your opponent gets a point. Now, I know we rejected this system for a few reasons. One, it felt like tag. Two, it doesn’t reward deeper targets. And three, getting touched is not the same as getting cut, especially through clothing.
 
 Thus our solution was born: we will gauge for martial quality! Was it flat or not flat? (I think this is a silly distinction when applied to the head, but pretty rational everywhere else.) Did you fence to a deeper target? More points. Did you have blade control? More points. Were they able to hit you back in time? Maybe fewer points, etc.
 
-Now this is fine. I don’t want to say it’s the worst way to score anything. I think it’s a great solution — but it’s not the only one.
+Now this is fine. I don’t want to say it’s the worst way to score anything. I think it’s a great solution, but it’s not the only one.
 
 So behold!  
 **The Three Wise Men.**
