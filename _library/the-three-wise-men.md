@@ -2,6 +2,7 @@
 title: "The Three Wise Men"
 section: recipes
 author: Me
+tags: [HEMA, Tournaments, Rulesets, Community, Training]
 ---
 
 This is a silly name, but hey, I’m a somewhat silly person. One of my continued issues with the tournament scene, as I’m sure you’re all aware of by now, is that I don’t care for how we score things.
