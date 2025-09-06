@@ -2,6 +2,7 @@
 title: "A Fun Tournament Rule Set: The Best Fencer"
 section: recipes
 author: Me
+tags: [HEMA, Tournaments, Rulesets, Community, Training]
 ---
 
 Feast your eyes on **“The Best Fencer.”**
