@@ -5,4 +5,8 @@ author: Me
 tags: [HEMA, Tournaments, Rulesets, Community, Training]
 ---
 
-![Binding example]({{ '/assets/images/website-photo-for-fun.jpg' | relative_url }})
+<section class="deco-card">
+  <span class="corner tl"></span><span class="corner tr"></span>
+  <span class="corner bl"></span><span class="corner br"></span>
+  <img src="{{ '/assets/images/website-photo-for-fun.jpg' | relative_url }}" alt="Binding example">
+</section>
