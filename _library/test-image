@@ -5,4 +5,4 @@ author: Me
 tags: [HEMA, Tournaments, Rulesets, Community, Training]
 ---
 
-![Binding example]({{ 'assets/images/website-photo-for-fun.jpg' | relative_url }})
+![Binding example]({{ '/assets/images/website-photo-for-fun.jpg' | relative_url }})
