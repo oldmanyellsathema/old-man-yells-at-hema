@@ -7,46 +7,54 @@ categories: [Training Notes]
 tags: [Meyer, Longsword, Rapier, Bind, Winden, Fühlen]
 ---
 
-**Thesis:** If you treat Meyer’s rapier rules (Rostock) as general rules of his art—not just rapier quirks—then *control via the bind* becomes the default from which good fencing flows. Hence our emphasis on **binding and winding**.
+---
+title: "Why We Bind and Wind"
+section: recipes
+author: Me
+---
 
-### 1) The “sword as source” and reading rules upward
-Meyer (1570) says the **sword** is the “origin and source” of all other combat. He’s talking longsword, sure, but I read that as: other weapons inherit ideas from the sword. So if a principle is called out explicitly in the rapier rules, it likely exists—at least in spirit—in the longsword too. I’m not claiming perfect equivalence; I’m arguing for a helpful reading frame.
+So, some thoughts on why we are stressing winding so much. This new emphasis has something to do with the winds themselves, but more to do with rules of the Rostock document, specifically the rules for rapier combat. Now, I’m about to make a couple of arguments here that may or may not be accurate, so if you disagree please let me know. I’m certainly no expert in this.  
 
-### 2) Treat the rules as axioms—before techniques
-I take the rapier rules as **a priori** constraints: they govern what *counts* as good fencing before we pick a technique or tactic in the *Krieg*. That moves “bind and wind” from a trick to a **foundation**.
+Firstly, we start with Meyer’s 1570 book, in which he states:  
 
-### 3) Rule 1 — Keep control
-> Conduct your cuts and thrusts so you don’t lose control of your weapon or over-commit.
+> “Experience shows and it is obvious that combat with the sword is not only an origin and source of all other combat, but it is also the most artful and manliest above all other weapons.”  
 
-Basic? Yes. But most of us fence looser with feders than we would with sharps. I think Meyer knew this (hence the play-focused material vs. the more combative material). Control is the first gate we pass through.
+In this passage he is, of course, referring to the longsword specifically. So for Meyer, longsword is the super-set of all combat in his “art of combat.” We can then assume that all other aspects of his system must have some basis in his longsword, and by extension that anything we find called out specifically in his other weapons is a further explanation or idea that already exists in his longsword material. With this established, we can safely look at the Rostock rules for rapier combat as having their origins in the longsword. Thus, the rapier rules (a subset of the longsword super-set) are simply the rules of combat in general, though they aren’t specifically called out in the longsword section.  
 
-### 4) Rule 2 — Don’t hit the body until you’re secure
-> Don’t cut to the body until you’ve made yourself **secure with parrying**, and can **recover** safely.
-
-I read “secure with parrying” as **establish a bind** (however brief): when swords touch, you can **Fühlen** (feel), locate strength/weakness, and **wind** to an open, safe line. This is why we drill winding like fiends.  
-**Caveat:** I wouldn’t say *never* strike without a prior bind—Meyer also shows initiating actions that *bring your cover with the blow*. But as a **default**, “control the other blade first” is the safer, more general rule.
-
-### 5) Rule 3 — Only bind on purpose
-> Don’t let him touch/bind your blade unless you mean to **take** it; when the blades bind, you must have an opening, or your art is false.
-
-So: don’t drift into meaningless binds. Bind **with intent**: to win the line, to wind, to displace and enter. Winding for the sake of winding is as empty as point-chasing without cover.
-
-### 6) Rule 4 — Chasing and footwork
-> Watch the limbs; when he gathers them, you have an opportunity for **chasing**. Step correctly and change around his hilt.
-
-“Chasing” is nasty-good **from a bind**: with Fühlen and forward stepping, Nachreisen (traveling after) becomes simple, effective, and *safe*.
-
-### 7) Rule 5 — How to *get* the bind (and keep it)
-Pommel low by the leg, point up; **go through**; if he seeks your blade:
-- Falls on the **foible** → **strike around** his blade;
-- Falls on the **forte** → **jerk** (wrench) it to the other side;
-- Finds the **middle** → **let it run**, fall back with **suppressing**, work immediately to the opening.
-
-This is essentially a **playbook for entering and improving binds**. Deceptions aren’t for avoiding the blade entirely; they’re for luring the opponent into **bad binds** you can dominate.
+The second argument I’m going to make is that the rules themselves make up axioms for combat, that must be considered *a priori* to any techniques or tactics used during the “Krieg.” Though Meyer doesn’t call this out specifically, it’s certainly implied.  
 
 ---
 
-### So why we bind and wind
-Because it satisfies Rule 1 (your control) and Rule 2 (their control), and it lines up with Rules 3–5: bind on purpose, read with Fühlen, wind to take the line, then finish with recovery baked in. Feints and flourishes still have their place—but as tools to *create* or *exploit* binds, not to gamble on naked entries.
+### On to the Rules and their relationship with winds
 
-*If you disagree with my “read the rapier rules upward” approach, please yell at me gently. I’m happy to sharpen this.*
+**Rule 1**  
+> “You should conduct all your cuts and thrusts such that you do not lose control of your weapon or over-commit with it.”  
+
+Now, this is pretty basic: don’t fence out of control. That being said, one could argue that we all are fencing somewhat out of control compared to how we would fence with sharps. In fact, I would argue that we are all breaking the very first rule because we don’t treat feders like sharps. Not to go too far down another rabbit hole, but I think Meyer thought the same way — which is why he has his sportified plays in the section before his *Zettel* and his combat plays after. But that is just more supposition.  
+
+**Rule 2**  
+> “You should not cut to the body until you have made yourself secure with parrying, not only to cut or thrust to his body, but so that after delivering the cut you can recover your weapon and body without harm.”  
+
+OK, this is a big one. What is he saying here? Well, first we have to know what “making yourself secure with parrying” is. Here again, this is just my opinion: every time your sword meets another sword, you have bound, or are in a bind. Clearly you don’t have to stay there — you can beat, etc. — but at its most basic, when swords touch edge to edge they bind.  
+
+This is important. When is Meyer telling us to attack the body? Only after parrying/binding. In essence, this is the other end of Rule 1. Instead of controlling your sword, now you control their sword as well in — you guessed it — a bind. So when do you attack straight to the body? In good time? When his sword is in another *Hut*? You NEVER attack without first controlling their sword. Not sometimes, not in true time, not in *Nachreisen*. NEVER.  
+
+This is why we focus on winding from binds: because only through binds are we in control of both our weapon and, potentially, theirs. Knowing what to do — where to wind, where to thrust, cut, and slice from a wind — are the only attacks Meyer approves of. Binding and, by extension, winding are thus *a priori* to any other set of actions, especially with sharp swords. Admittedly he’s a little looser with his writings on both dussacks and feders, but they fenced for sport with those, so you’d expect them to be a little freer with the techniques. Not to mention the blunted, thickened edges “bind” considerably less than two sharps would.  
+
+**Rule 3**  
+> “You should also not let him touch or bind your blade, unless you want to intercept, catch, or take his blade. For whenever the blades touch and hit in the bind, you should have a sure opening, otherwise your art is false.”  
+
+This again has to do with controlling your opponent’s sword. Essentially, he is saying don’t get into a bind you cannot work from. For just as in Rule 2 — where you hit from a bind — that’s exactly what your opponent also wants to do. Thus, only get into a bind when it is to your advantage.  
+
+So this is another issue we have when fencing: often we either don’t bind at all, or when we do, it is for no purpose. Winding mindlessly for the sake of winding is just as bad as not first making oneself secure with parrying. Thus, it’s important that we are able to wind effectively and with a plan from many angles and relationships. Otherwise our art is false.  
+
+**Rule 4**  
+> “In all combat you should take heed of the opponent’s limbs, for whenever he gathers them you have an opportunity for chasing. Also, in chasing you should change around his hilt. And learn to step correctly for everything.”  
+
+This rule is kind of an aside from the winding discussion, but since I’m going through all of them I might as well address it. Personally I think “chasing” is a thousand times more effective from a bind than when two opponents are just swinging swords back and forth looking for an opportunity to jump in. In fact, I think it’s a singularly effective technique from a bind. As long as you have *Fühlen* and can step into your opponent, cutting or slicing in *Nachreisen* becomes incredibly simple and effective — as well as safe. This aspect of our game should be looked at much more closely, as I think there is a wealth of potential in it.  
+
+**Rule 5**  
+> “If you are holding your rapier with the pommel by your leg so that the point goes up towards the opponent, be diligent about the following work: first, do not let him intercept or touch your blade, but always go through; and as you go through, on whatever side he thrusts, go in on the other side, stepping out from his weapon. If he goes after your blade as you go through, then change through short, and fall on his blade, and thrust to his body. If he falls on your blade as you go through, not first. If he falls on the foible, strike around on his blade; if he falls on the forte, jerk his weapon around on the other side. If he falls on the middle, then let it run through, and fall back on it with suppressing, and work at once to the opening.”  
+
+The last rule — and the one we pay by far the most attention to. As you all know, this is essentially HOW to get into a good bind and, if you’re not in one, how to get there. This rule spawns all subsequent techniques we find, like deceptions and such, which are not without merit and should be taught — but with the knowledge that binding and winding is the basic framework for combat. The feints and deceptions are mechanisms to entice your opponent into a bad bind, not to avoid the blade entirely, or set up a situation where one can attack straight to the body with no fear of being struck in return.  
+
