@@ -2,7 +2,7 @@
 layout: post
 title: "Another paper on the Vor, Nach, Indes, and Gleich"
 date: 2025-08-27
-author: "Geoffrey Harrington"
+author: "Me"
 categories: [Blog]
 tags: [HEMA, longsword, timing, Vor, Nach, Indes, Gleich]
 description: "Thoughts on Vor, Nach, Indes, and Gleich as system balance/imbalance and practical timing."
