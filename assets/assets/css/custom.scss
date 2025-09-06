@@ -97,3 +97,10 @@ body {
   border-radius:10px; text-decoration:none; }
 .hub-tile:hover { border-color:var(--ink-40); transform:translateY(-1px); transition:.15s ease; }
 
+.post-body img,
+.deco-card img,
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
