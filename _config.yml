@@ -25,6 +25,9 @@ collections:
   recipes:
     output: true
     permalink: /recipes/:title/
+  Salon:
+    output: true
+    permalink: /salon/:title/
 
 defaults:
   - scope:
@@ -42,20 +45,14 @@ defaults:
       type: recipes
     values:
       layout: recipes_item
-
-      collections:
-  salon:
-    output: true
-    permalink: /library/salon/:name/
-
-# Optional: default layout for every salon item
-defaults:
   - scope:
       path: ""
       type: salon
     values:
-      layout: salon_item   # we'll create this layout below
+      layout: salon_item
+      
 
+      
 
 
 # Markdown + permalinks
