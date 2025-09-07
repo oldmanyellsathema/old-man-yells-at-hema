@@ -43,4 +43,4 @@ As a relatively new swordswoman, I can remember a time (roughly two years ago) w
 ---
 
 Thank you for reading.  
-**Dr. Jennifer Blum, PsyD**
+**Dr. J**
