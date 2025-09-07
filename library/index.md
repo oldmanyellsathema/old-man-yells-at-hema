@@ -1,7 +1,24 @@
 ---
-layout: library_index
-title: Library
-permalink: /library/
+layout: default
+title: Salon
+permalink: /library/salon/
 ---
 
-Welcome to the Library hub. Pick a section:
+<section class="deco-card">
+  <span class="corner tl"></span><span class="corner tr"></span>
+  <span class="corner bl"></span><span class="corner br"></span>
+  <h2 class="invite-title" style="text-align:center;">Recipes</h2>
+ <p style="text-align:center; max-width: 700px; margin: 0 auto 1.2rem;">
+    This is where others in the HEMA community can share there own disscusions and thoughts. Please be respecful or I'll forcably, but lovingly, remove you.
+  </p>
+  <ul class="post-list">
+    {% assign recipes = site.library | where: "section", "recipes" %}
+    {% for item in recipes %}
+      <li>
+        <a class="post-link" href="{{ item.url | relative_url }}">
+          <span class="post-title">{{ item.title }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
