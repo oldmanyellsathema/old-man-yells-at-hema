@@ -3,7 +3,6 @@ layout: site
 title: Salon
 permalink: /library/salon/
 ---
-
 <section class="deco-card">
   <span class="corner tl" aria-hidden="true"></span>
   <span class="corner tr" aria-hidden="true"></span>
@@ -35,3 +34,4 @@ permalink: /library/salon/
     <p>No Salon entries yet. Add Markdown files to <code>_salon/</code>.</p>
   {% endif %}
 </section>
+
