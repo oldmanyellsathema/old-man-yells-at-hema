@@ -20,6 +20,8 @@ permalink: /library/
     <a class="btn" href="{{ '/library/recipes/' | relative_url }}">Recipes</a>
     <a class="btn ghost" href="{{ '/library/gallery/' | relative_url }}">Gallery</a>
     <a class="btn ghost" href="{{ '/library/about/' | relative_url }}">About</a>
+    <a class="btn ghost" href="{{ '/library/salon/' | relative_url }}">Salon</a>
+    <a class="btn ghost" href="{{ '/library/shelves/' | relative_url }}">shelves</a>
   </div>
 </section>
 
