@@ -25,7 +25,7 @@ collections:
   recipes:
     output: true
     permalink: /recipes/:title/
-  Salon:
+  salon:
     output: true
     permalink: /salon/:title/
 
