@@ -38,6 +38,7 @@ More information is needed to determine how much these supplemental activities h
 
 As a relatively new swordswoman, I can remember a time (roughly two years ago) when I might have scoffed at the idea of I-SAD. At present, I can only hope others share my experience and are willing to share theirs. In the next article—if it’s desired—I will outline more detailed activities that may provide relief, and I hope to gain ideas and inspiration from our community at large.
 
+## **please note this is just for fun. It's not real science**
 ---
 
 Thank you for reading.  
