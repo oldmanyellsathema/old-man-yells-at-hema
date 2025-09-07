@@ -43,6 +43,20 @@ defaults:
     values:
       layout: recipes_item
 
+      collections:
+  salon:
+    output: true
+    permalink: /library/salon/:name/
+
+# Optional: default layout for every salon item
+defaults:
+  - scope:
+      path: ""
+      type: salon
+    values:
+      layout: salon_item   # we'll create this layout below
+
+
 
 # Markdown + permalinks
 markdown: kramdown
