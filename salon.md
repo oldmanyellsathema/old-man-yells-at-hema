@@ -1,5 +1,5 @@
 ---
-layout: site
+layout: default
 title: Salon
 permalink: /library/salon/
 ---
