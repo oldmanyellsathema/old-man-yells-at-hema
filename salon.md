@@ -11,7 +11,8 @@ permalink: /library/salon/
 
   <h2 class="invite-title" style="text-align:center;">Salon</h2>
   <p style="text-align:center; max-width:700px; margin:0 auto 1.2rem;">
-    Guest articles & community pieces.
+     This is where others in the HEMA community can share their own discussions and thoughts.
+    Please be respectful, or I’ll forcibly (but lovingly) remove you.
   </p>
 
   {% assign items = site.salon | sort: 'date' | reverse %}
