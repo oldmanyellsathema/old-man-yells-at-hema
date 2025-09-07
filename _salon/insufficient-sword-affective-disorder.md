@@ -1,7 +1,7 @@
 ---
 title: "Insufficient-Sword Affective Disorder (I-SAD)"
 date: 2025-09-07
-author: Dr. Jennifer Blum, PsyD
+author: Dr. J, PsyD
 layout: salon_item
 ---
 
@@ -41,4 +41,4 @@ As a relatively new swordswoman, I can remember a time (roughly two years ago) w
 ---
 
 Thank you for reading.  
-**Dr. Jennifer Blum, PsyD**
+**Dr. J, PsyD**
