@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: site
 ---
 <article class="deco-card">
   <span class="corner tl" aria-hidden="true"></span>
@@ -22,10 +22,7 @@ layout: default
     {{ content }}
   </div>
 
-  {%- comment -%}
-    Build prev/next within the Salon category
-  {%- endcomment -%}
-  {% assign coll = site.categories.Salon | sort: "date" %}
+  {% assign coll = site.salon | sort: 'date' %}
   {% assign idx = nil %}
   {% for p in coll %}
     {% if p.url == page.url %}
