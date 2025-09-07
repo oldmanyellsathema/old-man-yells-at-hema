@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: site
 title: Salon
 permalink: /library/salon/
 ---
@@ -12,25 +12,26 @@ permalink: /library/salon/
 
   <h2 class="invite-title" style="text-align:center;">Salon</h2>
   <p style="text-align:center; max-width:700px; margin:0 auto 1.2rem;">
-    This is where others in the HEMA community can share their own discussions and thoughts.
-    Please be respectful—or I’ll forcibly (but lovingly) remove you.
+    Guest articles & community pieces. Be respectful—or I’ll forcibly (but lovingly) remove you.
   </p>
 
-  {% assign salon_posts = site.categories.Salon %}
-  {% if salon_posts and salon_posts != empty %}
+  {% assign items = site.salon | sort: 'date' | reverse %}
+  {% if items and items != empty %}
     <ul class="post-list">
-      {% for post in salon_posts %}
+      {% for item in items %}
         <li>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            <span class="post-title">{{ post.title }}</span>
-            <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">
-              {{ post.date | date: "%b %d, %Y" }}
-            </time>
+          <a class="post-link" href="{{ item.url | relative_url }}">
+            <span class="post-title">{{ item.title }}</span>
+            {% if item.date %}
+              <time class="post-date" datetime="{{ item.date | date_to_xmlschema }}">
+                {{ item.date | date: "%b %d, %Y" }}
+              </time>
+            {% endif %}
           </a>
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>No Salon posts yet. Tag a post with <code>categories: [Salon]</code>.</p>
+    <p>No Salon entries yet. Add Markdown files to <code>_salon/</code>.</p>
   {% endif %}
 </section>
