@@ -1,0 +1,53 @@
+---
+layout: default
+---
+<article class="deco-card">
+  <span class="corner tl" aria-hidden="true"></span>
+  <span class="corner tr" aria-hidden="true"></span>
+  <span class="corner bl" aria-hidden="true"></span>
+  <span class="corner br" aria-hidden="true"></span>
+
+  <header class="invite small" style="text-align:center;">
+    <div class="invite-topline">— Salon —</div>
+    <h1 class="invite-title" style="margin:0;">{{ page.title }}</h1>
+    {% if page.date %}
+      <p style="opacity:.8;margin:.4rem 0 0;">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+        {% if page.author %} • {{ page.author }}{% endif %}
+      </p>
+    {% endif %}
+  </header>
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+
+  {%- comment -%}
+    Build prev/next within the Salon category
+  {%- endcomment -%}
+  {% assign coll = site.categories.Salon | sort: "date" %}
+  {% assign idx = nil %}
+  {% for p in coll %}
+    {% if p.url == page.url %}
+      {% assign idx = forloop.index0 %}
+    {% endif %}
+  {% endfor %}
+
+  <nav class="post-nav" style="display:flex;justify-content:space-between;margin-top:1.2rem;">
+    {% if idx and idx > 0 %}
+      {% assign prev = coll[idx | minus: 1] %}
+      <a class="btn tiny" href="{{ prev.url | relative_url }}">&larr; {{ prev.title }}</a>
+    {% else %}
+      <span></span>
+    {% endif %}
+
+    <a class="btn tiny ghost" href="{{ '/library/salon/' | relative_url }}">Back to Salon</a>
+
+    {% if idx != nil and idx < coll.size | minus: 1 %}
+      {% assign nxt = coll[idx | plus: 1] %}
+      <a class="btn tiny" href="{{ nxt.url | relative_url }}">{{ nxt.title }} &rarr;</a>
+    {% else %}
+      <span></span>
+    {% endif %}
+  </nav>
+</article>
