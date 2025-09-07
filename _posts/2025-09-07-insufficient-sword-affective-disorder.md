@@ -1,11 +1,11 @@
 ---
-layout: post
+layout: salon
 title: "Insufficient-Sword Affective Disorder (I-SAD)"
 description: "When life keeps you from the sword: recognizing the symptoms, why it happens, and a call for relief ideas."
-date: 2025-09-07
+date: 2022-09-07
 categories: [Salon]
 tags: [Community, Wellbeing, Training, HEMA]
-author: Dr. Jennifer Blum, PsyD
+author: Dr. J
 ---
 
 *For whatever reason, from time to time we are unable to engage in the art and practice we all love: the sword. Whether due to injury, busyness in life, illness, or required isolation, it is inevitable that sometimes we are simply prevented from practicing.*
