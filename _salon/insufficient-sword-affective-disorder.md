@@ -1,6 +1,6 @@
 ---
 title: "Insufficient-Sword Affective Disorder (I-SAD)"
-date: 2025-09-07
+date: 2022-09-07
 author: Dr. J, PsyD
 layout: salon_item
 ---
