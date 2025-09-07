@@ -1,5 +1,4 @@
 ---
-layout: salon
 title: "Insufficient-Sword Affective Disorder (I-SAD)"
 description: "When life keeps you from the sword: recognizing the symptoms, why it happens, and a call for relief ideas."
 date: 2022-09-07
