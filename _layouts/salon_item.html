@@ -1,5 +1,5 @@
 ---
-layout: defualt
+layout: site
 ---
 <article class="deco-card">
   <span class="corner tl" aria-hidden="true"></span>
@@ -24,27 +24,17 @@ layout: defualt
 
   {% assign coll = site.salon | sort: 'date' %}
   {% assign idx = nil %}
-  {% for p in coll %}
-    {% if p.url == page.url %}
-      {% assign idx = forloop.index0 %}
-    {% endif %}
-  {% endfor %}
-
+  {% for p in coll %}{% if p.url == page.url %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %}
   <nav class="post-nav" style="display:flex;justify-content:space-between;margin-top:1.2rem;">
     {% if idx and idx > 0 %}
       {% assign prev = coll[idx | minus: 1] %}
       <a class="btn tiny" href="{{ prev.url | relative_url }}">&larr; {{ prev.title }}</a>
-    {% else %}
-      <span></span>
-    {% endif %}
-
+    {% else %}<span></span>{% endif %}
     <a class="btn tiny ghost" href="{{ '/library/salon/' | relative_url }}">Back to Salon</a>
-
     {% if idx != nil and idx < coll.size | minus: 1 %}
       {% assign nxt = coll[idx | plus: 1] %}
       <a class="btn tiny" href="{{ nxt.url | relative_url }}">{{ nxt.title }} &rarr;</a>
-    {% else %}
-      <span></span>
-    {% endif %}
+    {% else %}<span></span>{% endif %}
   </nav>
 </article>
+
