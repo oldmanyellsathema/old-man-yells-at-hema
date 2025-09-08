@@ -1,5 +1,5 @@
 ---
-title: "A Fun Tournament Rule Set: The Best Fencer"
+title: "The Best Fencer"
 section: recipes
 author: Me
 tags: [HEMA, Tournaments, Rulesets, Community, Training]
@@ -7,7 +7,7 @@ tags: [HEMA, Tournaments, Rulesets, Community, Training]
 
 Feast your eyes on **“The Best Fencer.”**
 
-I know this seems silly, but I’ve always had a problem with how we score fencers by wins and losses. I’ve seen people skate through and win a tournament with 8 fewer touches *for* than *against*, and I’ve seen people absolutely annihilate every fencer, then get knocked out on one bad call. I’ve seen someone put up 40 touches for and only 8 against and still get eliminated. Was that person me? Maybe. Should I have lost that match? Yeah, probably. Am I exaggerating? I don’t know — it was years ago.  
+I know this seems silly, but I’ve always had a problem with how we score fencers by wins and losses. I’ve seen people skate through and win a tournament with 8 fewer touches *for* than *against*, and I’ve seen people absolutely annihilate every fencer, then get knocked out on one bad call. I’ve seen someone put up 40 touches for and only 8 against through out a tournament and be eliminated after a bad call. Was that person me? Maybe. Should I have lost that match? Yeah, probably. Am I exaggerating? I don’t know. it was years ago.  
 
 So what can we do to fix this issue? Easy: let’s change how we look at a tournament.
 
