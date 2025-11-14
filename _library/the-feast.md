@@ -8,8 +8,6 @@ author: Me
 tags: [HEMA, Tournaments, Rulesets, Community, Training]
 ---
 
-<div style="text-align:left;">
-
 # The Feast
 
 Hello. It’s been a while since I’ve posted. Do you care? Probably not. Neither do I. So we’re something of a team, you can comfort yourself with the knowledge that you’ll never be alone. Though that might be a horror. Unclear.
