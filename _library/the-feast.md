@@ -3,8 +3,9 @@ layout: post
 title: "The Feast"
 description: "A training and tournament game about blade control, binds, and shame."
 date: 2025-11-20
-categories: [Opinion]
-tags: [HEMA, Training, Tournaments, Games]
+section: recipes
+author: Me
+tags: [HEMA, Tournaments, Rulesets, Community, Training]
 ---
 
 # The Feast
