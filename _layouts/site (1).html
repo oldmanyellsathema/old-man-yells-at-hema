@@ -1,9 +1,6 @@
 ---
-layout: default
-title: site
+layout: null
 ---
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,8 +10,7 @@ title: site
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Poiret+One&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ '/assets/css/styles.css?v=10' | relative_url }}">
-
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
   {% seo %}
 </head>
 <body>
@@ -31,11 +27,9 @@ title: site
       <h1 class="site-title">Old Man Yells at HEMA</h1>
     </div>
   </header>
-
   <main id="main" class="wrap">
     {{ content }}
   </main>
-
   <footer class="site-foot">
     <div class="wrap">
       <div class="foot-grid">
@@ -51,7 +45,6 @@ title: site
       </div>
     </div>
   </footer>
-
   <script src="{{ '/js/main.js' | relative_url }}" defer></script>
 </body>
 </html>
