@@ -94,10 +94,10 @@ body {
   align-items: center;
 }
 
-.brand-left {
-  width:  clamp(72px, 8vw, 112px);
+.brand-left{
+  width: clamp(72px, 8vw, 112px);
   height: clamp(72px, 8vw, 112px);
-  background-image: url("/assets/images/oldmanyellsathema/deco-rose-gold.png");
+  background-image: url("{{ '/assets/images/oldmanyellsathema/deco-rose-gold.png' | relative_url }}");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
