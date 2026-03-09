@@ -1,218 +1,433 @@
----
+/* ============================================================
+   HEMA ART DECO — Revised Stylesheet
+   Changes applied:
+   1. Nav rebuilt as flexbox — no competing justify-self rules
+   2. Deco corners enlarged (80px) + midpoint lozenge on card borders
+   3. Cinzel replaces Poiret One for nav links
+   4. Divider uses ✦ ornament
+   5. SVG noise texture overlay added for depth
+   6. Transitions on all interactive elements
+   7. HEMA identity: sword watermark + manuscript drop cap
+   ============================================================ */
 
----
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Poiret+One&display=swap');
 
-:root{
-  --ink: #f4ead7;
-  --bg: #0a0a0c;
-  --bg-2:#120e12;
-  --gold:#cba135;
-  --gold-2:#8f6f1f;
-  --garnet:#5b121a;
-  --garnet-2:#390b10;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; color:var(--ink); background:
-    radial-gradient(1200px 700px at 85% -10%, rgba(91,18,26,.35), transparent 60%),
-    radial-gradient(900px 600px at -20% 100%, rgba(203,161,53,.12), transparent 65%),
-    linear-gradient(180deg, var(--bg) 0%, #0b0b10 100%);
-  font: 400 18px/1.6 "Cormorant Garamond", serif;
-  letter-spacing:.2px;
-}
-.wrap{max-width:1100px;margin:0 auto;padding: clamp(16px, 3vw, 32px)}
+:root {
+  --ink:      #f4ead7;
+  --ink-dim:  rgba(244,234,215,.75);
+  --bg:       #0a0a0c;
+  --bg-2:     #120e12;
+  --gold:     #cba135;
+  --gold-dim: rgba(203,161,53,.45);
+  --gold-glow:rgba(203,161,53,.12);
+  --garnet:   #5b121a;
+  --garnet-2: #390b10;
 
-/* --- Top nav with cohesive flourish --- */
-.nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.72);backdrop-filter:saturate(120%) blur(6px);border-bottom:2px solid var(--gold)}
-.nav .wrap{display:grid;grid-template-columns: 160px 1fr auto;gap:1rem;align-items:center}
-.brand-left{
-width: clamp(72px, 8vw, 112px);
-  height: clamp(72px, 8vw, 112px);
-  background-image:url("{{ '/assets/images/deco-rose-gold.png' | relative_url }}");
-  background-repeat:no-repeat;
-  background-size:contain;
-  background-position:center;
-}
-.menu{display:flex; gap:1rem; align-items:center; justify-self:center}
-@media (max-width:780px){
-  .brand-left{ width:40px; height:40px; }
+  /* Transition shorthand */
+  --t-fast: 0.18s ease;
+  --t-mid:  0.28s ease;
 }
 
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
 
-.site-title{margin:0;justify-self:end;font-family:"Cinzel", serif;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
-.menu{display:flex;gap:1rem;align-items:center;justify-self:center}
-.menu-link{font-family:"Poiret One", cursive;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:.9;padding:.35rem .6rem;border:1px solid transparent}
-.menu-link:hover,.menu-link.is-active{border-color:var(--gold);color:var(--gold)}
-.skip{position:absolute;left:-9999px;top:auto}
-.skip:focus{left:1rem;top:1rem;background:#000;color:#fff;padding:.4rem .6rem}
-
-/* Center text in the homepage cards */
-.deco-card {
-  text-align: center;
+/* ── Noise texture overlay ──────────────────────────────────
+   Sits above the background, below all content.
+   A tiny inline SVG feTurbulence grain at ~3% opacity.
+   ----------------------------------------------------------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .032;
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>\
+  <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/></filter>\
+  <rect width='200' height='200' filter='url(%23n)'/>\
+</svg>");
+  background-size: 200px 200px;
 }
 
-
-/* --- Cards with Deco corners --- */
-.deco-card{position:relative;margin: clamp(16px, 3vw, 28px) 0; padding:clamp(18px, 3.2vw, 36px);
-  background:linear-gradient(180deg, rgba(91,18,26,.22), rgba(17,12,17,.72)),
-             radial-gradient(1000px 600px at 110% -10%, rgba(203,161,53,.09), transparent 60%),
-             #0e0c0f;
-  border:1.5px solid var(--gold); box-shadow:0 10px 28px rgba(0,0,0,.45)
-}
-.deco-card.alt{background:linear-gradient(180deg, rgba(17,12,17,.8), rgba(91,18,26,.16)), #0e0c0f}
-
-/* Corner ornaments (5 ribs) */
-.corner{position:absolute;
-  width:54px;
-  height:54px;
-  pointer-events:none;
-  opacity:.95;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='54' height='54' viewBox='0 0 54 54'><g fill='none' stroke='%23cba135' stroke-width='2'><path d='M2 8 V2 H8'/><path d='M2 20 V2 H20'/><path d='M2 32 V2 H32'/><path d='M2 44 V2 H44'/><path d='M2 52 V2 H52'/></g></svg>");
-  background-repeat:no-repeat;
-  background-size:100% 100%;}
-.tl{top:-1px;left:-1px}
-.tr{top:-1px;right:-1px;transform:scaleX(-1)}
-.bl{bottom:-1px;left:-1px;transform:scaleY(-1)}
-.br{bottom:-1px;right:-1px;transform:scale(-1)}
-
-
-/* Invitation header styling */
-.invite{ text-align:center; margin: .5rem 0 1.2rem }
-.invite.small{ margin:.25rem 0 1rem }
-.invite-topline{font-family:"Poiret One", cursive; text-transform:uppercase; letter-spacing:3px; color:var(--gold); opacity:.9}
-.invite-title{font-family:"Cinzel", serif; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin:.25rem 0 .4rem}
-.invite-sub{font-style:italic; opacity:.85}
-
-/* Post list */
-.post-list{list-style:none;margin:0;padding:0}
-.post-link{display:flex;align-items:baseline;justify-content:space-between;gap:1rem; padding:.6rem .2rem; border-bottom:1px dashed rgba(203,161,53,.28); text-decoration:none; color:var(--ink)}
-.post-link:hover .post-title{color:var(--gold)}
-.post-title{font-family:"Cormorant Garamond", serif; font-weight:600}
-.post-date{font-size:.95rem; opacity:.8}
-
-.post-excerpt .post-title,
-.post-excerpt p {text-align: center;}
-
-/* Divider with centered dots */
-.deco-divider{
-  --w: 2px;
-  position:relative;
-  height:18px;
-  margin: 18px 0;
+body {
+  position: relative;
+  z-index: 0;
+  margin: 0;
+  color: var(--ink);
   background:
-    linear-gradient(90deg, transparent, var(--gold), transparent) center / 100% var(--w) no-repeat;
-}
-.deco-divider::after{
-  content:"• • •";
-  display:block;
-  text-align:center;
-  color:var(--gold);
-  font-family:"Cinzel", serif;
-  font-size:1.15rem;
-  margin-top:6px;
-  letter-spacing:0.5rem;
+    radial-gradient(1200px 700px at 85% -10%,  rgba(91,18,26,.38),  transparent 60%),
+    radial-gradient(900px  600px at -20% 100%, rgba(203,161,53,.13), transparent 65%),
+    linear-gradient(180deg, var(--bg) 0%, #0b0b10 100%);
+  font: 400 18px/1.65 "Cormorant Garamond", serif;
+  letter-spacing: .2px;
 }
 
-/* Buttons */
-.btn{display:inline-block; font-family:"Poiret One", cursive; text-transform:uppercase; letter-spacing:2px; text-decoration:none; padding:.55rem .9rem; border:1.5px solid var(--gold); color:var(--ink)}
-.btn:hover{background:rgba(203,161,53,.08); color:var(--gold)}
-.btn.ghost{border-color:rgba(203,161,53,.6); opacity:.9}
-.btn.tiny{font-size:.85rem; padding:.35rem .6rem}
-
-.cta-row {
-  display: flex; 
-  gap: .6rem;
-  flex-wrap: wrap; 
-  justify-content: center;
-  /* ✅ centers the buttons */}
-
-/* 🔹 On smaller screens, stack buttons vertically but still center them */
-@media (max-width: 600px) {
-  .cta-row { flex-direction: column; align-items: center; /* keeps them centered */}
+/* Everything sits above the noise layer */
+.wrap, .nav, .site-foot {
+  position: relative;
+  z-index: 1;
 }
 
+.wrap { max-width: 1100px; margin: 0 auto; padding: clamp(16px, 3vw, 32px); }
 
-/* Footer */
-.site-foot{border-top:2px solid var(--gold); background:linear-gradient(180deg, rgba(0,0,0,.8), rgba(59,13,18,.25)), #000}
-.foot-grid{display:grid; grid-template-columns:1fr auto; gap:1rem; align-items:center}
-.foot-title{font-family:"Cinzel", serif; color:var(--gold); letter-spacing:2px; text-transform:uppercase}
-.foot-sub{opacity:.8}
-.foot-right{display:flex; align-items:center; gap:.6rem}
-.foot-link{color:var(--ink); text-decoration:none}
-.foot-link:hover{color:var(--gold)}
+/* skip link */
+.skip { position: absolute; left: -9999px; top: auto; }
+.skip:focus { left: 1rem; top: 1rem; background: #000; color: #fff; padding: .4rem .6rem; }
 
-/* Links */
-a{color:#e9d29a}
-a:hover{color:var(--gold)}
 
-/* Misc */
-.colophon{margin:.4rem 0 0 1.2rem}
-
-/* Responsive tweak */
-@media (max-width:780px){
-  .nav .wrap{grid-template-columns: 1fr auto; gap:.6rem}
-  .brand-left{display:none}
-  .site-title{font-size:1.02rem; letter-spacing:1.6px}
-  .menu{justify-self:start; gap:.4rem}
+/* ── Navigation ──────────────────────────────────────────────
+   Rebuilt as flexbox — no competing justify-self.
+   Logo | menu (centred, auto margins) | title (right)
+   ----------------------------------------------------------- */
+.nav {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(6,5,7,.82);
+  backdrop-filter: saturate(130%) blur(8px);
+  border-bottom: 2px solid var(--gold);
 }
-/* --- Library dropdown --- */
-.dropdown{position:relative}
-.dropdown-toggle{cursor:pointer}
-.dropdown-menu{
-  position:absolute; top:100%; left:0;
-  min-width: 220px;
-  display:none; z-index:20;
-  background:rgba(10,10,12,.95);
-  border:1.5px solid var(--gold);
-  box-shadow:0 10px 28px rgba(0,0,0,.45);
-  padding:.35rem;
-}
-.dropdown:hover .dropdown-menu,
-.dropdown:focus-within .dropdown-menu{display:block}
 
-.dropdown-item{
-  display:block; text-decoration:none;
-  padding:.45rem .6rem; border:1px solid transparent;
-  font-family:"Poiret One", cursive; text-transform:uppercase; letter-spacing:1px;
-  color:var(--ink); opacity:.95;
+.nav .wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
-.dropdown-item:hover{border-color:var(--gold); color:var(--gold)}
 
-/* Keep the site title from hyphenating or breaking weirdly */
-/* Prevent auto hyphenation / word breaking on the site title */
+.brand-left {
+  flex-shrink: 0;
+  width:  clamp(52px, 7vw, 96px);
+  height: clamp(52px, 7vw, 96px);
+  background-image: url("{{ '/assets/images/deco-rose-gold.png' | relative_url }}");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+/* ── HEMA sword watermark behind the nav brand area ────────── */
+.brand-left::after {
+  content: "";
+  display: block;
+  width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'>\
+  <g stroke='%23cba135' stroke-width='1.4' fill='none' opacity='.55'>\
+    <line x1='24' y1='2'  x2='24' y2='42'/>\
+    <polygon points='24,2 22,10 26,10' fill='%23cba135' opacity='.6'/>\
+    <line x1='16' y1='34' x2='32' y2='34'/>\
+    <line x1='14' y1='37' x2='34' y2='37'/>\
+    <ellipse cx='24' cy='40' rx='4' ry='2.5' stroke-width='1.2'/>\
+  </g>\
+</svg>");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: center;
+  pointer-events: none;
+}
+
+.menu {
+  display: flex;
+  flex: 1;                  /* takes remaining space */
+  justify-content: center;  /* centres links within that space */
+  align-items: center;
+  gap: .9rem;
+  flex-wrap: wrap;
+}
+
+/* Cinzel for nav — more authority at small sizes than Poiret One */
+.menu-link {
+  font-family: "Cinzel", serif;
+  font-weight: 400;
+  font-size: .82rem;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  opacity: .88;
+  padding: .38rem .65rem;
+  border: 1px solid transparent;
+  transition: color var(--t-fast), border-color var(--t-fast), opacity var(--t-fast);
+}
+.menu-link:hover,
+.menu-link.is-active {
+  border-color: var(--gold);
+  color: var(--gold);
+  opacity: 1;
+}
+
 .site-title {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: clamp(.85rem, 1.4vw, 1.05rem);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
   hyphens: none;
   -webkit-hyphens: none;
-  -ms-hyphens: none;
   word-break: keep-all;
-  white-space: nowrap; /* keep title on one line */
+  white-space: nowrap;
 }
-@media (min-width: 1px){
-  .site-title{ letter-spacing: 2.2px; } /* tiny reduction can help some renderers */
+
+@media (max-width: 780px) {
+  .brand-left { width: 40px; height: 40px; }
+  .menu { gap: .45rem; }
+  .menu-link { font-size: .75rem; letter-spacing: 1px; padding: .3rem .45rem; }
+  .site-title { font-size: .88rem; letter-spacing: 1.4px; }
 }
-@media (max-width:780px){
-  .nav .wrap{
-    grid-template-columns: auto 1fr auto; /* logo | menu | title */
-    align-items:center;
-    gap:.4rem;
-  }
-  .menu{
-    justify-self:start;
-    flex-wrap:wrap;   /* let links wrap instead of pushing the title */
-    gap:.6rem;
-  }
-  .site-title{
-    font-size:1rem;
-    letter-spacing:1.6px;
-    white-space:nowrap;
-  }
-  .post-body img,
+
+
+/* ── Dropdown ────────────────────────────────────────────────  */
+.dropdown { position: relative; }
+.dropdown-toggle { cursor: pointer; }
+
+.dropdown-menu {
+  position: absolute; top: 100%; left: 0;
+  min-width: 220px;
+  display: none; z-index: 20;
+  background: rgba(10,10,12,.97);
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 12px 32px rgba(0,0,0,.55);
+  padding: .35rem;
+}
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu { display: block; }
+
+.dropdown-item {
+  display: block; text-decoration: none;
+  padding: .45rem .6rem;
+  border: 1px solid transparent;
+  font-family: "Cinzel", serif;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--ink); opacity: .95;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+.dropdown-item:hover { border-color: var(--gold); color: var(--gold); }
+
+
+/* ── Deco Cards ──────────────────────────────────────────────
+   Enlarged corners (80px) + lozenge midpoint ornaments on borders
+   ----------------------------------------------------------- */
+.deco-card {
+  position: relative;
+  text-align: center;
+  margin: clamp(16px, 3vw, 28px) 0;
+  padding: clamp(20px, 3.5vw, 42px) clamp(20px, 4vw, 52px);
+  background:
+    linear-gradient(180deg, rgba(91,18,26,.22), rgba(17,12,17,.75)),
+    radial-gradient(1000px 600px at 110% -10%, rgba(203,161,53,.09), transparent 60%),
+    #0e0c0f;
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 12px 36px rgba(0,0,0,.5), inset 0 0 60px rgba(203,161,53,.03);
+}
+.deco-card.alt {
+  background: linear-gradient(180deg, rgba(17,12,17,.82), rgba(91,18,26,.16)), #0e0c0f;
+}
+
+/* Corners — 80px, five-rib bracket */
+.corner {
+  position: absolute;
+  width: 80px; height: 80px;
+  pointer-events: none;
+  opacity: .98;
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'>\
+  <g fill='none' stroke='%23cba135' stroke-width='1.6'>\
+    <path d='M3 12 V3 H12'/>\
+    <path d='M3 28 V3 H28'/>\
+    <path d='M3 44 V3 H44'/>\
+    <path d='M3 60 V3 H60'/>\
+    <path d='M3 76 V3 H76'/>\
+  </g>\
+</svg>");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.tl { top: -1px; left: -1px; }
+.tr { top: -1px; right: -1px; transform: scaleX(-1); }
+.bl { bottom: -1px; left: -1px; transform: scaleY(-1); }
+.br { bottom: -1px; right: -1px; transform: scale(-1); }
+
+/* Lozenge midpoint ornaments on all four sides */
+.deco-card::before,
+.deco-card::after {
+  content: "◆";
+  position: absolute;
+  color: var(--gold);
+  font-size: .65rem;
+  line-height: 1;
+  pointer-events: none;
+}
+/* Top + bottom centre lozenges */
+.deco-card::before {
+  top: -0.42em; left: 50%; transform: translateX(-50%);
+}
+.deco-card::after {
+  bottom: -0.42em; left: 50%; transform: translateX(-50%);
+}
+
+
+/* ── Invitation header ───────────────────────────────────────  */
+.invite { text-align: center; margin: .5rem 0 1.2rem; }
+.invite.small { margin: .25rem 0 1rem; }
+.invite-topline {
+  font-family: "Poiret One", cursive;   /* kept for decorative labels only */
+  text-transform: uppercase; letter-spacing: 3px;
+  color: var(--gold); opacity: .9;
+}
+.invite-title {
+  font-family: "Cinzel", serif; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .25rem 0 .4rem;
+}
+.invite-sub { font-style: italic; opacity: .85; }
+
+
+/* ── Post list ───────────────────────────────────────────────  */
+.post-list { list-style: none; margin: 0; padding: 0; }
+
+.post-link {
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 1rem;
+  padding: .65rem .25rem;
+  border-bottom: 1px dashed var(--gold-dim);
+  text-decoration: none; color: var(--ink);
+  transition: color var(--t-fast);
+}
+.post-link:hover .post-title { color: var(--gold); }
+
+.post-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  transition: color var(--t-fast);
+}
+.post-date { font-size: .95rem; opacity: .78; }
+
+.post-excerpt .post-title,
+.post-excerpt p { text-align: center; }
+
+
+/* ── Manuscript drop cap ─────────────────────────────────────
+   First paragraph of a post gets a HEMA-flavoured illuminated cap.
+   Use class "manuscript" on your <article> or wrapper.
+   ----------------------------------------------------------- */
+.manuscript > p:first-of-type::first-letter {
+  float: left;
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 4.2em;
+  line-height: .82;
+  margin: .06em .14em -.05em 0;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(203,161,53,.35);
+}
+
+
+/* ── Deco divider ─────────────────────────────────────────────
+   Changed • • • → ✦ ✦ ✦ for period-correct feel
+   ----------------------------------------------------------- */
+.deco-divider {
+  position: relative;
+  height: 20px;
+  margin: 22px 0;
+  background:
+    linear-gradient(90deg, transparent, var(--gold), transparent)
+    center / 100% 1.5px no-repeat;
+}
+.deco-divider::after {
+  content: "✦ ✦ ✦";
+  display: block;
+  text-align: center;
+  color: var(--gold);
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  margin-top: 4px;
+  letter-spacing: .7rem;
+  text-shadow: 0 0 8px rgba(203,161,53,.4);
+}
+
+
+/* ── Buttons ─────────────────────────────────────────────────  */
+.btn {
+  display: inline-block;
+  font-family: "Cinzel", serif;
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  padding: .58rem .95rem;
+  border: 1.5px solid var(--gold);
+  color: var(--ink);
+  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.btn:hover {
+  background: rgba(203,161,53,.1);
+  color: var(--gold);
+  box-shadow: 0 0 14px rgba(203,161,53,.2);
+}
+.btn.ghost { border-color: rgba(203,161,53,.55); opacity: .9; }
+.btn.tiny  { font-size: .78rem; padding: .35rem .6rem; }
+
+.cta-row {
+  display: flex; gap: .6rem;
+  flex-wrap: wrap; justify-content: center;
+}
+@media (max-width: 600px) {
+  .cta-row { flex-direction: column; align-items: center; }
+}
+
+
+/* ── Footer ──────────────────────────────────────────────────  */
+.site-foot {
+  border-top: 2px solid var(--gold);
+  background: linear-gradient(180deg, rgba(0,0,0,.82), rgba(59,13,18,.28)), #000;
+}
+.foot-grid {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 1rem; align-items: center;
+}
+.foot-title {
+  font-family: "Cinzel", serif;
+  color: var(--gold); letter-spacing: 2px; text-transform: uppercase;
+}
+.foot-sub { opacity: .78; }
+.foot-right { display: flex; align-items: center; gap: .6rem; }
+.foot-link {
+  color: var(--ink); text-decoration: none;
+  transition: color var(--t-fast);
+}
+.foot-link:hover { color: var(--gold); }
+
+
+/* ── Global link colour ──────────────────────────────────────  */
+a { color: #e9d29a; transition: color var(--t-fast); }
+a:hover { color: var(--gold); }
+
+
+/* ── Misc ────────────────────────────────────────────────────  */
+.colophon { margin: .4rem 0 0 1.2rem; }
+
+/* ── Responsive images ───────────────────────────────────────  */
+.post-body img,
 .deco-card img,
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
-}
 
+
+/* ── Page-load reveal animation ──────────────────────────────
+   Add class "reveal" to any element to fade+rise on load.
+   Stagger with style="--delay: 0.1s" etc.
+   ----------------------------------------------------------- */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  animation: revealUp .55s cubic-bezier(.22,.8,.36,1) both;
+  animation-delay: var(--delay, 0s);
+}
