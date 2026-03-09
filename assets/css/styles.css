@@ -82,19 +82,19 @@ body {
    ----------------------------------------------------------- */
 .nav {
   position: sticky; top: 0; z-index: 10;
-  background: rgba(6,5,7,.82);
-  backdrop-filter: saturate(130%) blur(8px);
+  background: rgba(0,0,0,.72);
+  backdrop-filter: saturate(120%) blur(6px);
   border-bottom: 2px solid var(--gold);
 }
 
 .nav .wrap {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
   gap: 1rem;
+  align-items: center;
 }
 
 .brand-left {
-  flex-shrink: 0;
   width:  clamp(72px, 8vw, 112px);
   height: clamp(72px, 8vw, 112px);
   background-image: url("{{ '/assets/images/deco-rose-gold.png' | relative_url }}");
@@ -126,11 +126,9 @@ body {
 
 .menu {
   display: flex;
-  flex: 1;                  /* takes remaining space */
-  justify-content: center;  /* centres links within that space */
+  gap: 1rem;
   align-items: center;
-  gap: .9rem;
-  flex-wrap: wrap;
+  justify-self: center;
 }
 
 /* Cinzel for nav — more authority at small sizes than Poiret One */
@@ -155,8 +153,8 @@ body {
 }
 
 .site-title {
-  flex-shrink: 0;
   margin: 0;
+  justify-self: end;
   font-family: "Cinzel", serif;
   font-weight: 700;
   font-size: clamp(1rem, 1.8vw, 1.35rem);
@@ -170,10 +168,12 @@ body {
 }
 
 @media (max-width: 780px) {
-  .brand-left { width: 56px; height: 56px; }
-  .menu { gap: .45rem; }
+  .brand-left { width: 40px; height: 40px; }
+  .nav .wrap { grid-template-columns: auto 1fr auto; gap: .4rem; }
+  .menu { justify-self: start; flex-wrap: wrap; gap: .6rem; }
   .menu-link { font-size: .75rem; letter-spacing: 1px; padding: .3rem .45rem; }
-  .site-title { font-size: 1.05rem; letter-spacing: 1.4px; }
+  .site-title { font-size: 1.05rem; letter-spacing: 1.4px; white-space: nowrap; }
+}
 }
 
 
@@ -431,4 +431,3 @@ img {
   animation: revealUp .55s cubic-bezier(.22,.8,.36,1) both;
   animation-delay: var(--delay, 0s);
 }
-
