@@ -95,8 +95,8 @@ body {
 
 .brand-left {
   flex-shrink: 0;
-  width:  clamp(52px, 7vw, 96px);
-  height: clamp(52px, 7vw, 96px);
+  width:  clamp(72px, 8vw, 112px);
+  height: clamp(72px, 8vw, 112px);
   background-image: url("{{ '/assets/images/deco-rose-gold.png' | relative_url }}");
   background-repeat: no-repeat;
   background-size: contain;
@@ -159,7 +159,7 @@ body {
   margin: 0;
   font-family: "Cinzel", serif;
   font-weight: 700;
-  font-size: clamp(.85rem, 1.4vw, 1.05rem);
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--gold);
@@ -170,10 +170,10 @@ body {
 }
 
 @media (max-width: 780px) {
-  .brand-left { width: 40px; height: 40px; }
+  .brand-left { width: 56px; height: 56px; }
   .menu { gap: .45rem; }
   .menu-link { font-size: .75rem; letter-spacing: 1px; padding: .3rem .45rem; }
-  .site-title { font-size: .88rem; letter-spacing: 1.4px; }
+  .site-title { font-size: 1.05rem; letter-spacing: 1.4px; }
 }
 
 
@@ -431,3 +431,4 @@ img {
   animation: revealUp .55s cubic-bezier(.22,.8,.36,1) both;
   animation-delay: var(--delay, 0s);
 }
+
