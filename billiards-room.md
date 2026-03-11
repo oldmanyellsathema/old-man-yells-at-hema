@@ -10,15 +10,15 @@ permalink: /billiards-room/
 
 ## The Billiards Room
 
-Past the library, behind the curtain nobody asks about, there's a room with bad lighting and sharp tools.
+Past the library, behind the curtain, there's a room, a room with bad lighting and sharp tools.
 
-This is where the practical work happens. No essays, no opinions — just instruments for the people who actually show up and fight.
+This is where the practical work happens. No essays, no opinions, just instruments for the people who actually show up and fight.
 
 ---
 
 ### ⚔ Scouting Diary & Combat Judge
 
-A tracking tool for HEMA and Bohurt. Built because nothing else existed that wasn't a spreadsheet held together with spite.
+A tracking tool for HEMA. Built because nothing else existed that wasn't a spreadsheet held together with spite.
 
 **What it does:**
 
