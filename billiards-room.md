@@ -33,7 +33,7 @@ All data stays on your device. No accounts, no server, no nonsense. Install it o
 
 <div style="text-align:center; margin-top: 2em; margin-bottom: 1em;">
   <a href="/scouting-diary/" style="display:inline-block; padding: 12px 32px; border: 2px solid; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-decoration: none;">Enter the Billiards Room</a>
-
+</div>
 
 ### [⚔ Enter the Billiards Room](/scouting-diary/)
 Bring your own chalk.
