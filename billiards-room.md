@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: The Billiards Room
 permalink: /billiards-room/
 ---
