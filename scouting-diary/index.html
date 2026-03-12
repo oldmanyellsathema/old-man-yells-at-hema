@@ -585,7 +585,7 @@
 <!-- JUDGE: BOUT VIEW -->
 <div class="screen" id="screen-judge-bout">
   <div class="detail-header">
-    <button class="back-btn" onclick="endBout()">←</button>
+    <button class="back-btn" onclick="leaveBout()">←</button>
     <div class="detail-title" id="jBoutTitle">Bout</div>
   </div>
 
@@ -636,6 +636,9 @@
     </div>
   </div>
   <div class="j-bout-log" id="jBoutLog"></div>
+  <div class="mt-16">
+    <button class="btn btn-blood" onclick="confirmEndBout()">End Bout</button>
+  </div>
 </div>
 
 <!-- Hit flash overlay -->
@@ -1555,6 +1558,28 @@ function undoLastHit(){
   jScoreLimitReached=false;
   document.getElementById('jScoreLimitBanner').style.display='none';
   checkScoreLimit();
+}
+
+function leaveBout(){
+  cancelAfterblow();
+  stopClock();
+  // Save progress but don't mark complete
+  if(jPool){
+    const existIdx=state.pools.findIndex(p=>p.id===jPool.id);
+    if(existIdx>=0)state.pools[existIdx]=JSON.parse(JSON.stringify(jPool));
+    else state.pools.push(JSON.parse(JSON.stringify(jPool)));
+    save();
+  }
+  showScreen('judge');
+  showJudgeSub('bracket');
+  renderBracketList();
+}
+
+function confirmEndBout(){
+  const b=jPool.bouts[jBoutIdx];
+  const rn=fighterName(b.redId),gn=fighterName(b.goldId);
+  if(!confirm('End bout?\n\n'+rn+' (Red): '+b.redScore+'\n'+gn+' (Gold): '+b.goldScore+'\n\nThis will mark the bout as complete.'))return;
+  endBout();
 }
 
 function endBout(){
