@@ -1,749 +1,1707 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1e1e22">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/svg+xml" href="icon.svg">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <title>HEMA Scouting Diary</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=MedievalSharp&display=swap');
-    :root {
-      --iron: #1e1e22; --steel: #2a2a30; --steel-light: #3a3a42;
-      --blood: #c0392b; --blood-dark: #7a1a10;
-      --gold: #c9a84c; --gold-light: #e8c96a; --gold-dim: #7a6530;
-      --smoke: #7a7a8a; --white: #f0ebe0; --green: #4a8c5c;
-      --heat-1: rgba(201,168,76,0.25); --heat-2: rgba(210,140,50,0.45);
-      --heat-3: rgba(192,57,43,0.55); --heat-4: rgba(192,57,43,0.75);
-      --heat-5: rgba(140,20,10,0.9);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body {
-      font-family: 'Crimson Text', serif; background: var(--iron); color: var(--white);
-      min-height: 100vh; min-height: 100dvh; margin: 0;
-      background-image: radial-gradient(ellipse at top, #2a2018 0%, var(--iron) 70%);
-      overflow-x: hidden; padding-bottom: 70px;
-    }
-    .header {
-      background: linear-gradient(180deg, #1a1208 0%, #2a1e0a 50%, var(--iron) 100%);
-      padding: 10px 16px; text-align: center; border-bottom: 2px solid var(--gold);
-      position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-    }
-    .header h1 { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 700; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
-    .header-sub { font-size: 11px; color: var(--smoke); letter-spacing: 2px; margin-top: 2px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1e1e22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>HEMA Scouting Diary</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=MedievalSharp&display=swap');
+  :root {
+    --iron: #1e1e22; --steel: #2a2a30; --steel-light: #3a3a42;
+    --blood: #c0392b; --blood-dark: #7a1a10;
+    --gold: #c9a84c; --gold-light: #e8c96a; --gold-dim: #7a6530;
+    --smoke: #7a7a8a; --white: #f0ebe0; --green: #4a8c5c;
+    --heat-1: rgba(201,168,76,0.25); --heat-2: rgba(210,140,50,0.45);
+    --heat-3: rgba(192,57,43,0.55); --heat-4: rgba(192,57,43,0.75);
+    --heat-5: rgba(140,20,10,0.9);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'Crimson Text', serif; background: var(--iron); color: var(--white);
+    min-height: 100vh; min-height: 100dvh; margin: 0;
+    background-image: radial-gradient(ellipse at top, #2a2018 0%, var(--iron) 70%);
+    overflow-x: hidden; padding-bottom: 70px;
+  }
+  .header {
+    background: linear-gradient(180deg, #1a1208 0%, #2a1e0a 50%, var(--iron) 100%);
+    padding: 10px 16px; text-align: center; border-bottom: 2px solid var(--gold);
+    position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  }
+  .header h1 { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 700; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+  .header-sub { font-size: 11px; color: var(--smoke); letter-spacing: 2px; margin-top: 2px; }
+  .nav {
+    position: fixed; bottom: 0; left: 0;
+    width: 100%;
+    background: linear-gradient(0deg, #111114 0%, var(--steel) 100%);
+    border-top: 2px solid var(--gold-dim); display: flex; z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .nav-btn {
+    flex: 1; padding: 6px 2px 8px; background: none; border: none; color: var(--smoke);
+    font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; transition: color 0.2s;
+  }
+  .nav-btn.active { color: var(--gold); }
+  .nav-btn svg { width: 20px; height: 20px; }
+  .screen { display: none; padding: 16px; animation: fadeIn 0.25s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .section-title { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--gold-dim); }
+  .card { background: var(--steel); border: 1px solid var(--steel-light); border-radius: 6px; padding: 14px; margin-bottom: 12px; }
+  .card:active { background: var(--steel-light); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 20px; border: 2px solid var(--gold); background: linear-gradient(180deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%); color: var(--gold); border-radius: 4px; cursor: pointer; transition: all 0.15s; width: 100%; }
+  .btn:active { background: rgba(201,168,76,0.3); transform: scale(0.97); }
+  .btn-blood { border-color: var(--blood); color: var(--blood); background: linear-gradient(180deg, rgba(192,57,43,0.15) 0%, rgba(192,57,43,0.05) 100%); }
+  .btn-sm { padding: 6px 14px; font-size: 11px; width: auto; }
+  .btn-ghost { border-color: var(--smoke); color: var(--smoke); background: none; }
+  input, textarea, select { font-family: 'Crimson Text', serif; font-size: 16px; color: var(--white); background: var(--iron); border: 1px solid var(--steel-light); border-radius: 4px; padding: 10px 12px; width: 100%; outline: none; }
+  input:focus, textarea:focus, select:focus { border-color: var(--gold-dim); }
+  textarea { resize: vertical; min-height: 60px; }
+  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7a8a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+  option { background: var(--iron); color: var(--white); }
+  input[type="number"] { width: 42px; text-align: center; padding: 4px; font-size: 13px; }
+  label { display: block; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; color: var(--smoke); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .form-group { margin-bottom: 14px; }
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--smoke); font-style: italic; }
+  .stat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .stat-label { color: var(--smoke); font-size: 14px; }
+  .stat-value { color: var(--gold); font-weight: 600; font-size: 14px; }
+  .body-container { position: relative; width: 220px; height: 340px; margin: 0 auto 16px; }
+  .body-svg { width: 100%; height: 100%; }
+  .zone { cursor: pointer; transition: all 0.15s; stroke: var(--gold-dim); stroke-width: 1.2; fill: rgba(201,168,76,0.06); }
+  .zone:active { stroke-width: 2.5; }
+  .zone.selected { stroke: var(--gold-light); stroke-width: 2.5; fill: rgba(201,168,76,0.25); filter: drop-shadow(0 0 6px rgba(201,168,76,0.4)); }
+  .zone-label { fill: var(--smoke); font-family: 'Cinzel', serif; font-size: 9px; pointer-events: none; text-anchor: middle; }
+  .zone.heat-1 { fill: var(--heat-1); } .zone.heat-2 { fill: var(--heat-2); } .zone.heat-3 { fill: var(--heat-3); } .zone.heat-4 { fill: var(--heat-4); } .zone.heat-5 { fill: var(--heat-5); }
+  .attack-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
+  .attack-pill { padding: 8px 14px; border: 1.5px solid var(--steel-light); border-radius: 20px; background: var(--steel); color: var(--smoke); font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+  .attack-pill.selected { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.15); box-shadow: 0 0 10px rgba(201,168,76,0.2); }
+  .attack-pill:active { transform: scale(0.95); }
+  .bar-chart { margin: 12px 0; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .bar-label { width: 80px; font-size: 12px; color: var(--smoke); text-align: right; font-family: 'Cinzel', serif; letter-spacing: 0.5px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 20px; background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+  .bar-fill-gold { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); }
+  .bar-fill-blood { background: linear-gradient(90deg, var(--blood-dark), var(--blood)); }
+  .bar-count { font-size: 11px; color: var(--white); width: 30px; text-align: right; flex-shrink: 0; }
+  .tabs { display: flex; gap: 0; margin-bottom: 16px; border: 1px solid var(--steel-light); border-radius: 4px; overflow: hidden; }
+  .tab { flex: 1; padding: 8px 4px; background: var(--steel); border: none; color: var(--smoke); font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; border-right: 1px solid var(--steel-light); }
+  .tab:last-child { border-right: none; }
+  .tab.active { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .log-entry { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .log-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .log-icon-dealt { background: rgba(201,168,76,0.2); color: var(--gold); }
+  .log-icon-taken { background: rgba(192,57,43,0.2); color: var(--blood); }
+  .log-icon-neutral { background: rgba(122,122,138,0.2); color: var(--smoke); }
+  .log-details { flex: 1; }
+  .log-main { font-size: 14px; font-weight: 600; }
+  .log-sub { font-size: 12px; color: var(--smoke); }
+  .log-pts { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--gold); flex-shrink: 0; min-width: 24px; text-align: center; }
+  .log-time { font-size: 11px; color: var(--smoke); flex-shrink: 0; }
+  .delete-btn { background: none; border: none; color: var(--smoke); cursor: pointer; padding: 4px; opacity: 0.5; font-size: 16px; }
+  .delete-btn:active { opacity: 1; color: var(--blood); }
+  .opp-card { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .opp-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--steel-light); border: 2px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: var(--gold); flex-shrink: 0; }
+  .opp-avatar.me-avatar { border-color: var(--gold); background: rgba(201,168,76,0.15); }
+  .opp-info { flex: 1; }
+  .opp-name { font-weight: 600; font-size: 16px; }
+  .opp-stats { font-size: 12px; color: var(--smoke); }
+  .opp-arrow { color: var(--gold-dim); font-size: 18px; }
+  .session-card { cursor: pointer; }
+  .session-name { font-weight: 600; font-size: 16px; color: var(--white); }
+  .session-date { font-size: 12px; color: var(--smoke); margin-top: 2px; }
+  .session-notes { font-size: 13px; color: var(--smoke); font-style: italic; margin-top: 4px; }
+  .session-hit-count { margin-top: 6px; font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold); letter-spacing: 1px; }
+  .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .back-btn { background: none; border: none; color: var(--gold); font-size: 22px; cursor: pointer; padding: 4px; line-height: 1; }
+  .detail-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 200; justify-content: center; align-items: flex-end; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: var(--steel); border-top: 2px solid var(--gold); border-radius: 12px 12px 0 0; padding: 20px 16px; width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.25s ease; }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: none; } }
+  .modal-title { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: var(--gold); letter-spacing: 2px; text-align: center; margin-bottom: 16px; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+  .matrix-table th { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; text-transform: uppercase; padding: 6px 2px; text-align: center; border-bottom: 1px solid var(--gold-dim); }
+  .matrix-table th:first-child { text-align: left; width: 70px; }
+  .matrix-table td { padding: 4px 2px; text-align: center; }
+  .matrix-table td:first-child { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; color: var(--smoke); text-align: left; letter-spacing: 0.5px; }
+  .matrix-table input[type="number"] { width: 38px; padding: 4px 2px; font-size: 13px; text-align: center; background: var(--iron); border: 1px solid var(--steel-light); border-radius: 3px; color: var(--gold); }
+  .matrix-table input[type="number"]:focus { border-color: var(--gold-dim); }
+  .atk-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .atk-item-name { flex: 1; font-size: 15px; font-weight: 600; }
+  .quick-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .quick-stat { background: var(--steel); border: 1px solid var(--steel-light); border-radius: 6px; padding: 10px 8px; text-align: center; }
+  .quick-stat-num { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; color: var(--gold); line-height: 1; }
+  .quick-stat-label { font-size: 10px; color: var(--smoke); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+  .who-toggle { display: flex; border: 1.5px solid var(--steel-light); border-radius: 4px; overflow: hidden; margin-bottom: 14px; }
+  .who-btn { flex: 1; padding: 10px; background: var(--steel); border: none; color: var(--smoke); font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
+  .who-btn.active-dealt { background: rgba(201,168,76,0.2); color: var(--gold); }
+  .who-btn.active-taken { background: rgba(192,57,43,0.2); color: var(--blood); }
+  .swap-btn { background: none; border: 2px solid var(--steel-light); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: var(--smoke); cursor: pointer; font-size: 16px; flex-shrink: 0; transition: all 0.15s; }
+  .swap-btn:active { border-color: var(--gold); color: var(--gold); transform: rotate(180deg); }
+  .divider { border: none; border-top: 1px solid var(--steel-light); margin: 16px 0; }
+  .flex-between { display: flex; justify-content: space-between; align-items: center; }
+  .mb-8 { margin-bottom: 8px; } .mb-16 { margin-bottom: 16px; }
+  .mt-8 { margin-top: 8px; } .mt-16 { margin-top: 16px; }
+  .text-center { text-align: center; }
+  .text-gold { color: var(--gold); } .text-blood { color: var(--blood); } .text-smoke { color: var(--smoke); }
+  .text-sm { font-size: 12px; }
+
+  /* ─── JUDGE TAB ─── */
+  .judge-sub { display: none; }
+  .judge-sub.active { display: block; }
+  .j-clock {
+    font-family: 'Cinzel', serif; font-size: 48px; font-weight: 900;
+    color: var(--gold); text-align: center; letter-spacing: 4px;
+    padding: 8px 0; line-height: 1; user-select: none;
+  }
+  .j-clock.running { color: var(--green); }
+  .j-clock.warn { color: var(--blood); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  .j-clock-btns { display: flex; gap: 8px; justify-content: center; margin-bottom: 12px; }
+  .j-clock-btns .btn { width: auto; padding: 8px 20px; font-size: 11px; }
+  .j-arena {
+    display: flex; gap: 4px; justify-content: center; align-items: flex-start;
+    margin-bottom: 12px; position: relative;
+  }
+  .j-side {
+    flex: 1; max-width: 180px; text-align: center; position: relative;
+    border: 2px solid transparent; border-radius: 8px; padding: 6px 4px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .j-side-red { border-color: var(--blood-dark); background: rgba(192,57,43,0.06); }
+  .j-side-gold { border-color: var(--gold-dim); background: rgba(201,168,76,0.06); }
+  .j-side-label {
+    font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px;
+  }
+  .j-side-red .j-side-label { color: var(--blood); }
+  .j-side-gold .j-side-label { color: var(--gold); }
+  .j-side-name { font-size: 13px; color: var(--white); margin-bottom: 4px; font-weight: 600; }
+  .j-side-score {
+    font-family: 'Cinzel', serif; font-size: 36px; font-weight: 900;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .j-side-red .j-side-score { color: var(--blood); }
+  .j-side-gold .j-side-score { color: var(--gold); }
+  .j-body { width: 120px; height: 190px; margin: 0 auto; }
+  .j-body .body-svg { width: 100%; height: 100%; }
+  .j-body .zone { fill: rgba(255,255,255,0.04); stroke-width: 1; }
+  .j-body .zone-label { font-size: 7px; }
+  .j-side-red .j-body .zone { stroke: rgba(192,57,43,0.4); }
+  .j-side-red .j-body .zone:active { fill: rgba(192,57,43,0.3); }
+  .j-side-gold .j-body .zone { stroke: rgba(201,168,76,0.4); }
+  .j-side-gold .j-body .zone:active { fill: rgba(201,168,76,0.3); }
+  .j-vs {
+    font-family: 'Cinzel', serif; font-size: 14px; font-weight: 900;
+    color: var(--smoke); align-self: center; padding: 0 2px; flex-shrink: 0;
+  }
+  .j-atk-bar {
+    display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+    margin-bottom: 10px; padding: 6px 0;
+    border-top: 1px solid var(--steel-light); border-bottom: 1px solid var(--steel-light);
+  }
+  .j-atk-pill {
+    padding: 6px 12px; border: 1.5px solid var(--steel-light); border-radius: 16px;
+    background: var(--steel); color: var(--smoke);
+    font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.12s;
+  }
+  .j-atk-pill.selected { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.15); }
+  .j-atk-pill:active { transform: scale(0.93); }
+  .j-hit-flash {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-family: 'Cinzel', serif; font-size: 28px; font-weight: 900;
+    padding: 12px 24px; border-radius: 8px; pointer-events: none;
+    opacity: 0; transition: opacity 0.15s; z-index: 300;
+  }
+  .j-hit-flash.show { opacity: 1; }
+  .j-hit-flash.red { background: rgba(192,57,43,0.9); color: white; }
+  .j-hit-flash.gold-flash { background: rgba(201,168,76,0.9); color: #1e1e22; }
+  .j-bout-log { max-height: 200px; overflow-y: auto; }
+  .j-bout-entry {
+    display: flex; align-items: center; gap: 8px; padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px;
+  }
+  .j-bout-entry .j-be-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .j-be-red { background: var(--blood); }
+  .j-be-gold { background: var(--gold); }
+  .j-pool-fighter {
+    display: flex; align-items: center; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .j-pool-fighter .opp-avatar { width: 36px; height: 36px; font-size: 14px; }
+  .j-pool-cb { width: 20px; height: 20px; accent-color: var(--gold); flex-shrink: 0; }
+  .j-bracket-card {
+    background: var(--steel); border: 1px solid var(--steel-light);
+    border-radius: 6px; padding: 10px 12px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+  }
+  .j-bracket-card.completed { opacity: 0.6; }
+  .j-bracket-card.current { border-color: var(--gold); box-shadow: 0 0 12px rgba(201,168,76,0.2); }
+  .j-bc-vs { color: var(--smoke); font-size: 12px; flex-shrink: 0; }
+  .j-bc-name { font-weight: 600; font-size: 14px; }
+  .j-bc-name-red { color: var(--blood); }
+  .j-bc-name-gold { color: var(--gold); }
+  .j-bc-score { font-family: 'Cinzel', serif; font-weight: 700; font-size: 14px; }
+  .j-bc-result { font-size: 11px; color: var(--smoke); margin-left: auto; }
+  .j-results-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .j-results-table th {
+    font-family: 'Cinzel', serif; font-size: 10px; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 6px 4px; text-align: left; border-bottom: 1px solid var(--gold-dim);
+  }
+  .j-results-table td { padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .j-results-table tr:hover { background: rgba(201,168,76,0.05); }
+
+  /* ─── RESPONSIVE LAYOUT ─── */
+  .screen { max-width: 480px; margin: 0 auto; }
+  #screen-judge, #screen-judge-bout { max-width: 600px; }
+
+  /* Log two-column layout wrapper */
+  .log-layout { display: block; }
+  .log-left, .log-right { width: 100%; }
+
+  /* Cards grid for multi-column on wider screens */
+  .cards-grid { display: block; }
+
+  /* ── TABLET (768px+) ── */
+  @media (min-width: 768px) {
+    .screen { max-width: 720px; padding: 24px 32px; }
+    .header { padding: 14px 24px; }
+    .header h1 { font-size: 24px; letter-spacing: 4px; }
+    .header-sub { font-size: 12px; }
+    .nav-btn { padding: 10px 4px 12px; font-size: 10px; gap: 4px; }
+    .nav-btn svg { width: 24px; height: 24px; }
+    .section-title { font-size: 16px; }
+    .body-container { width: 280px; height: 430px; }
+    .attack-pill { padding: 10px 18px; font-size: 12px; }
+    .card { padding: 18px; }
+    .opp-avatar { width: 52px; height: 52px; font-size: 18px; }
+    .opp-name { font-size: 18px; }
+    .quick-stats { gap: 12px; }
+    .quick-stat { padding: 14px 10px; }
+    .quick-stat-num { font-size: 26px; }
+    .bar-label { width: 100px; font-size: 13px; }
+    .bar-track { height: 24px; }
+    .log-entry { gap: 14px; padding: 10px 0; }
+    .log-icon { width: 38px; height: 38px; font-size: 16px; }
+    .log-main { font-size: 16px; }
+    .log-pts { font-size: 16px; }
+    .modal { max-width: 520px; padding: 24px 20px; }
+    .matrix-table input[type="number"] { width: 48px; padding: 6px; font-size: 14px; }
+    .matrix-table th { font-size: 10px; padding: 8px 4px; }
+    .matrix-table td:first-child { font-size: 13px; }
+    .tab { padding: 10px 8px; font-size: 11px; }
+    .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cards-grid .card { margin-bottom: 0; }
+    .log-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+    input, textarea, select { font-size: 16px; padding: 12px 14px; }
+    .btn { padding: 12px 24px; font-size: 14px; }
+    #screen-judge, #screen-judge-bout { max-width: 720px; }
+    .j-side { max-width: 240px; }
+    .j-body { width: 160px; height: 250px; }
+    .j-clock { font-size: 56px; }
+    .j-side-score { font-size: 42px; }
+    .j-atk-pill { padding: 8px 16px; font-size: 11px; }
+  }
+
+  /* ── DESKTOP (1024px+) ── */
+  @media (min-width: 1024px) {
+    body { padding-bottom: 0; padding-left: 200px; }
+    .header { padding-left: 216px; }
     .nav {
-      position: fixed; bottom: 0; left: 0;
-      width: 100%;
-      background: linear-gradient(0deg, #111114 0%, var(--steel) 100%);
-      border-top: 2px solid var(--gold-dim); display: flex; z-index: 100;
-      padding-bottom: env(safe-area-inset-bottom, 0);
+      position: fixed; top: 0; left: 0; bottom: 0;
+      width: 200px; height: 100vh;
+      flex-direction: column;
+      border-top: none; border-right: 2px solid var(--gold-dim);
+      padding: 80px 0 20px;
+      background: linear-gradient(180deg, #111114 0%, var(--steel) 100%);
     }
     .nav-btn {
-      flex: 1; padding: 6px 2px 8px; background: none; border: none; color: var(--smoke);
-      font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase;
-      display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; transition: color 0.2s;
-    }
-    .nav-btn.active { color: var(--gold); }
-    .nav-btn svg { width: 20px; height: 20px; }
-    .screen { display: none; padding: 16px; animation: fadeIn 0.25s ease; }
-    .screen.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-    .section-title { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--gold-dim); }
-    .card { background: var(--steel); border: 1px solid var(--steel-light); border-radius: 6px; padding: 14px; margin-bottom: 12px; }
-    .card:active { background: var(--steel-light); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 20px; border: 2px solid var(--gold); background: linear-gradient(180deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%); color: var(--gold); border-radius: 4px; cursor: pointer; transition: all 0.15s; width: 100%; }
-    .btn:active { background: rgba(201,168,76,0.3); transform: scale(0.97); }
-    .btn-blood { border-color: var(--blood); color: var(--blood); background: linear-gradient(180deg, rgba(192,57,43,0.15) 0%, rgba(192,57,43,0.05) 100%); }
-    .btn-sm { padding: 6px 14px; font-size: 11px; width: auto; }
-    .btn-ghost { border-color: var(--smoke); color: var(--smoke); background: none; }
-    input, textarea, select { font-family: 'Crimson Text', serif; font-size: 16px; color: var(--white); background: var(--iron); border: 1px solid var(--steel-light); border-radius: 4px; padding: 10px 12px; width: 100%; outline: none; }
-    input:focus, textarea:focus, select:focus { border-color: var(--gold-dim); }
-    textarea { resize: vertical; min-height: 60px; }
-    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7a8a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
-    option { background: var(--iron); color: var(--white); }
-    input[type="number"] { width: 42px; text-align: center; padding: 4px; font-size: 13px; }
-    label { display: block; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; color: var(--smoke); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-    .form-group { margin-bottom: 14px; }
-    .empty-state { text-align: center; padding: 40px 20px; color: var(--smoke); font-style: italic; }
-    .stat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .stat-label { color: var(--smoke); font-size: 14px; }
-    .stat-value { color: var(--gold); font-weight: 600; font-size: 14px; }
-    .body-container { position: relative; width: 220px; height: 340px; margin: 0 auto 16px; }
-    .body-svg { width: 100%; height: 100%; }
-    .zone { cursor: pointer; transition: all 0.15s; stroke: var(--gold-dim); stroke-width: 1.2; fill: rgba(201,168,76,0.06); }
-    .zone:active { stroke-width: 2.5; }
-    .zone.selected { stroke: var(--gold-light); stroke-width: 2.5; fill: rgba(201,168,76,0.25); filter: drop-shadow(0 0 6px rgba(201,168,76,0.4)); }
-    .zone-label { fill: var(--smoke); font-family: 'Cinzel', serif; font-size: 9px; pointer-events: none; text-anchor: middle; }
-    .zone.heat-1 { fill: var(--heat-1); } .zone.heat-2 { fill: var(--heat-2); } .zone.heat-3 { fill: var(--heat-3); } .zone.heat-4 { fill: var(--heat-4); } .zone.heat-5 { fill: var(--heat-5); }
-    .attack-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
-    .attack-pill { padding: 8px 14px; border: 1.5px solid var(--steel-light); border-radius: 20px; background: var(--steel); color: var(--smoke); font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
-    .attack-pill.selected { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.15); box-shadow: 0 0 10px rgba(201,168,76,0.2); }
-    .attack-pill:active { transform: scale(0.95); }
-    .bar-chart { margin: 12px 0; }
-    .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .bar-label { width: 80px; font-size: 12px; color: var(--smoke); text-align: right; font-family: 'Cinzel', serif; letter-spacing: 0.5px; flex-shrink: 0; }
-    .bar-track { flex: 1; height: 20px; background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
-    .bar-fill-gold { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); }
-    .bar-fill-blood { background: linear-gradient(90deg, var(--blood-dark), var(--blood)); }
-    .bar-count { font-size: 11px; color: var(--white); width: 30px; text-align: right; flex-shrink: 0; }
-    .tabs { display: flex; gap: 0; margin-bottom: 16px; border: 1px solid var(--steel-light); border-radius: 4px; overflow: hidden; }
-    .tab { flex: 1; padding: 8px 4px; background: var(--steel); border: none; color: var(--smoke); font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; border-right: 1px solid var(--steel-light); }
-    .tab:last-child { border-right: none; }
-    .tab.active { background: rgba(201,168,76,0.15); color: var(--gold); }
-    .log-entry { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .log-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-    .log-icon-dealt { background: rgba(201,168,76,0.2); color: var(--gold); }
-    .log-icon-taken { background: rgba(192,57,43,0.2); color: var(--blood); }
-    .log-icon-neutral { background: rgba(122,122,138,0.2); color: var(--smoke); }
-    .log-details { flex: 1; }
-    .log-main { font-size: 14px; font-weight: 600; }
-    .log-sub { font-size: 12px; color: var(--smoke); }
-    .log-pts { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--gold); flex-shrink: 0; min-width: 24px; text-align: center; }
-    .log-time { font-size: 11px; color: var(--smoke); flex-shrink: 0; }
-    .delete-btn { background: none; border: none; color: var(--smoke); cursor: pointer; padding: 4px; opacity: 0.5; font-size: 16px; }
-    .delete-btn:active { opacity: 1; color: var(--blood); }
-    .opp-card { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-    .opp-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--steel-light); border: 2px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: var(--gold); flex-shrink: 0; }
-    .opp-avatar.me-avatar { border-color: var(--gold); background: rgba(201,168,76,0.15); }
-    .opp-info { flex: 1; }
-    .opp-name { font-weight: 600; font-size: 16px; }
-    .opp-stats { font-size: 12px; color: var(--smoke); }
-    .opp-arrow { color: var(--gold-dim); font-size: 18px; }
-    .session-card { cursor: pointer; }
-    .session-name { font-weight: 600; font-size: 16px; color: var(--white); }
-    .session-date { font-size: 12px; color: var(--smoke); margin-top: 2px; }
-    .session-notes { font-size: 13px; color: var(--smoke); font-style: italic; margin-top: 4px; }
-    .session-hit-count { margin-top: 6px; font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold); letter-spacing: 1px; }
-    .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-    .back-btn { background: none; border: none; color: var(--gold); font-size: 22px; cursor: pointer; padding: 4px; line-height: 1; }
-    .detail-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 200; justify-content: center; align-items: flex-end; }
-    .modal-overlay.active { display: flex; }
-    .modal { background: var(--steel); border-top: 2px solid var(--gold); border-radius: 12px 12px 0 0; padding: 20px 16px; width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.25s ease; }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: none; } }
-    .modal-title { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: var(--gold); letter-spacing: 2px; text-align: center; margin-bottom: 16px; }
-    .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
-    .matrix-table th { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; text-transform: uppercase; padding: 6px 2px; text-align: center; border-bottom: 1px solid var(--gold-dim); }
-    .matrix-table th:first-child { text-align: left; width: 70px; }
-    .matrix-table td { padding: 4px 2px; text-align: center; }
-    .matrix-table td:first-child { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; color: var(--smoke); text-align: left; letter-spacing: 0.5px; }
-    .matrix-table input[type="number"] { width: 38px; padding: 4px 2px; font-size: 13px; text-align: center; background: var(--iron); border: 1px solid var(--steel-light); border-radius: 3px; color: var(--gold); }
-    .matrix-table input[type="number"]:focus { border-color: var(--gold-dim); }
-    .atk-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .atk-item-name { flex: 1; font-size: 15px; font-weight: 600; }
-    .quick-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-    .quick-stat { background: var(--steel); border: 1px solid var(--steel-light); border-radius: 6px; padding: 10px 8px; text-align: center; }
-    .quick-stat-num { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; color: var(--gold); line-height: 1; }
-    .quick-stat-label { font-size: 10px; color: var(--smoke); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
-    .who-toggle { display: flex; border: 1.5px solid var(--steel-light); border-radius: 4px; overflow: hidden; margin-bottom: 14px; }
-    .who-btn { flex: 1; padding: 10px; background: var(--steel); border: none; color: var(--smoke); font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
-    .who-btn.active-dealt { background: rgba(201,168,76,0.2); color: var(--gold); }
-    .who-btn.active-taken { background: rgba(192,57,43,0.2); color: var(--blood); }
-    .swap-btn { background: none; border: 2px solid var(--steel-light); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: var(--smoke); cursor: pointer; font-size: 16px; flex-shrink: 0; transition: all 0.15s; }
-    .swap-btn:active { border-color: var(--gold); color: var(--gold); transform: rotate(180deg); }
-    .divider { border: none; border-top: 1px solid var(--steel-light); margin: 16px 0; }
-    .flex-between { display: flex; justify-content: space-between; align-items: center; }
-    .mb-8 { margin-bottom: 8px; } .mb-16 { margin-bottom: 16px; }
-    .mt-8 { margin-top: 8px; } .mt-16 { margin-top: 16px; }
-    .text-center { text-align: center; }
-    .text-gold { color: var(--gold); } .text-blood { color: var(--blood); } .text-smoke { color: var(--smoke); }
-    .text-sm { font-size: 12px; }
-
-    /* ─── JUDGE TAB ─── */
-    .judge-sub { display: none; }
-    .judge-sub.active { display: block; }
-    .j-clock {
-      font-family: 'Cinzel', serif; font-size: 48px; font-weight: 900;
-      color: var(--gold); text-align: center; letter-spacing: 4px;
-      padding: 8px 0; line-height: 1; user-select: none;
-    }
-    .j-clock.running { color: var(--green); }
-    .j-clock.warn { color: var(--blood); animation: pulse 1s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
-    .j-clock-btns { display: flex; gap: 8px; justify-content: center; margin-bottom: 12px; }
-    .j-clock-btns .btn { width: auto; padding: 8px 20px; font-size: 11px; }
-    .j-arena {
-      display: flex; gap: 4px; justify-content: center; align-items: flex-start;
-      margin-bottom: 12px; position: relative;
-    }
-    .j-side {
-      flex: 1; max-width: 180px; text-align: center; position: relative;
-      border: 2px solid transparent; border-radius: 8px; padding: 6px 4px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .j-side-red { border-color: var(--blood-dark); background: rgba(192,57,43,0.06); }
-    .j-side-gold { border-color: var(--gold-dim); background: rgba(201,168,76,0.06); }
-    .j-side-label {
-      font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px;
-    }
-    .j-side-red .j-side-label { color: var(--blood); }
-    .j-side-gold .j-side-label { color: var(--gold); }
-    .j-side-name { font-size: 13px; color: var(--white); margin-bottom: 4px; font-weight: 600; }
-    .j-side-score {
-      font-family: 'Cinzel', serif; font-size: 36px; font-weight: 900;
-      line-height: 1; margin-bottom: 4px;
-    }
-    .j-side-red .j-side-score { color: var(--blood); }
-    .j-side-gold .j-side-score { color: var(--gold); }
-    .j-body { width: 120px; height: 190px; margin: 0 auto; }
-    .j-body .body-svg { width: 100%; height: 100%; }
-    .j-body .zone { fill: rgba(255,255,255,0.04); stroke-width: 1; }
-    .j-body .zone-label { font-size: 7px; }
-    .j-side-red .j-body .zone { stroke: rgba(192,57,43,0.4); }
-    .j-side-red .j-body .zone:active { fill: rgba(192,57,43,0.3); }
-    .j-side-gold .j-body .zone { stroke: rgba(201,168,76,0.4); }
-    .j-side-gold .j-body .zone:active { fill: rgba(201,168,76,0.3); }
-    .j-vs {
-      font-family: 'Cinzel', serif; font-size: 14px; font-weight: 900;
-      color: var(--smoke); align-self: center; padding: 0 2px; flex-shrink: 0;
-    }
-    .j-atk-bar {
-      display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
-      margin-bottom: 10px; padding: 6px 0;
-      border-top: 1px solid var(--steel-light); border-bottom: 1px solid var(--steel-light);
-    }
-    .j-atk-pill {
-      padding: 6px 12px; border: 1.5px solid var(--steel-light); border-radius: 16px;
-      background: var(--steel); color: var(--smoke);
-      font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.5px; text-transform: uppercase;
-      cursor: pointer; transition: all 0.12s;
-    }
-    .j-atk-pill.selected { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.15); }
-    .j-atk-pill:active { transform: scale(0.93); }
-    .j-hit-flash {
-      position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
-      font-family: 'Cinzel', serif; font-size: 28px; font-weight: 900;
-      padding: 12px 24px; border-radius: 8px; pointer-events: none;
-      opacity: 0; transition: opacity 0.15s; z-index: 300;
-    }
-    .j-hit-flash.show { opacity: 1; }
-    .j-hit-flash.red { background: rgba(192,57,43,0.9); color: white; }
-    .j-hit-flash.gold-flash { background: rgba(201,168,76,0.9); color: #1e1e22; }
-    .j-bout-log { max-height: 200px; overflow-y: auto; }
-    .j-bout-entry {
-      display: flex; align-items: center; gap: 8px; padding: 4px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px;
-    }
-    .j-bout-entry .j-be-dot {
-      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-    }
-    .j-be-red { background: var(--blood); }
-    .j-be-gold { background: var(--gold); }
-    .j-pool-fighter {
-      display: flex; align-items: center; gap: 10px; padding: 10px 0;
+      flex: 0; flex-direction: row; gap: 10px;
+      padding: 14px 20px; font-size: 12px;
+      justify-content: flex-start; text-align: left;
       border-bottom: 1px solid rgba(255,255,255,0.04);
     }
-    .j-pool-fighter .opp-avatar { width: 36px; height: 36px; font-size: 14px; }
-    .j-pool-cb { width: 20px; height: 20px; accent-color: var(--gold); flex-shrink: 0; }
-    .j-bracket-card {
-      background: var(--steel); border: 1px solid var(--steel-light);
-      border-radius: 6px; padding: 10px 12px; margin-bottom: 8px;
-      display: flex; align-items: center; gap: 10px; cursor: pointer;
-    }
-    .j-bracket-card.completed { opacity: 0.6; }
-    .j-bracket-card.current { border-color: var(--gold); box-shadow: 0 0 12px rgba(201,168,76,0.2); }
-    .j-bc-vs { color: var(--smoke); font-size: 12px; flex-shrink: 0; }
-    .j-bc-name { font-weight: 600; font-size: 14px; }
-    .j-bc-name-red { color: var(--blood); }
-    .j-bc-name-gold { color: var(--gold); }
-    .j-bc-score { font-family: 'Cinzel', serif; font-weight: 700; font-size: 14px; }
-    .j-bc-result { font-size: 11px; color: var(--smoke); margin-left: auto; }
-    .j-results-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .j-results-table th {
-      font-family: 'Cinzel', serif; font-size: 10px; color: var(--gold);
-      text-transform: uppercase; letter-spacing: 0.5px;
-      padding: 6px 4px; text-align: left; border-bottom: 1px solid var(--gold-dim);
-    }
-    .j-results-table td { padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .j-results-table tr:hover { background: rgba(201,168,76,0.05); }
+    .nav-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .nav-btn.active { background: rgba(201,168,76,0.1); }
+    .screen { max-width: 960px; padding: 28px 40px; }
+    .body-container { width: 300px; height: 460px; }
+    .quick-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+    .log-layout { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .cards-grid { grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .modal-overlay { align-items: center; }
+    .modal { border-radius: 12px; border: 2px solid var(--gold); max-width: 560px; }
+    @keyframes slideUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: none; } }
+    .bar-label { width: 110px; font-size: 14px; }
+    .bar-track { height: 26px; }
+    .attack-grid { gap: 10px; }
+    .attack-pill { padding: 10px 20px; font-size: 13px; }
+    .detail-title { font-size: 22px; }
+    .section-title { font-size: 17px; letter-spacing: 3px; }
+  }
 
-    /* ─── RESPONSIVE LAYOUT ─── */
-    .screen { max-width: 480px; margin: 0 auto; }
-    #screen-judge, #screen-judge-bout { max-width: 600px; }
+  /* ── WIDE DESKTOP (1400px+) ── */
+  @media (min-width: 1400px) {
+    .screen { max-width: 1100px; }
+    .log-layout { grid-template-columns: 2fr 1fr; gap: 40px; }
+    .cards-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  }
 
-    /* Log two-column layout wrapper */
-    .log-layout { display: block; }
-    .log-left, .log-right { width: 100%; }
+  /* Hover states for desktop */
+  @media (hover: hover) {
+    .btn:hover { background: rgba(201,168,76,0.25); }
+    .btn-blood:hover { background: rgba(192,57,43,0.25); }
+    .btn-ghost:hover { background: rgba(122,122,138,0.1); }
+    .card:hover { border-color: var(--gold-dim); background: var(--steel-light); }
+    .attack-pill:hover { border-color: var(--smoke); color: var(--white); }
+    .attack-pill.selected:hover { border-color: var(--gold-light); }
+    .zone:hover { stroke-width: 2; stroke: var(--gold); fill: rgba(201,168,76,0.12); }
+    .zone.selected:hover { fill: rgba(201,168,76,0.3); }
+    .nav-btn:hover { color: var(--gold-light); }
+    .delete-btn:hover { opacity: 1; color: var(--blood); }
+    .opp-card:hover .opp-arrow { color: var(--gold); }
+    .tab:hover { color: var(--gold); background: rgba(201,168,76,0.08); }
+    .swap-btn:hover { border-color: var(--gold); color: var(--gold); }
+  }
 
-    /* Cards grid for multi-column on wider screens */
-    .cards-grid { display: block; }
-
-    /* ── TABLET (768px+) ── */
-    @media (min-width: 768px) {
-      .screen { max-width: 720px; padding: 24px 32px; }
-      .header { padding: 14px 24px; }
-      .header h1 { font-size: 24px; letter-spacing: 4px; }
-      .header-sub { font-size: 12px; }
-      .nav-btn { padding: 10px 4px 12px; font-size: 10px; gap: 4px; }
-      .nav-btn svg { width: 24px; height: 24px; }
-      .section-title { font-size: 16px; }
-      .body-container { width: 280px; height: 430px; }
-      .attack-pill { padding: 10px 18px; font-size: 12px; }
-      .card { padding: 18px; }
-      .opp-avatar { width: 52px; height: 52px; font-size: 18px; }
-      .opp-name { font-size: 18px; }
-      .quick-stats { gap: 12px; }
-      .quick-stat { padding: 14px 10px; }
-      .quick-stat-num { font-size: 26px; }
-      .bar-label { width: 100px; font-size: 13px; }
-      .bar-track { height: 24px; }
-      .log-entry { gap: 14px; padding: 10px 0; }
-      .log-icon { width: 38px; height: 38px; font-size: 16px; }
-      .log-main { font-size: 16px; }
-      .log-pts { font-size: 16px; }
-      .modal { max-width: 520px; padding: 24px 20px; }
-      .matrix-table input[type="number"] { width: 48px; padding: 6px; font-size: 14px; }
-      .matrix-table th { font-size: 10px; padding: 8px 4px; }
-      .matrix-table td:first-child { font-size: 13px; }
-      .tab { padding: 10px 8px; font-size: 11px; }
-      .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-      .cards-grid .card { margin-bottom: 0; }
-      .log-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
-      input, textarea, select { font-size: 16px; padding: 12px 14px; }
-      .btn { padding: 12px 24px; font-size: 14px; }
-      #screen-judge, #screen-judge-bout { max-width: 720px; }
-      .j-side { max-width: 240px; }
-      .j-body { width: 160px; height: 250px; }
-      .j-clock { font-size: 56px; }
-      .j-side-score { font-size: 42px; }
-      .j-atk-pill { padding: 8px 16px; font-size: 11px; }
-    }
-
-    /* ── DESKTOP (1024px+) ── */
-    @media (min-width: 1024px) {
-      body { padding-bottom: 0; padding-left: 200px; }
-      .header { padding-left: 216px; }
-      .nav {
-        position: fixed; top: 0; left: 0; bottom: 0;
-        width: 200px; height: 100vh;
-        flex-direction: column;
-        border-top: none; border-right: 2px solid var(--gold-dim);
-        padding: 80px 0 20px;
-        background: linear-gradient(180deg, #111114 0%, var(--steel) 100%);
-      }
-      .nav-btn {
-        flex: 0; flex-direction: row; gap: 10px;
-        padding: 14px 20px; font-size: 12px;
-        justify-content: flex-start; text-align: left;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
-      }
-      .nav-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
-      .nav-btn.active { background: rgba(201,168,76,0.1); }
-      .screen { max-width: 960px; padding: 28px 40px; }
-      .body-container { width: 300px; height: 460px; }
-      .quick-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-      .log-layout { grid-template-columns: 1fr 1fr; gap: 32px; }
-      .cards-grid { grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-      .modal-overlay { align-items: center; }
-      .modal { border-radius: 12px; border: 2px solid var(--gold); max-width: 560px; }
-      @keyframes slideUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: none; } }
-      .bar-label { width: 110px; font-size: 14px; }
-      .bar-track { height: 26px; }
-      .attack-grid { gap: 10px; }
-      .attack-pill { padding: 10px 20px; font-size: 13px; }
-      .detail-title { font-size: 22px; }
-      .section-title { font-size: 17px; letter-spacing: 3px; }
-    }
-
-    /* ── WIDE DESKTOP (1400px+) ── */
-    @media (min-width: 1400px) {
-      .screen { max-width: 1100px; }
-      .log-layout { grid-template-columns: 2fr 1fr; gap: 40px; }
-      .cards-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
-    }
-
-    /* Hover states for desktop */
-    @media (hover: hover) {
-      .btn:hover { background: rgba(201,168,76,0.25); }
-      .btn-blood:hover { background: rgba(192,57,43,0.25); }
-      .btn-ghost:hover { background: rgba(122,122,138,0.1); }
-      .card:hover { border-color: var(--gold-dim); background: var(--steel-light); }
-      .attack-pill:hover { border-color: var(--smoke); color: var(--white); }
-      .attack-pill.selected:hover { border-color: var(--gold-light); }
-      .zone:hover { stroke-width: 2; stroke: var(--gold); fill: rgba(201,168,76,0.12); }
-      .zone.selected:hover { fill: rgba(201,168,76,0.3); }
-      .nav-btn:hover { color: var(--gold-light); }
-      .delete-btn:hover { opacity: 1; color: var(--blood); }
-      .opp-card:hover .opp-arrow { color: var(--gold); }
-      .tab:hover { color: var(--gold); background: rgba(201,168,76,0.08); }
-      .swap-btn:hover { border-color: var(--gold); color: var(--gold); }
-    }
-
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--steel-light); border-radius: 4px; }
-  </style>
+  ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--steel-light); border-radius: 4px; }
+</style>
 </head>
 <body>
-  <div class="header">
-    <h1>⚔ Scouting Diary</h1>
-    <div class="header-sub" id="activeSessionLabel">No Session Active</div>
-  </div>
+<div class="header">
+  <h1>⚔ Scouting Diary</h1>
+  <div class="header-sub" id="activeSessionLabel">No Session Active</div>
+</div>
 
-  <!-- DASHBOARD -->
-  <div class="screen active" id="screen-dashboard">
-    <div class="quick-stats" id="dashStats"></div>
-    <div class="flex-between mb-8">
-      <div class="section-title" style="margin-bottom:0;border:none;padding:0">Active Session</div>
-      <button class="btn btn-sm" onclick="openSessionModal()">+ New</button>
+<!-- DASHBOARD -->
+<div class="screen active" id="screen-dashboard">
+  <div class="quick-stats" id="dashStats"></div>
+  <div class="flex-between mb-8">
+    <div class="section-title" style="margin-bottom:0;border:none;padding:0">Active Session</div>
+    <button class="btn btn-sm" onclick="openSessionModal()">+ New</button>
+  </div>
+  <div id="dashActiveSession"></div>
+  <hr class="divider">
+  <div class="section-title">Recent Hits</div>
+  <div id="dashRecentHits"></div>
+</div>
+
+<!-- LOG -->
+<div class="screen" id="screen-log">
+  <div id="logNoSession" class="empty-state" style="display:none">
+    <p>Start or select a session first</p>
+    <button class="btn mt-8" onclick="openSessionModal()" style="width:auto;margin:8px auto 0">+ New Session</button>
+  </div>
+  <div id="logContent">
+    <div class="log-layout">
+      <div class="log-left">
+        <div class="form-group">
+          <label>Attacker</label>
+          <div style="display:flex;gap:8px">
+            <select id="logAttacker" style="flex:1"></select>
+            <button class="swap-btn" onclick="swapFighters()" title="Swap">⇅</button>
+            <button class="btn btn-sm" onclick="openAddFighterModal()" style="width:auto;padding:6px 10px">+</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Defender (hit received by)</label>
+          <select id="logDefender"></select>
+        </div>
+        <label>Attack Type</label>
+        <div class="attack-grid" id="attackGrid"></div>
+      </div>
+      <div class="log-right">
+        <label class="text-center" style="display:block">Target Zone</label>
+        <div class="body-container" id="bodyDiagram"></div>
+        <div id="logPointsPreview" class="text-center mb-8" style="font-family:'Cinzel',serif;font-size:18px;color:var(--gold-dim);min-height:28px"></div>
+      </div>
     </div>
-    <div id="dashActiveSession"></div>
+    <div style="display:flex;gap:8px;max-width:400px;margin:0 auto">
+      <button class="btn" onclick="logHit()" style="flex:1">Log Hit</button>
+      <button class="btn btn-ghost" onclick="logSparDouble()" style="flex:0;padding:10px 16px;white-space:nowrap">Double</button>
+    </div>
+    <div id="logFeedback" style="text-align:center;margin-top:8px;font-size:13px;color:var(--green);opacity:0;transition:opacity 0.3s"></div>
     <hr class="divider">
-    <div class="section-title">Recent Hits</div>
-    <div id="dashRecentHits"></div>
-  </div>
-
-  <!-- LOG -->
-  <div class="screen" id="screen-log">
-    <div id="logNoSession" class="empty-state" style="display:none">
-      <p>Start or select a session first</p>
-      <button class="btn mt-8" onclick="openSessionModal()" style="width:auto;margin:8px auto 0">+ New Session</button>
-    </div>
-    <div id="logContent">
-      <div class="log-layout">
-        <div class="log-left">
-          <div class="form-group">
-            <label>Attacker</label>
-            <div style="display:flex;gap:8px">
-              <select id="logAttacker" style="flex:1"></select>
-              <button class="swap-btn" onclick="swapFighters()" title="Swap">⇅</button>
-              <button class="btn btn-sm" onclick="openAddFighterModal()" style="width:auto;padding:6px 10px">+</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Defender (hit received by)</label>
-            <select id="logDefender"></select>
-          </div>
-          <label>Attack Type</label>
-          <div class="attack-grid" id="attackGrid"></div>
-        </div>
-        <div class="log-right">
-          <label class="text-center" style="display:block">Target Zone</label>
-          <div class="body-container" id="bodyDiagram"></div>
-          <div id="logPointsPreview" class="text-center mb-8" style="font-family:'Cinzel',serif;font-size:18px;color:var(--gold-dim);min-height:28px"></div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;max-width:400px;margin:0 auto">
-        <button class="btn" onclick="logHit()" style="flex:1">Log Hit</button>
-        <button class="btn btn-ghost" onclick="logSparDouble()" style="flex:0;padding:10px 16px;white-space:nowrap">Double</button>
-      </div>
-      <div id="logFeedback" style="text-align:center;margin-top:8px;font-size:13px;color:var(--green);opacity:0;transition:opacity 0.3s"></div>
-      <hr class="divider">
-      <div class="section-title">Session Log</div>
-      <div id="sessionHitLog"></div>
-      <div class="mt-16" style="display:flex;gap:8px">
-        <button class="btn btn-sm" onclick="exportSessionLog()" style="flex:1">Export Session</button>
-      </div>
+    <div class="section-title">Session Log</div>
+    <div id="sessionHitLog"></div>
+    <div class="mt-16" style="display:flex;gap:8px">
+      <button class="btn btn-sm" onclick="exportSessionLog()" style="flex:1">Export Session</button>
     </div>
   </div>
+</div>
 
-  <!-- FIGHTERS -->
-  <div class="screen" id="screen-fighters">
-    <div class="flex-between mb-16">
-      <div class="section-title" style="margin-bottom:0;border:none;padding:0">Fighters</div>
+<!-- FIGHTERS -->
+<div class="screen" id="screen-fighters">
+  <div class="flex-between mb-16">
+    <div class="section-title" style="margin-bottom:0;border:none;padding:0">Fighters</div>
+    <button class="btn btn-sm" onclick="openAddFighterModal()">+ Add</button>
+  </div>
+  <div id="fighterList" class="cards-grid"></div>
+</div>
+
+<!-- FIGHTER DETAIL -->
+<div class="screen" id="screen-fighter-detail">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showScreen('fighters')">←</button>
+    <div class="detail-title" id="fdName"></div>
+  </div>
+  <div class="quick-stats" id="fdStats"></div>
+  <div class="form-group">
+    <label>Notes</label>
+    <textarea id="fdNotes" placeholder="Scouting notes..." rows="3" oninput="saveFighterNotes()"></textarea>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="setFdTab('heatmap',this)">Heat Map</button>
+    <button class="tab" onclick="setFdTab('attacks',this)">Attacks</button>
+    <button class="tab" onclick="setFdTab('zones',this)">Zones</button>
+    <button class="tab" onclick="setFdTab('history',this)">Log</button>
+  </div>
+  <div id="fdTab-heatmap">
+    <div class="who-toggle mb-8">
+      <button class="who-btn active-dealt" id="heatDealt" onclick="setHeatWho('dealt')">Hits They Dealt</button>
+      <button class="who-btn" id="heatTaken" onclick="setHeatWho('taken')">Hits They Took</button>
+    </div>
+    <div class="body-container" id="fdHeatBody"></div>
+  </div>
+  <div id="fdTab-attacks" style="display:none"></div>
+  <div id="fdTab-zones" style="display:none"></div>
+  <div id="fdTab-history" style="display:none"></div>
+  <hr class="divider">
+  <div id="fdDeleteArea"></div>
+</div>
+
+<!-- DIARY -->
+<div class="screen" id="screen-diary">
+  <div class="section-title">My Diary</div>
+  <div class="quick-stats" id="diaryStats"></div>
+  <div class="tabs">
+    <button class="tab active" onclick="setDiaryTab('weaknesses',this)">My Weaknesses</button>
+    <button class="tab" onclick="setDiaryTab('strengths',this)">My Strengths</button>
+    <button class="tab" onclick="setDiaryTab('sessions',this)">Sessions</button>
+  </div>
+  <div id="diaryTab-weaknesses">
+    <p class="text-sm text-smoke mb-8">Where I get hit</p>
+    <label>Heat Map — Hits Taken</label>
+    <div class="body-container" id="diaryHeatBody"></div>
+    <div id="diaryWeaknessCharts"></div>
+  </div>
+  <div id="diaryTab-strengths" style="display:none"><div id="diaryStrengthContent"></div></div>
+  <div id="diaryTab-sessions" style="display:none"><div id="diarySessionList" class="cards-grid"></div></div>
+  <hr class="divider">
+  <div style="display:flex;gap:8px">
+    <button class="btn btn-sm" onclick="exportDiary()" style="flex:1">Export Diary</button>
+  </div>
+</div>
+
+<!-- JUDGE: POOL SETUP -->
+<div class="screen" id="screen-judge">
+  <div class="section-title">Judge — Pool Setup</div>
+
+  <div class="judge-sub active" id="jSub-setup">
+    <div class="form-group">
+      <label>Pool Name</label>
+      <input type="text" id="jPoolName" placeholder="e.g. Pool A — Longsword">
+    </div>
+    <div class="form-group">
+      <label>Ruleset</label>
+      <select id="jPoolRuleset"><option value="">— Use current config —</option></select>
+    </div>
+    <div class="form-group">
+      <label>Clock Mode</label>
+      <select id="jClockMode">
+        <option value="down">Count Down</option>
+        <option value="up">Count Up</option>
+      </select>
+    </div>
+    <div class="form-group" id="jClockTimeGroup">
+      <label>Bout Length (seconds)</label>
+      <input type="number" id="jClockTime" value="180" min="30" max="600" style="width:100px">
+    </div>
+    <div class="form-group">
+      <label>Score Limit (0 = no limit)</label>
+      <input type="number" id="jScoreLimit" value="0" min="0" max="99" style="width:100px">
+      <p class="text-sm text-smoke mt-8">Bout flashes a notification when a fighter reaches this score. Ref still ends manually.</p>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title" style="font-size:12px">Afterblow</div>
+    <div class="form-group">
+      <label>Afterblow Points (0 = off)</label>
+      <input type="number" id="jAfterblowPts" value="0" min="0" max="99" style="width:80px">
+      <p class="text-sm text-smoke mt-8">After each hit, clock pauses. Ref logs afterblow (fixed points) or taps "No Afterblow" to continue.</p>
+    </div>
+
+    <hr class="divider">
+    <div class="flex-between mb-8">
+      <label style="margin:0">Select Fighters for Pool</label>
       <button class="btn btn-sm" onclick="openAddFighterModal()">+ Add</button>
     </div>
-    <div id="fighterList" class="cards-grid"></div>
+    <div id="jFighterSelect"></div>
+
+    <div class="mt-16">
+      <button class="btn" onclick="generatePool()">Generate Round Robin</button>
+    </div>
   </div>
 
-  <!-- FIGHTER DETAIL -->
-  <div class="screen" id="screen-fighter-detail">
-    <div class="detail-header">
-      <button class="back-btn" onclick="showScreen('fighters')">←</button>
-      <div class="detail-title" id="fdName"></div>
+  <div class="judge-sub" id="jSub-bracket">
+    <div class="flex-between mb-8">
+      <div class="section-title" style="margin:0;border:none;padding:0" id="jPoolTitle">Pool</div>
+      <button class="btn btn-sm btn-ghost" onclick="showJudgeSub('setup')">← Edit Pool</button>
     </div>
-    <div class="quick-stats" id="fdStats"></div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="fdNotes" placeholder="Scouting notes..." rows="3" oninput="saveFighterNotes()"></textarea>
-    </div>
-    <div class="tabs">
-      <button class="tab active" onclick="setFdTab('heatmap',this)">Heat Map</button>
-      <button class="tab" onclick="setFdTab('attacks',this)">Attacks</button>
-      <button class="tab" onclick="setFdTab('zones',this)">Zones</button>
-      <button class="tab" onclick="setFdTab('history',this)">Log</button>
-    </div>
-    <div id="fdTab-heatmap">
-      <div class="who-toggle mb-8">
-        <button class="who-btn active-dealt" id="heatDealt" onclick="setHeatWho('dealt')">Hits They Dealt</button>
-        <button class="who-btn" id="heatTaken" onclick="setHeatWho('taken')">Hits They Took</button>
-      </div>
-      <div class="body-container" id="fdHeatBody"></div>
-    </div>
-    <div id="fdTab-attacks" style="display:none"></div>
-    <div id="fdTab-zones" style="display:none"></div>
-    <div id="fdTab-history" style="display:none"></div>
-    <hr class="divider">
-    <div id="fdDeleteArea"></div>
-  </div>
-
-  <!-- DIARY -->
-  <div class="screen" id="screen-diary">
-    <div class="section-title">My Diary</div>
-    <div class="quick-stats" id="diaryStats"></div>
-    <div class="tabs">
-      <button class="tab active" onclick="setDiaryTab('weaknesses',this)">My Weaknesses</button>
-      <button class="tab" onclick="setDiaryTab('strengths',this)">My Strengths</button>
-      <button class="tab" onclick="setDiaryTab('sessions',this)">Sessions</button>
-    </div>
-    <div id="diaryTab-weaknesses">
-      <p class="text-sm text-smoke mb-8">Where I get hit</p>
-      <label>Heat Map — Hits Taken</label>
-      <div class="body-container" id="diaryHeatBody"></div>
-      <div id="diaryWeaknessCharts"></div>
-    </div>
-    <div id="diaryTab-strengths" style="display:none"><div id="diaryStrengthContent"></div></div>
-    <div id="diaryTab-sessions" style="display:none"><div id="diarySessionList" class="cards-grid"></div></div>
+    <div id="jBracketList"></div>
     <hr class="divider">
     <div style="display:flex;gap:8px">
-      <button class="btn btn-sm" onclick="exportDiary()" style="flex:1">Export Diary</button>
+      <button class="btn btn-sm" onclick="showJudgeSub('results')" style="flex:1">View Results</button>
+      <button class="btn btn-sm" onclick="exportPoolResults()" style="flex:1">Export Results</button>
     </div>
   </div>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <button class="nav-btn active" data-screen="dashboard" onclick="showScreen('dashboard',this)" title="Dashboard">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg>
-      Home
-    </button>
-    <button class="nav-btn" data-screen="log" onclick="showScreen('log',this)" title="Log">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-      Log
-    </button>
-    <button class="nav-btn" data-screen="fighters" onclick="showScreen('fighters',this)" title="Fighters">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-      Fighters
-    </button>
-    <button class="nav-btn" data-screen="diary" onclick="showScreen('diary',this)" title="Diary">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      Diary
-    </button>
-  </nav>
-
-  <!-- SETUP -->
-  <div class="screen" id="screen-setup">
-    <div class="section-title">Your Name</div>
-    <div class="form-group">
-      <input type="text" id="setupMyName" placeholder="Your fighter name" oninput="saveMyName()">
-    </div>
-    <hr class="divider">
+  <div class="judge-sub" id="jSub-results">
     <div class="flex-between mb-8">
-      <div class="section-title" style="margin-bottom:0;border:none;padding:0">Attack Types</div>
-      <button class="btn btn-sm" onclick="openAddAttackModal()">+ Add</button>
+      <div class="section-title" style="margin:0;border:none;padding:0">Pool Results</div>
+      <button class="btn btn-sm btn-ghost" onclick="showJudgeSub('bracket')">← Bracket</button>
     </div>
-    <div id="setupAttackList"></div>
-    <hr class="divider">
-    <div class="section-title">Point Matrix</div>
-    <p class="text-sm text-smoke mb-8">Points per attack type × zone</p>
-    <div style="overflow-x:auto"><table class="matrix-table" id="pointMatrix"></table></div>
-    <hr class="divider">
-    <div class="section-title">Data</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-sm" onclick="exportData()" style="flex:1;min-width:120px">Export JSON</button>
-      <button class="btn btn-sm" onclick="document.getElementById('importFile').click()" style="flex:1;min-width:120px">Import JSON</button>
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    <div id="jResultsContent"></div>
+    <div class="mt-16" style="display:flex;gap:8px">
+      <button class="btn btn-sm" onclick="exportPoolResults()" style="flex:1">Export JSON</button>
+      <button class="btn btn-sm" onclick="exportPoolCSV()" style="flex:1">Export CSV</button>
     </div>
-    <div class="mt-8">
-      <button class="btn btn-sm btn-blood" onclick="confirmClearData()" style="width:100%">Clear All Data</button>
+  </div>
+</div>
+
+<!-- JUDGE: BOUT VIEW -->
+<div class="screen" id="screen-judge-bout">
+  <div class="detail-header">
+    <button class="back-btn" onclick="endBout()">←</button>
+    <div class="detail-title" id="jBoutTitle">Bout</div>
+  </div>
+
+  <!-- Clock -->
+  <div class="j-clock" id="jClockDisplay">0:00</div>
+  <div class="j-clock-btns">
+    <button class="btn btn-sm" id="jClockStartBtn" onclick="toggleClock()">Start</button>
+    <button class="btn btn-sm btn-ghost" onclick="resetClock()">Reset</button>
+  </div>
+
+  <!-- Attack type bar -->
+  <div class="j-atk-bar" id="jAtkBar"></div>
+
+  <!-- Two figures -->
+  <div class="j-arena">
+    <div class="j-side j-side-red">
+      <div class="j-side-label">Red</div>
+      <div class="j-side-name" id="jRedName">—</div>
+      <div class="j-side-score" id="jRedScore">0</div>
+      <div class="j-body" id="jRedBody"></div>
+    </div>
+    <div class="j-vs">VS</div>
+    <div class="j-side j-side-gold">
+      <div class="j-side-label">Gold</div>
+      <div class="j-side-name" id="jGoldName">—</div>
+      <div class="j-side-score" id="jGoldScore">0</div>
+      <div class="j-body" id="jGoldBody"></div>
     </div>
   </div>
 
-  <!-- MODALS -->
-  <div class="modal-overlay" id="sessionModal">
-    <div class="modal">
-      <div class="modal-title">Session</div>
-      <div class="form-group"><label>Name</label><input type="text" id="sessionName" placeholder="Thursday sparring"></div>
-      <div class="form-group"><label>Date</label><input type="date" id="sessionDate"></div>
-      <div class="form-group"><label>Notes</label><textarea id="sessionNotes" rows="2" placeholder="Optional..."></textarea></div>
-      <button class="btn" onclick="createSession()">Start Session</button>
-      <hr class="divider"><label>Or Resume</label>
-      <div id="sessionResumeList" class="mt-8"></div>
-      <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('sessionModal')">Cancel</button></div>
-    </div>
+  <!-- Score limit banner -->
+  <div id="jScoreLimitBanner" style="display:none;text-align:center;padding:10px;margin-bottom:8px;background:rgba(192,57,43,0.2);border:2px solid var(--blood);border-radius:6px;animation:pulse 1s infinite">
+    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:900;color:var(--blood);letter-spacing:2px">SCORE LIMIT REACHED</span>
   </div>
 
-  <div class="modal-overlay" id="addFighterModal">
-    <div class="modal">
-      <div class="modal-title">Add Fighter</div>
-      <div class="form-group"><label>Name</label><input type="text" id="newFighterName" placeholder="Fighter name"></div>
-      <div class="form-group"><label>Notes</label><textarea id="newFighterNotes" rows="2" placeholder="Club, style..."></textarea></div>
-      <button class="btn" onclick="addFighter()">Add Fighter</button>
-      <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('addFighterModal')">Cancel</button></div>
-    </div>
+  <!-- Afterblow button -->
+  <div id="jAfterblowArea" style="display:none;text-align:center;margin-bottom:10px;padding:10px;background:rgba(201,168,76,0.08);border:1.5px solid var(--gold-dim);border-radius:6px">
+    <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:1px;margin-bottom:6px">AFTERBLOW?</div>
+    <div class="text-sm text-smoke mb-8">Tap zone on the other fighter, or:</div>
+    <button class="btn btn-sm" onclick="cancelAfterblow()" style="margin:0 auto">No Afterblow — Continue</button>
   </div>
 
-  <div class="modal-overlay" id="addAttackModal">
-    <div class="modal">
-      <div class="modal-title">Add Attack Type</div>
-      <div class="form-group"><label>Name</label><input type="text" id="newAttackName" placeholder="e.g. Mordhau"></div>
-      <button class="btn" onclick="addAttackType()">Add</button>
-      <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('addAttackModal')">Cancel</button></div>
+  <div class="flex-between mb-8">
+    <label style="margin:0">Bout Log</label>
+    <div style="display:flex;gap:6px">
+      <button class="btn btn-sm" onclick="logDouble()" style="font-size:10px;padding:4px 10px;border-color:var(--smoke);color:var(--smoke)">Double</button>
+      <button class="btn btn-sm btn-blood" onclick="undoLastHit()" style="font-size:10px;padding:4px 10px">Undo</button>
     </div>
   </div>
+  <div class="j-bout-log" id="jBoutLog"></div>
+</div>
 
-  <div class="modal-overlay" id="sessionDetailModal">
-    <div class="modal">
-      <div class="modal-title" id="sdmTitle"></div>
-      <div id="sdmContent"></div>
-      <div style="display:flex;gap:8px;margin-top:16px">
-        <button class="btn" onclick="resumeSessionFromDetail()" style="flex:1">Resume</button>
-        <button class="btn btn-blood btn-sm" onclick="deleteSessionFromDetail()" style="flex:0;padding:10px 14px">🗑</button>
-      </div>
-      <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('sessionDetailModal')">Close</button></div>
-    </div>
+<!-- Hit flash overlay -->
+<div class="j-hit-flash" id="jHitFlash"></div>
+
+<!-- SETUP -->
+<div class="screen" id="screen-setup">
+  <div class="section-title">Your Name</div>
+  <div class="form-group">
+    <input type="text" id="setupMyName" placeholder="Your fighter name" oninput="saveMyName()">
   </div>
+  <hr class="divider">
+  <div class="flex-between mb-8">
+    <div class="section-title" style="margin-bottom:0;border:none;padding:0">Rulesets</div>
+    <button class="btn btn-sm" onclick="openSavePresetModal()">Save Current</button>
+  </div>
+  <p class="text-sm text-smoke mb-8">Save your attack types + point matrix as a named ruleset. Load one to switch configs.</p>
+  <div id="presetList"></div>
+  <hr class="divider">
+  <div class="flex-between mb-8">
+    <div class="section-title" style="margin-bottom:0;border:none;padding:0">Attack Types</div>
+    <button class="btn btn-sm" onclick="openAddAttackModal()">+ Add</button>
+  </div>
+  <div id="setupAttackList"></div>
+  <hr class="divider">
+  <div class="section-title">Point Matrix</div>
+  <p class="text-sm text-smoke mb-8">Points per attack type × zone</p>
+  <div style="overflow-x:auto"><table class="matrix-table" id="pointMatrix"></table></div>
+  <hr class="divider">
+  <div class="section-title">Data</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn btn-sm" onclick="exportData()" style="flex:1;min-width:120px">Export JSON</button>
+    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()" style="flex:1;min-width:120px">Import JSON</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+  </div>
+  <div class="mt-8">
+    <button class="btn btn-sm btn-blood" onclick="confirmClearData()" style="width:100%">Clear All Data</button>
+  </div>
+</div>
 
-  <script>
-    /**
-     * HEMA Scouting Diary & Combat Judge
-     * A personal combat tracking and scouting app for HEMA
-     * All data stored in localStorage
-     */
+<!-- MODALS -->
+<div class="modal-overlay" id="sessionModal">
+  <div class="modal">
+    <div class="modal-title">Session</div>
+    <div class="form-group"><label>Name</label><input type="text" id="sessionName" placeholder="Thursday sparring"></div>
+    <div class="form-group"><label>Date</label><input type="date" id="sessionDate"></div>
+    <div class="form-group"><label>Notes</label><textarea id="sessionNotes" rows="2" placeholder="Optional..."></textarea></div>
+    <div class="form-group"><label>Ruleset (optional)</label><select id="sessionRuleset"><option value="">— Keep current config —</option></select><p class="text-sm text-smoke mt-8">Loading a ruleset will update your attack types & point matrix</p></div>
+    <button class="btn" onclick="createSession()">Start Session</button>
+    <hr class="divider"><label>Or Resume</label>
+    <div id="sessionResumeList" class="mt-8"></div>
+    <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('sessionModal')">Cancel</button></div>
+  </div>
+</div>
+<div class="modal-overlay" id="addFighterModal">
+  <div class="modal">
+    <div class="modal-title">Add Fighter</div>
+    <div class="form-group"><label>Name</label><input type="text" id="newFighterName" placeholder="Fighter name"></div>
+    <div class="form-group"><label>Notes</label><textarea id="newFighterNotes" rows="2" placeholder="Club, style..."></textarea></div>
+    <button class="btn" onclick="addFighter()">Add Fighter</button>
+    <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('addFighterModal')">Cancel</button></div>
+  </div>
+</div>
+<div class="modal-overlay" id="addAttackModal">
+  <div class="modal">
+    <div class="modal-title">Add Attack Type</div>
+    <div class="form-group"><label>Name</label><input type="text" id="newAttackName" placeholder="e.g. Mordhau"></div>
+    <button class="btn" onclick="addAttackType()">Add</button>
+    <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('addAttackModal')">Cancel</button></div>
+  </div>
+</div>
+<div class="modal-overlay" id="sessionDetailModal">
+  <div class="modal">
+    <div class="modal-title" id="sdmTitle"></div>
+    <div id="sdmContent"></div>
+    <div style="display:flex;gap:8px;margin-top:16px">
+      <button class="btn" onclick="resumeSessionFromDetail()" style="flex:1">Resume</button>
+      <button class="btn btn-blood btn-sm" onclick="deleteSessionFromDetail()" style="flex:0;padding:10px 14px">🗑</button>
+    </div>
+    <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('sessionDetailModal')">Close</button></div>
+  </div>
+</div>
 
-    const ZONES = [
-      { id: 1, name: 'Head/Neck', path: 'M95,28 Q95,8 110,8 Q125,8 125,28 Q125,52 119,55 L119,64 L101,64 L101,55 Q95,52 95,28Z', lx: 110, ly: 34 },
-      { id: 2, name: 'R Torso', path: 'M101,64 L82,68 Q74,74 72,84 L68,110 L78,110 L82,168 L110,168 L110,64Z', lx: 94, ly: 118 },
-      { id: 3, name: 'L Torso', path: 'M110,64 L110,168 L138,168 L142,110 L152,110 Q146,74 138,68 L119,64Z', lx: 126, ly: 118 },
-      { id: 4, name: 'R Arm', path: 'M68,110 L58,114 L52,155 L70,162 L78,110Z', lx: 65, ly: 137 },
-      { id: 5, name: 'L Arm', path: 'M142,110 L150,162 L168,155 L162,114 L152,110Z', lx: 155, ly: 137 },
-      { id: 6, name: 'R Leg', path: 'M82,168 L110,168 L104,230 L100,265 L93,318 L76,312 L80,265 L82,230Z', lx: 93, ly: 248 },
-      { id: 7, name: 'L Leg', path: 'M110,168 L138,168 L138,230 L140,265 L144,312 L127,318 L120,265 L116,230Z', lx: 127, ly: 248 }
-    ];
+<div class="modal-overlay" id="savePresetModal">
+  <div class="modal">
+    <div class="modal-title">Save Ruleset</div>
+    <p class="text-sm text-smoke mb-8">Saves your current attack types and point matrix as a reusable ruleset.</p>
+    <div class="form-group"><label>Ruleset Name</label><input type="text" id="presetName" placeholder="e.g. HEMA Longsword"></div>
+    <button class="btn" onclick="savePreset()">Save Ruleset</button>
+    <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('savePresetModal')">Cancel</button></div>
+  </div>
+</div>
 
-    const DEFAULT_ATTACKS = ['Cut', 'Thrust', 'Slice', 'Pommel', 'Grapple', 'Throw', 'Bind', 'Kick'];
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn active" data-screen="dashboard" onclick="showScreen('dashboard',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg>Home
+  </button>
+  <button class="nav-btn" data-screen="log" onclick="showScreen('log',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Log
+  </button>
+  <button class="nav-btn" data-screen="fighters" onclick="showScreen('fighters',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Fighters
+  </button>
+  <button class="nav-btn" data-screen="diary" onclick="showScreen('diary',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Diary
+  </button>
+  <button class="nav-btn" data-screen="judge" onclick="showScreen('judge',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>Judge
+  </button>
+  <button class="nav-btn" data-screen="setup" onclick="showScreen('setup',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Setup
+  </button>
+</nav>
 
-    function makeDefaultPts() {
-      const p = {};
-      ZONES.forEach(z => p[z.id] = 1);
-      return p;
+<script>
+/**
+* HEMA Scouting Diary & Combat Judge
+* A personal combat tracking, scouting, and live judging app
+* for HEMA (Historical European Martial Arts) and Bohurt.
+*
+* Features:
+*   - Personal hit logging with attacker/defender tracking
+*   - Configurable attack types and point matrix (rulesets)
+*   - Fighter scouting profiles with heat maps and charts
+*   - Personal diary tracking weaknesses and strengths
+*   - Live judging with dual-figure tap-to-score
+*   - Round robin pool generation with balanced scheduling
+*   - Afterblow support (configurable points)
+*   - Score limits, bout clock (count up/down)
+*   - Data export (JSON, CSV) and import
+*   - PWA support for offline use
+*
+* All data stored in localStorage on the device.
+*/
+
+
+const ZONES=[
+{id:1,name:'Head/Neck',path:'M95,28 Q95,8 110,8 Q125,8 125,28 Q125,52 119,55 L119,64 L101,64 L101,55 Q95,52 95,28Z',lx:110,ly:34},
+{id:2,name:'R Torso',path:'M101,64 L82,68 Q74,74 72,84 L68,110 L78,110 L82,168 L110,168 L110,64Z',lx:94,ly:118},
+{id:3,name:'L Torso',path:'M110,64 L110,168 L138,168 L142,110 L152,110 Q146,74 138,68 L119,64Z',lx:126,ly:118},
+{id:4,name:'R Arm',path:'M68,110 L58,114 L52,155 L70,162 L78,110Z',lx:65,ly:137},
+{id:5,name:'L Arm',path:'M142,110 L150,162 L168,155 L162,114 L152,110Z',lx:155,ly:137},
+{id:6,name:'R Leg',path:'M82,168 L110,168 L104,230 L100,265 L93,318 L76,312 L80,265 L82,230Z',lx:93,ly:248},
+{id:7,name:'L Leg',path:'M110,168 L138,168 L138,230 L140,265 L144,312 L127,318 L120,265 L116,230Z',lx:127,ly:248}
+];
+const DEFAULT_ATTACKS=['Cut','Thrust','Slice','Pommel','Grapple','Throw','Bind','Kick'];
+
+function makeDefaultPts(){const p={};ZONES.forEach(z=>p[z.id]=1);return p;}
+
+function defaultPoints(){
+  const p={};
+  const d={Cut:{1:5,2:3,3:3,4:2,5:2,6:1,7:1},Thrust:{1:5,2:4,3:4,4:2,5:2,6:1,7:1},Slice:{1:4,2:3,3:3,4:2,5:2,6:1,7:1},Pommel:{1:5,2:3,3:3,4:1,5:1,6:1,7:1},Grapple:{1:3,2:3,3:3,4:2,5:2,6:1,7:1},Throw:{1:3,2:4,3:4,4:2,5:2,6:2,7:2},Bind:{1:2,2:2,3:2,4:3,5:3,6:1,7:1},Kick:{1:1,2:3,3:3,4:1,5:1,6:3,7:3}};
+  DEFAULT_ATTACKS.forEach(a=>{p[a]=d[a]||makeDefaultPts();});return p;
+}
+
+let state={myName:'',fighters:[],sessions:[],hits:[],attacks:[...DEFAULT_ATTACKS],points:defaultPoints(),presets:[],pools:[],activeSessionId:null};
+let selectedZone=null,selectedAttack=null,currentFighterId=null,heatWho='dealt',detailSessionId=null;
+
+const SK='hema-diary-v5';
+
+function save(){localStorage.setItem(SK,JSON.stringify(state));}
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SK));
+  if(d){state.myName=d.myName||'';state.fighters=d.fighters||[];state.sessions=d.sessions||[];state.hits=d.hits||[];state.attacks=d.attacks||[...DEFAULT_ATTACKS];state.points=d.points||defaultPoints();state.presets=d.presets||[];state.pools=d.pools||[];state.activeSessionId=d.activeSessionId||null;
+  state.attacks.forEach(a=>{if(!state.points[a])state.points[a]=makeDefaultPts();ZONES.forEach(z=>{if(state.points[a][z.id]===undefined)state.points[a][z.id]=1;});});
+}}catch(e){}
+}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function formatDate(d){if(!d)return'';const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});}
+function fighterName(id){if(id==='__me__')return state.myName||'Me';const f=state.fighters.find(x=>x.id===id);return f?f.name:'?';}
+function fighterInitials(id){const n=fighterName(id);return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+function getPoints(attack,zoneId){return(state.points[attack]&&state.points[attack][zoneId])||0;}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('active');});});
+
+function ensureMe(){
+  if(!state.fighters.find(f=>f.id==='__me__')){state.fighters.unshift({id:'__me__',name:state.myName||'Me',notes:''});save();}
+  else{const me=state.fighters.find(f=>f.id==='__me__');me.name=state.myName||'Me';}
+}
+
+function showScreen(name,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else document.querySelector('.nav-btn[data-screen="'+name+'"]')?.classList.add('active');
+  if(name==='dashboard')renderDashboard();
+  if(name==='log')renderLogScreen();
+  if(name==='fighters')renderFighterList();
+  if(name==='diary')renderDiary();
+  if(name==='setup')renderSetup();
+  if(name==='judge')renderJudgeSetup();
+}
+
+
+// ── BODY SVG ──
+function buildBodySVG(cid,interactive,heatData){
+  const c=document.getElementById(cid);
+  let svg='<svg class="body-svg" viewBox="0 0 220 330">';
+  svg+='<path d="M110,8 Q130,8 128,35 Q128,52 119,55 L119,62 L140,65 Q148,70 146,82 L160,85 L162,130 L168,155 L150,160 L140,135 L140,168 L140,230 L142,255 L144,310 L127,315 L122,260 L118,230 L118,170 L110,168 L102,170 L102,230 L98,260 L93,315 L76,310 L80,255 L80,230 L80,168 L80,135 L70,160 L52,155 L58,130 L60,85 L74,82 Q72,70 80,65 L101,62 L101,55 Q92,52 92,35 Q90,8 110,8Z" fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="0.8"/>';
+  svg+='<line x1="110" y1="64" x2="110" y2="168" stroke="rgba(201,168,76,0.15)" stroke-width="0.6" stroke-dasharray="3,3"/>';
+  ZONES.forEach(z=>{
+    let hc='';
+    if(heatData){const cnt=heatData[z.id]||0;const mx=Math.max(1,...Object.values(heatData));const p=cnt/mx;
+    if(p>0.8)hc='heat-5';else if(p>0.6)hc='heat-4';else if(p>0.4)hc='heat-3';else if(p>0.2)hc='heat-2';else if(p>0)hc='heat-1';}
+    const cl=interactive?' onclick="selectZone('+z.id+')"':'';
+    svg+='<path class="zone '+hc+'" id="'+cid+'-z'+z.id+'" d="'+z.path+'"'+cl+'/>';
+    const sh=z.name.replace('Head/Neck','Head').replace(' Torso','').replace(' Arm','Arm').replace(' Leg','Leg');
+    svg+='<text class="zone-label" x="'+z.lx+'" y="'+z.ly+'" style="font-size:10px;fill:var(--gold)">'+sh+'</text>';
+  });
+  svg+='</svg>';c.innerHTML=svg;
+}
+function selectZone(id){
+  selectedZone=id;
+  document.querySelectorAll('#bodyDiagram .zone').forEach(z=>z.classList.remove('selected'));
+  document.getElementById('bodyDiagram-z'+id)?.classList.add('selected');
+  updatePointsPreview();
+}
+function buildAttackGrid(){
+  document.getElementById('attackGrid').innerHTML=state.attacks.map(a=>'<div class="attack-pill" onclick="selectAttackType(this,\''+esc(a).replace(/'/g,"\\'")+'\')">'+esc(a)+'</div>').join('');
+}
+function selectAttackType(el,type){
+  selectedAttack=type;
+  document.querySelectorAll('.attack-pill').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');
+  updatePointsPreview();
+}
+function updatePointsPreview(){
+  const el=document.getElementById('logPointsPreview');
+  if(selectedAttack&&selectedZone){const pts=getPoints(selectedAttack,selectedZone);const zn=ZONES.find(z=>z.id===selectedZone)?.name||'?';
+  el.innerHTML=esc(selectedAttack)+' → '+zn+' = <span style="color:var(--gold)">'+pts+' pt'+(pts!==1?'s':'')+'</span>';}
+  else el.textContent='';
+}
+
+
+// ── FIGHTERS ──
+function populateFighterDropdowns(){
+  ensureMe();
+  const opts=state.fighters.map(f=>'<option value="'+f.id+'">'+(f.id==='__me__'?'★ '+esc(f.name)+' (Me)':esc(f.name))+'</option>').join('');
+  const a=document.getElementById('logAttacker'),d=document.getElementById('logDefender');
+  const av=a.value,dv=d.value;
+  a.innerHTML='<option value="">— Select —</option>'+opts;
+  d.innerHTML='<option value="">— Select —</option>'+opts;
+  if(av&&state.fighters.find(f=>f.id===av))a.value=av;
+  if(dv&&state.fighters.find(f=>f.id===dv))d.value=dv;
+}
+function swapFighters(){const a=document.getElementById('logAttacker'),d=document.getElementById('logDefender');const t=a.value;a.value=d.value;d.value=t;}
+function openAddFighterModal(){document.getElementById('newFighterName').value='';document.getElementById('newFighterNotes').value='';document.getElementById('addFighterModal').classList.add('active');}
+function addFighter(){
+  const name=document.getElementById('newFighterName').value.trim();
+  if(!name)return alert('Enter a name');
+  state.fighters.push({id:uid(),name,notes:document.getElementById('newFighterNotes').value.trim()});
+  save();closeModal('addFighterModal');renderLogScreen();renderFighterList();
+}
+function renderFighterList(){
+  ensureMe();const el=document.getElementById('fighterList');
+  el.innerHTML=state.fighters.map(f=>{
+    const asA=state.hits.filter(h=>h.attackerId===f.id).length;
+    const asD=state.hits.filter(h=>h.defenderId===f.id).length;
+    const pts=state.hits.filter(h=>h.attackerId===f.id).reduce((s,h)=>s+(h.pts||0),0);
+    const isMe=f.id==='__me__';
+    return '<div class="card opp-card" onclick="showFighterDetail(\''+f.id+'\')"><div class="opp-avatar '+(isMe?'me-avatar':'')+'">'+fighterInitials(f.id)+'</div><div class="opp-info"><div class="opp-name">'+esc(f.name)+(isMe?' <span class="text-smoke text-sm">(Me)</span>':'')+'</div><div class="opp-stats"><span class="text-gold">'+asA+' dealt</span> · <span class="text-blood">'+asD+' taken</span> · '+pts+' pts</div></div><div class="opp-arrow">›</div></div>';
+  }).join('');
+}
+
+
+// ── FIGHTER DETAIL ──
+function showFighterDetail(id){
+  currentFighterId=id;heatWho='dealt';
+  const f=state.fighters.find(x=>x.id===id);
+  document.getElementById('fdName').textContent=f.name+(f.id==='__me__'?' (Me)':'');
+  document.getElementById('fdNotes').value=f.notes||'';
+  const asA=state.hits.filter(h=>h.attackerId===id);
+  const asD=state.hits.filter(h=>h.defenderId===id);
+  const ptsS=asA.reduce((s,h)=>s+(h.pts||0),0);
+  document.getElementById('fdStats').innerHTML='<div class="quick-stat"><div class="quick-stat-num">'+asA.length+'</div><div class="quick-stat-label">Dealt</div></div><div class="quick-stat"><div class="quick-stat-num text-blood">'+asD.length+'</div><div class="quick-stat-label">Taken</div></div><div class="quick-stat"><div class="quick-stat-num">'+ptsS+'</div><div class="quick-stat-label">Pts Scored</div></div>';
+  document.getElementById('heatDealt').className='who-btn active-dealt';
+  document.getElementById('heatTaken').className='who-btn';
+  renderFdHeatMap();renderFdAttackChart();renderFdZoneChart();renderFdHitLog();
+  setFdTab('heatmap',document.querySelector('#screen-fighter-detail .tab'));
+  showScreen('fighter-detail');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.nav-btn[data-screen="fighters"]').classList.add('active');
+  // Show delete button (not for Me)
+  const delArea=document.getElementById('fdDeleteArea');
+  if(id==='__me__'){
+    delArea.innerHTML='';
+  } else {
+    delArea.innerHTML='<button class="btn btn-sm btn-blood" onclick="deleteFighter(\''+id+'\')" style="width:100%">Delete Fighter & All Their Data</button>';
+  }
+}
+
+function deleteFighter(id){
+  const f=state.fighters.find(x=>x.id===id);
+  if(!f)return;
+  const hitCount=state.hits.filter(h=>h.attackerId===id||h.defenderId===id).length;
+  if(!confirm('Delete "'+f.name+'" and '+hitCount+' associated hits? This cannot be undone.'))return;
+  state.fighters=state.fighters.filter(x=>x.id!==id);
+  state.hits=state.hits.filter(h=>h.attackerId!==id&&h.defenderId!==id);
+  save();
+  showScreen('fighters');
+}
+function saveFighterNotes(){const f=state.fighters.find(x=>x.id===currentFighterId);if(f){f.notes=document.getElementById('fdNotes').value;save();}}
+function setFdTab(name,btn){['heatmap','attacks','zones','history'].forEach(t=>{document.getElementById('fdTab-'+t).style.display=t===name?'block':'none';});btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');}
+function setHeatWho(w){heatWho=w;document.getElementById('heatDealt').className='who-btn'+(w==='dealt'?' active-dealt':'');document.getElementById('heatTaken').className='who-btn'+(w==='taken'?' active-taken':'');renderFdHeatMap();}
+function renderFdHeatMap(){
+  const hits=heatWho==='dealt'?state.hits.filter(h=>h.attackerId===currentFighterId):state.hits.filter(h=>h.defenderId===currentFighterId);
+  const hd={};hits.forEach(h=>{hd[h.zone]=(hd[h.zone]||0)+1;});buildBodySVG('fdHeatBody',false,hd);
+}
+function makeBarChart(dealt,taken){
+  const all=[...new Set([...Object.keys(dealt),...Object.keys(taken)])];
+  all.sort((a,b)=>((dealt[b]||0)+(taken[b]||0))-((dealt[a]||0)+(taken[a]||0)));
+  if(!all.length)return'<div class="empty-state">No data</div>';
+  let h='<div class="bar-chart">';
+  const mx=Math.max(1,...all.map(a=>Math.max(dealt[a]||0,taken[a]||0)));
+  all.forEach(a=>{const d=dealt[a]||0,t=taken[a]||0;
+  h+='<div style="margin-bottom:8px"><div class="bar-row"><div class="bar-label">'+a+'</div><div class="bar-track"><div class="bar-fill bar-fill-gold" style="width:'+(d/mx*100)+'%"></div></div><div class="bar-count text-gold">'+d+'</div></div>';
+  h+='<div class="bar-row"><div class="bar-label" style="opacity:0"></div><div class="bar-track"><div class="bar-fill bar-fill-blood" style="width:'+(t/mx*100)+'%"></div></div><div class="bar-count text-blood">'+t+'</div></div></div>';
+});
+h+='</div><div class="text-sm text-smoke text-center"><span class="text-gold">■</span> Dealt <span class="text-blood">■</span> Taken</div>';
+return h;
+}
+function renderFdAttackChart(){
+  const asA=state.hits.filter(h=>h.attackerId===currentFighterId),asD=state.hits.filter(h=>h.defenderId===currentFighterId);
+  const dealt={},taken={};asA.forEach(h=>{dealt[h.attack]=(dealt[h.attack]||0)+1;});asD.forEach(h=>{taken[h.attack]=(taken[h.attack]||0)+1;});
+  document.getElementById('fdTab-attacks').innerHTML='<div class="section-title">Attacks</div>'+makeBarChart(dealt,taken);
+}
+function renderFdZoneChart(){
+  const asA=state.hits.filter(h=>h.attackerId===currentFighterId),asD=state.hits.filter(h=>h.defenderId===currentFighterId);
+  const dealt={},taken={};asA.forEach(h=>{const zn=ZONES.find(z=>z.id===h.zone)?.name||'?';dealt[zn]=(dealt[zn]||0)+1;});asD.forEach(h=>{const zn=ZONES.find(z=>z.id===h.zone)?.name||'?';taken[zn]=(taken[zn]||0)+1;});
+  document.getElementById('fdTab-zones').innerHTML='<div class="section-title">Zones</div>'+makeBarChart(dealt,taken);
+}
+function renderFdHitLog(){
+  const hits=state.hits.filter(h=>h.attackerId===currentFighterId||h.defenderId===currentFighterId).slice(-30).reverse();
+  const el=document.getElementById('fdTab-history');
+  if(!hits.length){el.innerHTML='<div class="empty-state">No hits</div>';return;}
+  el.innerHTML='<div class="section-title">Recent</div>'+hits.map(h=>hitLogEntry(h,false)).join('');
+}
+
+
+// ── LOG HIT ──
+function logHit(){
+  if(!state.activeSessionId)return alert('Start a session first!');
+  const atkId=document.getElementById('logAttacker').value,defId=document.getElementById('logDefender').value;
+  if(!atkId)return alert('Select an attacker');if(!defId)return alert('Select a defender');
+  if(atkId===defId)return alert('Attacker and defender must differ');
+  if(!selectedAttack)return alert('Select an attack type');if(!selectedZone)return alert('Select a target zone');
+  const pts=getPoints(selectedAttack,selectedZone);
+  state.hits.push({id:uid(),sessionId:state.activeSessionId,attackerId:atkId,defenderId:defId,zone:selectedZone,attack:selectedAttack,pts:pts,ts:Date.now()});
+  save();
+  const fb=document.getElementById('logFeedback');const zn=ZONES.find(z=>z.id===selectedZone)?.name||'?';
+  fb.textContent='✓ '+selectedAttack+' → '+zn+' = '+pts+' pts';fb.style.opacity='1';fb.style.color='var(--gold)';
+  setTimeout(()=>fb.style.opacity='0',1500);
+  selectedZone=null;selectedAttack=null;
+  document.querySelectorAll('#bodyDiagram .zone').forEach(z=>z.classList.remove('selected'));
+  document.querySelectorAll('.attack-pill').forEach(p=>p.classList.remove('selected'));
+  document.getElementById('logPointsPreview').textContent='';
+  renderSessionHitLog();
+}
+
+function logSparDouble(){
+  if(!state.activeSessionId)return alert('Start a session first!');
+  const atkId=document.getElementById('logAttacker').value;
+  const defId=document.getElementById('logDefender').value;
+  if(!atkId||!defId)return alert('Select both fighters');
+  if(atkId===defId)return alert('Select two different fighters');
+  state.hits.push({
+    id:uid(),sessionId:state.activeSessionId,
+    attackerId:atkId,defenderId:defId,
+    zone:null,attack:'Double',pts:0,isDouble:true,ts:Date.now()
+  });
+  save();
+  const fb=document.getElementById('logFeedback');
+  fb.textContent='✓ Double logged';fb.style.opacity='1';fb.style.color='var(--smoke)';
+  setTimeout(()=>fb.style.opacity='0',1500);
+  renderSessionHitLog();
+}
+
+function renderLogScreen(){
+  const has=!!state.activeSessionId;
+  document.getElementById('logNoSession').style.display=has?'none':'block';
+  document.getElementById('logContent').style.display=has?'block':'none';
+  if(!has)return;populateFighterDropdowns();buildBodySVG('bodyDiagram',true);buildAttackGrid();renderSessionHitLog();
+}
+function renderSessionHitLog(){
+  const hits=state.hits.filter(h=>h.sessionId===state.activeSessionId).reverse();
+  const el=document.getElementById('sessionHitLog');
+  if(!hits.length){el.innerHTML='<div class="empty-state text-sm">Hits will appear here</div>';return;}
+  el.innerHTML=hits.map(h=>hitLogEntry(h,true)).join('');
+}
+function hitLogEntry(h,showDel){
+  const zn=h.zone?ZONES.find(z=>z.id===h.zone)?.name||'?':'—';
+  const t=new Date(h.ts);const ts=t.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const an=fighterName(h.attackerId),dn=fighterName(h.defenderId);
+  const myAtk=h.attackerId==='__me__',myDef=h.defenderId==='__me__';
+  const isDb=h.isDouble;
+  const ic=isDb?'log-icon-neutral':(myAtk?'log-icon-dealt':(myDef?'log-icon-taken':'log-icon-neutral'));
+  const icon=isDb?'⚔⚔':(myAtk?'⚔':(myDef?'🛡':'👁'));
+  const mainText=isDb?'Double':(h.attack+' → '+zn);
+  const del=showDel?'<button class="delete-btn" onclick="deleteHit(\''+h.id+'\')">×</button>':'';
+  return '<div class="log-entry"><div class="log-icon '+ic+'">'+icon+'</div><div class="log-details"><div class="log-main">'+mainText+'</div><div class="log-sub">'+esc(an)+' ↔ '+esc(dn)+'</div></div><div class="log-pts">'+(isDb?'—':(h.pts||0))+'</div><div class="log-time">'+ts+'</div>'+del+'</div>';
+}
+function deleteHit(id){state.hits=state.hits.filter(h=>h.id!==id);save();renderSessionHitLog();}
+
+
+// ── SESSIONS ──
+function openSessionModal(){document.getElementById('sessionDate').value=new Date().toISOString().slice(0,10);document.getElementById('sessionName').value='';document.getElementById('sessionNotes').value='';
+const rSel=document.getElementById('sessionRuleset');rSel.innerHTML='<option value="">— Keep current config —</option>'+state.presets.map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join('');
+renderSessionResumeList();document.getElementById('sessionModal').classList.add('active');}
+function createSession(){const name=document.getElementById('sessionName').value.trim();if(!name)return alert('Name needed');
+const presetId=document.getElementById('sessionRuleset').value;
+if(presetId){const p=state.presets.find(x=>x.id===presetId);if(p){state.attacks=JSON.parse(JSON.stringify(p.attacks));state.points=JSON.parse(JSON.stringify(p.points));state.attacks.forEach(a=>{if(!state.points[a])state.points[a]=makeDefaultPts();ZONES.forEach(z=>{if(state.points[a][z.id]===undefined)state.points[a][z.id]=1;});});}}
+const s={id:uid(),name,date:document.getElementById('sessionDate').value,notes:document.getElementById('sessionNotes').value.trim(),presetId:presetId||null};state.sessions.push(s);state.activeSessionId=s.id;save();closeModal('sessionModal');updateSessionLabel();showScreen('log');}
+function resumeSession(id){state.activeSessionId=id;save();closeModal('sessionModal');updateSessionLabel();showScreen('log');}
+function updateSessionLabel(){const s=state.sessions.find(s=>s.id===state.activeSessionId);document.getElementById('activeSessionLabel').textContent=s?'⚔ '+s.name:'No Session Active';}
+function renderSessionResumeList(){
+  const el=document.getElementById('sessionResumeList');const sorted=[...state.sessions].reverse().slice(0,8);
+  if(!sorted.length){el.innerHTML='<div class="text-sm text-smoke">No sessions yet</div>';return;}
+  el.innerHTML=sorted.map(s=>{const c=state.hits.filter(h=>h.sessionId===s.id).length;
+  return'<div class="card session-card" onclick="resumeSession(\''+s.id+'\')"><div class="session-name">'+esc(s.name)+'</div><div class="session-date">'+formatDate(s.date)+'</div><div class="session-hit-count">'+c+' hit'+(c!==1?'s':'')+' logged</div></div>';}).join('');
+}
+
+
+// ── DASHBOARD ──
+function renderDashboard(){
+  const myD=state.hits.filter(h=>h.attackerId==='__me__'),myT=state.hits.filter(h=>h.defenderId==='__me__');
+  const myPts=myD.reduce((s,h)=>s+(h.pts||0),0);
+  document.getElementById('dashStats').innerHTML='<div class="quick-stat"><div class="quick-stat-num">'+state.sessions.length+'</div><div class="quick-stat-label">Sessions</div></div><div class="quick-stat"><div class="quick-stat-num">'+myPts+'</div><div class="quick-stat-label">My Points</div></div><div class="quick-stat"><div class="quick-stat-num">'+state.hits.length+'</div><div class="quick-stat-label">Total Hits</div></div>';
+  const as=state.sessions.find(s=>s.id===state.activeSessionId);const aEl=document.getElementById('dashActiveSession');
+  if(as){const c=state.hits.filter(h=>h.sessionId===as.id).length;aEl.innerHTML='<div class="card session-card" onclick="showScreen(\'log\')"><div class="session-name">'+esc(as.name)+'</div><div class="session-date">'+formatDate(as.date)+'</div>'+(as.notes?'<div class="session-notes">'+esc(as.notes)+'</div>':'')+'<div class="session-hit-count">'+c+' hit'+(c!==1?'s':'')+' · Tap to log</div></div>';}
+  else aEl.innerHTML='<div class="card text-center text-smoke" style="cursor:pointer" onclick="openSessionModal()">No active session — tap to start one</div>';
+  const recent=[...state.hits].reverse().slice(0,8);const rEl=document.getElementById('dashRecentHits');
+  if(!recent.length){rEl.innerHTML='<div class="empty-state text-sm">No hits yet</div>';return;}
+  rEl.innerHTML=recent.map(h=>hitLogEntry(h,false)).join('');
+}
+
+
+// ── DIARY ──
+function renderDiary(){
+  const myD=state.hits.filter(h=>h.attackerId==='__me__'),myT=state.hits.filter(h=>h.defenderId==='__me__');
+  const pS=myD.reduce((s,h)=>s+(h.pts||0),0),pT=myT.reduce((s,h)=>s+(h.pts||0),0);
+  const ratio=myT.length?(myD.length/myT.length).toFixed(1):'∞';
+  document.getElementById('diaryStats').innerHTML='<div class="quick-stat"><div class="quick-stat-num">'+pS+'</div><div class="quick-stat-label">Pts Scored</div></div><div class="quick-stat"><div class="quick-stat-num text-blood">'+pT+'</div><div class="quick-stat-label">Pts Taken</div></div><div class="quick-stat"><div class="quick-stat-num">'+ratio+'</div><div class="quick-stat-label">D/T Ratio</div></div>';
+  const hd={};myT.forEach(h=>{hd[h.zone]=(hd[h.zone]||0)+1;});buildBodySVG('diaryHeatBody',false,hd);
+  renderDiaryWeaknesses(myT);renderDiaryStrengths(myD);renderDiarySessionList();
+}
+function makeSingleBarChart(data,cls){
+  const sorted=Object.entries(data).sort((a,b)=>b[1]-a[1]);if(!sorted.length)return'';
+  let h='<div class="bar-chart">';const mx=sorted[0][1];
+  sorted.forEach(([k,v])=>{h+='<div class="bar-row"><div class="bar-label">'+k+'</div><div class="bar-track"><div class="bar-fill '+cls+'" style="width:'+(v/mx*100)+'%"></div></div><div class="bar-count">'+v+'</div></div>';});
+  return h+'</div>';
+}
+function renderDiaryWeaknesses(taken){
+  let h='';const zones={},atks={};
+  taken.forEach(x=>{const zn=ZONES.find(z=>z.id===x.zone)?.name||'?';zones[zn]=(zones[zn]||0)+1;atks[x.attack]=(atks[x.attack]||0)+1;});
+  if(Object.keys(zones).length)h+='<div class="section-title mt-16">Zones Hit</div>'+makeSingleBarChart(zones,'bar-fill-blood');
+  if(Object.keys(atks).length)h+='<div class="section-title mt-16">Attacks Taken</div>'+makeSingleBarChart(atks,'bar-fill-blood');
+  document.getElementById('diaryWeaknessCharts').innerHTML=h||'<div class="empty-state text-sm">No hits taken yet</div>';
+}
+function renderDiaryStrengths(dealt){
+  let h='<p class="text-sm text-smoke mb-8">My best attacks & targets</p>';
+  const atks={},zones={};
+  dealt.forEach(x=>{atks[x.attack]=(atks[x.attack]||0)+1;const zn=ZONES.find(z=>z.id===x.zone)?.name||'?';zones[zn]=(zones[zn]||0)+1;});
+  if(Object.keys(atks).length)h+='<div class="section-title">Best Attacks</div>'+makeSingleBarChart(atks,'bar-fill-gold');
+  if(Object.keys(zones).length)h+='<div class="section-title mt-16">Favorite Targets</div>'+makeSingleBarChart(zones,'bar-fill-gold');
+  document.getElementById('diaryStrengthContent').innerHTML=(Object.keys(atks).length||Object.keys(zones).length)?h:'<div class="empty-state text-sm">No hits dealt yet</div>';
+}
+function renderDiarySessionList(){
+  const el=document.getElementById('diarySessionList');const sorted=[...state.sessions].reverse();
+  if(!sorted.length){el.innerHTML='<div class="empty-state text-sm">No sessions</div>';return;}
+  el.innerHTML=sorted.map(s=>{const hits=state.hits.filter(h=>h.sessionId===s.id);const d=hits.filter(h=>h.attackerId==='__me__').length,t=hits.filter(h=>h.defenderId==='__me__').length;
+  return'<div class="card session-card" onclick="openSessionDetail(\''+s.id+'\')"><div class="session-name">'+esc(s.name)+'</div><div class="session-date">'+formatDate(s.date)+'</div>'+(s.notes?'<div class="session-notes">'+esc(s.notes)+'</div>':'')+'<div class="session-hit-count">'+hits.length+' hits · <span class="text-gold">'+d+' dealt</span> · <span class="text-blood">'+t+' taken</span></div></div>';}).join('');
+}
+function setDiaryTab(name,btn){['weaknesses','strengths','sessions'].forEach(t=>{document.getElementById('diaryTab-'+t).style.display=t===name?'block':'none';});btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');}
+
+
+// ── SESSION DETAIL ──
+function openSessionDetail(id){
+  detailSessionId=id;const s=state.sessions.find(x=>x.id===id);document.getElementById('sdmTitle').textContent=s.name;
+  const hits=state.hits.filter(h=>h.sessionId===id);const tp=hits.reduce((s,h)=>s+(h.pts||0),0);
+  const fs=[...new Set([...hits.map(h=>h.attackerId),...hits.map(h=>h.defenderId)])];
+  let h='<div class="stat-row"><span class="stat-label">Date</span><span class="stat-value">'+formatDate(s.date)+'</span></div>';
+  h+='<div class="stat-row"><span class="stat-label">Hits</span><span class="stat-value">'+hits.length+'</span></div>';
+  h+='<div class="stat-row"><span class="stat-label">Points</span><span class="stat-value text-gold">'+tp+'</span></div>';
+  h+='<div class="stat-row"><span class="stat-label">Fighters</span><span class="stat-value">'+fs.length+'</span></div>';
+  if(s.notes)h+='<div style="margin-top:10px;font-style:italic;color:var(--smoke)">'+esc(s.notes)+'</div>';
+  document.getElementById('sdmContent').innerHTML=h;document.getElementById('sessionDetailModal').classList.add('active');
+}
+function resumeSessionFromDetail(){resumeSession(detailSessionId);closeModal('sessionDetailModal');}
+function deleteSessionFromDetail(){
+  if(!confirm('Delete session and all hits?'))return;
+  state.hits=state.hits.filter(h=>h.sessionId!==detailSessionId);state.sessions=state.sessions.filter(s=>s.id!==detailSessionId);
+  if(state.activeSessionId===detailSessionId)state.activeSessionId=null;save();closeModal('sessionDetailModal');updateSessionLabel();renderDiary();
+}
+
+
+// ── SETUP ──
+function renderSetup(){document.getElementById('setupMyName').value=state.myName;renderPresetList();renderSetupAttackList();renderPointMatrix();}
+function saveMyName(){state.myName=document.getElementById('setupMyName').value.trim();const me=state.fighters.find(f=>f.id==='__me__');if(me)me.name=state.myName||'Me';save();}
+function renderSetupAttackList(){
+  document.getElementById('setupAttackList').innerHTML=state.attacks.map((a,i)=>'<div class="atk-item"><div class="atk-item-name">'+esc(a)+'</div><button class="delete-btn" onclick="removeAttack('+i+')" title="Remove">×</button></div>').join('');
+}
+function openAddAttackModal(){document.getElementById('newAttackName').value='';document.getElementById('addAttackModal').classList.add('active');}
+function addAttackType(){const name=document.getElementById('newAttackName').value.trim();if(!name)return alert('Enter name');if(state.attacks.includes(name))return alert('Exists');state.attacks.push(name);state.points[name]=makeDefaultPts();save();closeModal('addAttackModal');renderSetup();}
+function removeAttack(i){const name=state.attacks[i];if(!confirm('Remove "'+name+'"?'))return;state.attacks.splice(i,1);delete state.points[name];save();renderSetup();}
+function renderPointMatrix(){
+  const t=document.getElementById('pointMatrix');
+  let h='<thead><tr><th>Attack</th>';
+  ZONES.forEach(z=>{const sh=z.name.replace('Head/Neck','Head').replace(' Torso','Torso').replace(' Arm','Arm').replace(' Leg','Leg');h+='<th>'+sh+'</th>';});
+  h+='</tr></thead><tbody>';
+  state.attacks.forEach(a=>{h+='<tr><td>'+esc(a)+'</td>';ZONES.forEach(z=>{const v=(state.points[a]&&state.points[a][z.id])||0;h+='<td><input type="number" min="0" max="99" value="'+v+'" onchange="setPtVal(\''+esc(a).replace(/'/g,"\\'")+'\','+z.id+',this.value)"></td>';});h+='</tr>';});
+  t.innerHTML=h+'</tbody>';
+}
+function setPtVal(attack,zoneId,val){if(!state.points[attack])state.points[attack]=makeDefaultPts();state.points[attack][zoneId]=parseInt(val)||0;save();}
+
+
+// ── PRESETS ──
+function openSavePresetModal(){document.getElementById('presetName').value='';document.getElementById('savePresetModal').classList.add('active');}
+function savePreset(){
+  const name=document.getElementById('presetName').value.trim();
+  if(!name)return alert('Give it a name');
+  const existing=state.presets.find(p=>p.name===name);
+  if(existing){if(!confirm('A ruleset named "'+name+'" exists. Overwrite it?'))return;
+  existing.attacks=JSON.parse(JSON.stringify(state.attacks));existing.points=JSON.parse(JSON.stringify(state.points));
+}else{
+  state.presets.push({id:uid(),name,attacks:JSON.parse(JSON.stringify(state.attacks)),points:JSON.parse(JSON.stringify(state.points))});
+}
+save();closeModal('savePresetModal');renderSetup();
+}
+function loadPreset(id){
+  const p=state.presets.find(x=>x.id===id);if(!p)return;
+  if(!confirm('Load "'+p.name+'"? This will replace your current attack types and point matrix.'))return;
+  state.attacks=JSON.parse(JSON.stringify(p.attacks));state.points=JSON.parse(JSON.stringify(p.points));
+  state.attacks.forEach(a=>{if(!state.points[a])state.points[a]=makeDefaultPts();ZONES.forEach(z=>{if(state.points[a][z.id]===undefined)state.points[a][z.id]=1;});});
+  save();renderSetup();
+}
+function deletePreset(id){
+  const p=state.presets.find(x=>x.id===id);if(!p)return;
+  if(!confirm('Delete ruleset "'+p.name+'"?'))return;
+  state.presets=state.presets.filter(x=>x.id!==id);save();renderSetup();
+}
+function renderPresetList(){
+  const el=document.getElementById('presetList');
+  if(!state.presets.length){el.innerHTML='<div class="text-sm text-smoke" style="padding:8px 0">No saved rulesets yet. Configure your attacks & points above, then save.</div>';return;}
+  el.innerHTML=state.presets.map(p=>{
+    const atkCount=p.attacks.length;
+    return'<div class="card" style="padding:10px 14px"><div class="flex-between"><div><div class="opp-name">'+esc(p.name)+'</div><div class="text-sm text-smoke">'+atkCount+' attack type'+(atkCount!==1?'s':'')+'</div></div><div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="loadPreset(\''+p.id+'\')" style="padding:4px 10px;font-size:10px">Load</button><button class="delete-btn" onclick="deletePreset(\''+p.id+'\')" style="font-size:18px">×</button></div></div></div>';
+  }).join('');
+}
+
+
+// ── DATA IMPORT/EXPORT ──
+function exportData(){const b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='hema-diary-export.json';a.click();}
+function importData(event){
+  const file=event.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const d=JSON.parse(e.target.result);
+      if(!confirm('Import will REPLACE all current data (fighters, sessions, hits, rulesets, config). Continue?'))return;
+      state.myName=d.myName||'';state.fighters=d.fighters||[];state.sessions=d.sessions||[];state.hits=d.hits||[];
+      state.attacks=d.attacks||[...DEFAULT_ATTACKS];state.points=d.points||defaultPoints();state.presets=d.presets||[];state.pools=d.pools||[];
+      state.activeSessionId=d.activeSessionId||null;
+      state.attacks.forEach(a=>{if(!state.points[a])state.points[a]=makeDefaultPts();ZONES.forEach(z=>{if(state.points[a][z.id]===undefined)state.points[a][z.id]=1;});});
+      ensureMe();save();updateSessionLabel();
+      alert('Import successful! '+state.hits.length+' hits, '+state.sessions.length+' sessions, '+state.presets.length+' rulesets loaded.');
+      showScreen('setup');
+    }catch(err){alert('Invalid file. Make sure it\'s a valid HEMA Diary export.');}
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+function confirmClearData(){if(!confirm('Delete ALL data?'))return;if(!confirm('Really sure?'))return;localStorage.removeItem(SK);location.reload();}
+
+
+// ── EXPORT HELPERS FOR LOG/DIARY ──
+function exportSessionLog(){
+  if(!state.activeSessionId)return alert('No active session');
+  const s=state.sessions.find(x=>x.id===state.activeSessionId);
+  const hits=state.hits.filter(h=>h.sessionId===state.activeSessionId);
+  const data={session:s.name,date:s.date,notes:s.notes,hits:hits.map(h=>({attacker:fighterName(h.attackerId),defender:fighterName(h.defenderId),attack:h.attack,zone:ZONES.find(z=>z.id===h.zone)?.name||'?',pts:h.pts,time:new Date(h.ts).toISOString()}))};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(s.name||'session').replace(/\s+/g,'-')+'-log.json';a.click();
+}
+function exportDiary(){
+  const myD=state.hits.filter(h=>h.attackerId==='__me__');
+  const myT=state.hits.filter(h=>h.defenderId==='__me__');
+  const data={
+    fighter:state.myName||'Me',
+    totalDealt:myD.length,totalTaken:myT.length,
+    ptsScored:myD.reduce((s,h)=>s+(h.pts||0),0),
+    ptsTaken:myT.reduce((s,h)=>s+(h.pts||0),0),
+    sessions:state.sessions.length,
+    dealtByAttack:{},takenByAttack:{},dealtByZone:{},takenByZone:{}
+  };
+  myD.forEach(h=>{data.dealtByAttack[h.attack]=(data.dealtByAttack[h.attack]||0)+1;const zn=ZONES.find(z=>z.id===h.zone)?.name||'?';data.dealtByZone[zn]=(data.dealtByZone[zn]||0)+1;});
+  myT.forEach(h=>{data.takenByAttack[h.attack]=(data.takenByAttack[h.attack]||0)+1;const zn=ZONES.find(z=>z.id===h.zone)?.name||'?';data.takenByZone[zn]=(data.takenByZone[zn]||0)+1;});
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='diary-export.json';a.click();
+}
+
+
+// ── JUDGE ──
+let jPool=null;
+let jBoutIdx=null;
+let jSelectedAtk=null;
+let jClockInterval=null;
+let jClockSeconds=0;
+let jClockRunning=false;
+let jClockMode='down';
+let jClockMax=180;
+let jAfterblowPts=0;
+let jScoreLimit=0;
+let jInAfterblow=false;
+let jAfterblowOrigHit=null;
+let jScoreLimitReached=false;
+
+function showJudgeSub(name){
+  document.querySelectorAll('#screen-judge .judge-sub').forEach(s=>s.classList.remove('active'));
+  document.getElementById('jSub-'+name).classList.add('active');
+  if(name==='results')renderPoolResults();
+}
+
+function renderJudgeSetup(){
+  ensureMe();
+  const rSel=document.getElementById('jPoolRuleset');
+  rSel.innerHTML='<option value="">— Use current config —</option>'+state.presets.map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join('');
+  const el=document.getElementById('jFighterSelect');
+  const pool=state.fighters.filter(f=>f.id!=='__me__');
+  if(!pool.length){el.innerHTML='<div class="empty-state text-sm">Add fighters first (from Fighters tab)</div>';return;}
+  el.innerHTML=pool.map(f=>{
+    const checked=jPool&&jPool.fighterIds.includes(f.id)?'checked':'';
+    return'<div class="j-pool-fighter"><input type="checkbox" class="j-pool-cb" value="'+f.id+'" '+checked+'><div class="opp-avatar" style="width:36px;height:36px;font-size:13px">'+fighterInitials(f.id)+'</div><div style="flex:1;font-size:15px;font-weight:600">'+esc(f.name)+'</div></div>';
+  }).join('');
+  if(jPool&&jPool.bouts.length){
+    showJudgeSub('bracket');
+    renderBracketList();
+  }
+  document.getElementById('jClockMode').onchange=function(){
+    document.getElementById('jClockTimeGroup').style.display=this.value==='down'?'block':'none';
+  };
+}
+
+// Balanced round robin: minimize consecutive appearances
+function balancedRoundRobin(ids){
+  const pairs=[];
+  for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++)pairs.push([ids[i],ids[j]]);
+  // Greedy schedule: pick the pair whose fighters have the most rest since last bout
+  const scheduled=[];
+  const lastAppearance={};
+  ids.forEach(id=>{lastAppearance[id]=-2;});
+  const remaining=[...pairs];
+  let round=0;
+  while(remaining.length){
+    // Score each remaining pair: sum of gaps since last appearance (higher = more rest = better)
+    let bestIdx=0,bestScore=-Infinity;
+    for(let i=0;i<remaining.length;i++){
+      const[a,b]=remaining[i];
+      const gapA=round-lastAppearance[a];
+      const gapB=round-lastAppearance[b];
+      const score=Math.min(gapA,gapB); // worst-case rest
+      if(score>bestScore){bestScore=score;bestIdx=i;}
     }
+    const pair=remaining.splice(bestIdx,1)[0];
+    // Alternate red/gold assignment
+    if(round%2===0) scheduled.push({redId:pair[0],goldId:pair[1]});
+    else scheduled.push({redId:pair[1],goldId:pair[0]});
+    lastAppearance[pair[0]]=round;
+    lastAppearance[pair[1]]=round;
+    round++;
+  }
+  return scheduled;
+}
 
-    function defaultPoints() {
-      const p = {};
-      const d = {
-        Cut: { 1: 5, 2: 3, 3: 3, 4: 2, 5: 2, 6: 1, 7: 1 },
-        Thrust: { 1: 5, 2: 4, 3: 4, 4: 2, 5: 2, 6: 1, 7: 1 },
-        Slice: { 1: 4, 2: 3, 3: 3, 4: 2, 5: 2, 6: 1, 7: 1 },
-        Pommel: { 1: 5, 2: 3, 3: 3, 4: 1, 5: 1, 6: 1, 7: 1 },
-        Grapple: { 1: 3, 2: 3, 3: 3, 4: 2, 5: 2, 6: 1, 7: 1 },
-        Throw: { 1: 3, 2: 4, 3: 4, 4: 2, 5: 2, 6: 2, 7: 2 },
-        Bind: { 1: 2, 2: 2, 3: 2, 4: 3, 5: 3, 6: 1, 7: 1 },
-        Kick: { 1: 1, 2: 3, 3: 3, 4: 1, 5: 1, 6: 3, 7: 3 }
-      };
-      DEFAULT_ATTACKS.forEach(a => {
-        p[a] = d[a] || makeDefaultPts();
+function generatePool(){
+  const name=document.getElementById('jPoolName').value.trim()||'Pool';
+  const checks=document.querySelectorAll('.j-pool-cb:checked');
+  const ids=[...checks].map(c=>c.value);
+  if(ids.length<2)return alert('Select at least 2 fighters');
+
+  const presetId=document.getElementById('jPoolRuleset').value;
+  jClockMode=document.getElementById('jClockMode').value;
+  jClockMax=parseInt(document.getElementById('jClockTime').value)||180;
+  jScoreLimit=parseInt(document.getElementById('jScoreLimit').value)||0;
+  jAfterblowPts=parseInt(document.getElementById('jAfterblowPts').value)||0;
+
+  let poolAttacks=[...state.attacks];
+  let poolPoints=JSON.parse(JSON.stringify(state.points));
+  if(presetId){
+    const p=state.presets.find(x=>x.id===presetId);
+    if(p){poolAttacks=JSON.parse(JSON.stringify(p.attacks));poolPoints=JSON.parse(JSON.stringify(p.points));}
+  }
+
+  const schedule=balancedRoundRobin(ids);
+  const bouts=schedule.map(s=>({
+    id:uid(),redId:s.redId,goldId:s.goldId,
+    hits:[],redScore:0,goldScore:0,completed:false,clockTime:0
+  }));
+
+  jPool={
+    id:uid(),name,fighterIds:ids,
+    bouts,attacks:poolAttacks,points:poolPoints,
+    clockMode:jClockMode,clockMax:jClockMax,
+    scoreLimit:jScoreLimit,
+    afterblowPts:jAfterblowPts,
+    createdAt:Date.now()
+  };
+
+  showJudgeSub('bracket');
+  renderBracketList();
+}
+
+function renderBracketList(){
+  document.getElementById('jPoolTitle').textContent=jPool.name;
+  const el=document.getElementById('jBracketList');
+  const completed=jPool.bouts.filter(b=>b.completed).length;
+  el.innerHTML='<p class="text-sm text-smoke mb-8">'+completed+' / '+jPool.bouts.length+' bouts complete</p>'+
+  jPool.bouts.map((b,i)=>{
+    const rn=fighterName(b.redId),gn=fighterName(b.goldId);
+    const cls=b.completed?'completed':'';
+    return'<div class="j-bracket-card '+cls+'" onclick="startBout('+i+')">'+
+    '<span class="j-bc-name j-bc-name-red">'+esc(rn)+'</span>'+
+    '<span class="j-bc-vs">vs</span>'+
+    '<span class="j-bc-name j-bc-name-gold">'+esc(gn)+'</span>'+
+    (b.completed?'<span class="j-bc-result">'+b.redScore+' — '+b.goldScore+'</span>':'<span class="j-bc-result">Tap to start</span>')+
+    '</div>';
+  }).join('');
+}
+
+function startBout(idx){
+  jBoutIdx=idx;
+  const b=jPool.bouts[idx];
+  jSelectedAtk=null;
+  jInAfterblow=false;
+  jAfterblowOrigHit=null;
+  jScoreLimitReached=false;
+  document.getElementById('jAfterblowArea').style.display='none';
+  document.getElementById('jScoreLimitBanner').style.display='none';
+  document.getElementById('jBoutTitle').textContent='Bout '+(idx+1);
+  document.getElementById('jRedName').textContent=fighterName(b.redId);
+  document.getElementById('jGoldName').textContent=fighterName(b.goldId);
+  updateBoutScores();
+
+  document.getElementById('jAtkBar').innerHTML=jPool.attacks.map(a=>
+  '<div class="j-atk-pill" onclick="jSelectAtk(this,\''+esc(a).replace(/'/g,"\\'")+'\')">'+esc(a)+'</div>'
+  ).join('');
+
+  buildJudgeBody('jRedBody','red',b);
+  buildJudgeBody('jGoldBody','gold',b);
+
+  stopClock();
+  jClockMode=jPool.clockMode;
+  jClockMax=jPool.clockMax;
+  jClockSeconds=jClockMode==='down'?jClockMax:0;
+  b.clockTime=0;
+  updateClockDisplay();
+  renderBoutLog();
+
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-judge-bout').classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.nav-btn[data-screen="judge"]')?.classList.add('active');
+}
+
+function buildJudgeBody(containerId,side,bout){
+  const c=document.getElementById(containerId);
+  let svg='<svg class="body-svg" viewBox="0 0 220 330">';
+  svg+='<path d="M110,8 Q130,8 128,35 Q128,52 119,55 L119,62 L140,65 Q148,70 146,82 L160,85 L162,130 L168,155 L150,160 L140,135 L140,168 L140,230 L142,255 L144,310 L127,315 L122,260 L118,230 L118,170 L110,168 L102,170 L102,230 L98,260 L93,315 L76,310 L80,255 L80,230 L80,168 L80,135 L70,160 L52,155 L58,130 L60,85 L74,82 Q72,70 80,65 L101,62 L101,55 Q92,52 92,35 Q90,8 110,8Z" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.6"/>';
+  ZONES.forEach(z=>{
+    svg+='<path class="zone" d="'+z.path+'" onclick="jHitZone(\''+side+'\','+z.id+')"/>';
+    const sh=z.name.replace('Head/Neck','Head').replace(' Torso','').replace(' Arm','Arm').replace(' Leg','Leg');
+    svg+='<text class="zone-label" x="'+z.lx+'" y="'+z.ly+'" style="font-size:8px;fill:var(--smoke)">'+sh+'</text>';
+  });
+  svg+='</svg>';c.innerHTML=svg;
+}
+
+function jSelectAtk(el,type){
+  jSelectedAtk=type;
+  document.querySelectorAll('.j-atk-pill').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function jHitZone(side,zoneId){
+  if(!jSelectedAtk)return alert('Select an attack type first');
+  const b=jPool.bouts[jBoutIdx];
+  const zoneName=ZONES.find(z=>z.id===zoneId)?.name||'?';
+  const scorerSide=side==='red'?'gold':'red';
+  const scorerId=side==='red'?b.goldId:b.redId;
+  const defenderId=side==='red'?b.redId:b.goldId;
+
+  // If in afterblow mode, this hit is the afterblow (fixed points, must be on the OTHER side)
+  if(jInAfterblow){
+    // Afterblow must be on the opposite side from the original hit
+    if(scorerSide===jAfterblowOrigHit.scorerSide){
+      // Same scorer — they tapped the wrong body. Ignore or warn.
+      return;
+    }
+    const abPts=jPool.afterblowPts;
+    b.hits.push({id:uid(),scorerSide,attackerId:scorerId,defenderId,zone:zoneId,attack:jSelectedAtk,pts:abPts,isAfterblow:true,clockTime:jClockSeconds,ts:Date.now()});
+    if(scorerSide==='red')b.redScore+=abPts;else b.goldScore+=abPts;
+    showHitFlash(scorerSide,abPts,'AFTERBLOW',zoneName);
+    jInAfterblow=false;jAfterblowOrigHit=null;
+    document.getElementById('jAfterblowArea').style.display='none';
+    updateBoutScores();renderBoutLog();checkScoreLimit();
+    return;
+  }
+
+  // Normal hit
+  const pts=jGetPoints(jSelectedAtk,zoneId);
+  const hit={id:uid(),scorerSide,attackerId:scorerId,defenderId,zone:zoneId,attack:jSelectedAtk,pts,clockTime:jClockSeconds,ts:Date.now()};
+  b.hits.push(hit);
+  if(scorerSide==='red')b.redScore+=pts;else b.goldScore+=pts;
+
+  updateBoutScores();renderBoutLog();
+  showHitFlash(scorerSide,pts,jSelectedAtk,zoneName);
+  checkScoreLimit();
+
+  // If afterblow is enabled, pause clock and show prompt
+  if(jPool.afterblowPts&&jPool.afterblowPts>0){
+    stopClock();
+    jInAfterblow=true;
+    jAfterblowOrigHit=hit;
+    document.getElementById('jAfterblowArea').style.display='block';
+  }
+}
+
+function cancelAfterblow(){
+  jInAfterblow=false;jAfterblowOrigHit=null;
+  document.getElementById('jAfterblowArea').style.display='none';
+}
+
+function logDouble(){
+  if(!jPool||jBoutIdx===null)return;
+  if(jInAfterblow)cancelAfterblow();
+  const b=jPool.bouts[jBoutIdx];
+  b.hits.push({
+    id:uid(),
+    scorerSide:null,
+    attackerId:b.redId,
+    defenderId:b.goldId,
+    zone:null,
+    attack:'Double',
+    pts:0,
+    isDouble:true,
+    clockTime:jClockSeconds,
+    ts:Date.now()
+  });
+  renderBoutLog();
+  showHitFlash('','','DOUBLE','');
+}
+
+function jGetPoints(attack,zoneId){
+  return(jPool.points[attack]&&jPool.points[attack][zoneId])||0;
+}
+
+function updateBoutScores(){
+  const b=jPool.bouts[jBoutIdx];
+  document.getElementById('jRedScore').textContent=b.redScore;
+  document.getElementById('jGoldScore').textContent=b.goldScore;
+}
+
+function checkScoreLimit(){
+  if(!jPool.scoreLimit||jPool.scoreLimit<=0)return;
+  const b=jPool.bouts[jBoutIdx];
+  if(b.redScore>=jPool.scoreLimit||b.goldScore>=jPool.scoreLimit){
+    if(!jScoreLimitReached){
+      jScoreLimitReached=true;
+      document.getElementById('jScoreLimitBanner').style.display='block';
+      // Also flash it big
+      const el=document.getElementById('jHitFlash');
+      el.className='j-hit-flash red show';
+      el.textContent='SCORE LIMIT!';
+      setTimeout(()=>el.classList.remove('show'),1200);
+    }
+  }
+}
+
+function showHitFlash(side,pts,atk,zone){
+  const el=document.getElementById('jHitFlash');
+  if(!side&&!pts){
+    el.className='j-hit-flash red show';
+    el.textContent=atk||zone||'';
+  } else {
+    el.className='j-hit-flash '+(side==='red'?'red':'gold-flash')+' show';
+    el.textContent=(side==='red'?'RED':'GOLD')+' +'+pts;
+  }
+  setTimeout(()=>el.classList.remove('show'),600);
+}
+
+function renderBoutLog(){
+  const b=jPool.bouts[jBoutIdx];
+  const el=document.getElementById('jBoutLog');
+  if(!b.hits.length){el.innerHTML='<div class="text-sm text-smoke text-center">Tap on a body to log a hit</div>';return;}
+  el.innerHTML=[...b.hits].reverse().map(h=>{
+    if(h.isDouble){
+      return'<div class="j-bout-entry"><div class="j-be-dot" style="background:var(--smoke)"></div><span style="color:var(--smoke);font-weight:600;width:40px">DBL</span><span>Double — no points</span><span style="margin-left:auto;color:var(--smoke);font-weight:700">—</span></div>';
+    }
+    const zn=ZONES.find(z=>z.id===h.zone)?.name||'?';
+    const isRed=h.scorerSide==='red';
+    const abTag=h.isAfterblow?' <span class="text-smoke">[AB]</span>':'';
+    return'<div class="j-bout-entry"><div class="j-be-dot '+(isRed?'j-be-red':'j-be-gold')+'"></div><span style="color:'+(isRed?'var(--blood)':'var(--gold)')+';font-weight:600;width:40px">'+(isRed?'RED':'GOLD')+'</span><span>'+h.attack+' → '+zn+abTag+'</span><span style="margin-left:auto;color:var(--gold);font-weight:700">'+(h.pts?'+'+h.pts:'0')+'</span></div>';
+  }).join('');
+}
+
+function undoLastHit(){
+  if(jInAfterblow)cancelAfterblow();
+  const b=jPool.bouts[jBoutIdx];
+  if(!b.hits.length)return;
+  b.hits.pop();
+  // Recalculate scores from scratch
+  b.redScore=0;b.goldScore=0;
+  b.hits.forEach(h=>{if(h.scorerSide==='red')b.redScore+=h.pts;else b.goldScore+=h.pts;});
+  updateBoutScores();renderBoutLog();
+  jScoreLimitReached=false;
+  document.getElementById('jScoreLimitBanner').style.display='none';
+  checkScoreLimit();
+}
+
+function endBout(){
+  cancelAfterblow();
+  if(jPool&&jBoutIdx!==null){
+    const b=jPool.bouts[jBoutIdx];
+    b.completed=true;
+
+    // Pipe bout hits into fighter profiles (state.hits)
+    // Create or find a session for this pool
+    const poolSessionId='pool-'+jPool.id;
+    if(!state.sessions.find(s=>s.id===poolSessionId)){
+      state.sessions.push({
+        id:poolSessionId,
+        name:'[Judge] '+jPool.name,
+        date:new Date().toISOString().slice(0,10),
+        notes:'Auto-created from judge pool: '+jPool.name
       });
-      return p;
     }
-
-    let state = {
-      myName: '',
-      fighters: [],
-      sessions: [],
-      hits: [],
-      attacks: [...DEFAULT_ATTACKS],
-      points: defaultPoints(),
-      activeSessionId: null
-    };
-
-    let selectedZone = null;
-    let selectedAttack = null;
-    let currentFighterId = null;
-    let heatWho = 'dealt';
-
-    const SK = 'hema-diary-v5';
-
-    function save() {
-      localStorage.setItem(SK, JSON.stringify(state));
-    }
-
-    function load() {
-      try {
-        const d = JSON.parse(localStorage.getItem(SK));
-        if (d) {
-          state.myName = d.myName || '';
-          state.fighters = d.fighters || [];
-          state.sessions = d.sessions || [];
-          state.hits = d.hits || [];
-          state.attacks = d.attacks || [...DEFAULT_ATTACKS];
-          state.points = d.points || defaultPoints();
-          state.activeSessionId = d.activeSessionId || null;
-
-          state.attacks.forEach(a => {
-            if (!state.points[a]) state.points[a] = makeDefaultPts();
-            ZONES.forEach(z => {
-              if (state.points[a][z.id] === undefined) state.points[a][z.id] = 1;
-            });
-          });
-        }
-      } catch (e) {
-        console.error('Failed to load data:', e);
+    // Add each bout hit to state.hits (skip duplicates by checking hit id)
+    b.hits.forEach(h=>{
+      if(!state.hits.find(x=>x.id===h.id)){
+        state.hits.push({
+          id:h.id,
+          sessionId:poolSessionId,
+          attackerId:h.attackerId,
+          defenderId:h.defenderId,
+          zone:h.zone,
+          attack:h.attack,
+          pts:h.pts,
+          ts:h.ts
+        });
       }
-    }
-
-    function uid() {
-      return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-    }
-
-    function esc(s) {
-      const d = document.createElement('div');
-      d.textContent = s;
-      return d.innerHTML;
-    }
-
-    function formatDate(d) {
-      if (!d) return '';
-      const dt = new Date(d + 'T00:00:00');
-      return dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-    }
-
-    function fighterName(id) {
-      if (id === '__me__') return state.myName || 'Me';
-      const f = state.fighters.find(x => x.id === id);
-      return f ? f.name : '?';
-    }
-
-    function fighterInitials(id) {
-      const n = fighterName(id);
-      return n.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    }
-
-    function getPoints(attack, zoneId) {
-      return (state.points[attack] && state.points[attack][zoneId]) || 0;
-    }
-
-    function closeModal(id) {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('active');
-    }
-
-    document.querySelectorAll('.modal-overlay').forEach(m => {
-      m.addEventListener('click', e => {
-        if (e.target === m) m.classList.remove('active');
-      });
     });
 
-    function ensureMe() {
-      if (!state.fighters.find(f => f.id === '__me__')) {
-        state.fighters.unshift({ id: '__me__', name: state.myName || 'Me', notes: '' });
-        save();
-      } else {
-        const me = state.fighters.find(f => f.id === '__me__');
-        if (me) me.name = state.myName || 'Me';
-      }
-    }
+    // Save pool state
+    const existIdx=state.pools.findIndex(p=>p.id===jPool.id);
+    if(existIdx>=0)state.pools[existIdx]=JSON.parse(JSON.stringify(jPool));
+    else state.pools.push(JSON.parse(JSON.stringify(jPool)));
+    save();
+  }
+  stopClock();
+  showScreen('judge');
+  showJudgeSub('bracket');
+  renderBracketList();
+}
 
-    function showScreen(name, btn) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      const screen = document.getElementById('screen-' + name);
-      if (screen) screen.classList.add('active');
 
-      document.querySelectorAll('.nav-btn').
+// ── CLOCK ──
+function toggleClock(){if(jClockRunning)stopClock();else startClock();}
+function startClock(){
+  jClockRunning=true;
+  document.getElementById('jClockStartBtn').textContent='Stop';
+  document.getElementById('jClockDisplay').classList.add('running');
+  document.getElementById('jClockDisplay').classList.remove('warn');
+  jClockInterval=setInterval(()=>{
+    if(jClockMode==='down'){
+      jClockSeconds--;
+      if(jClockSeconds<=10&&jClockSeconds>0)document.getElementById('jClockDisplay').classList.add('warn');
+      if(jClockSeconds<=0){jClockSeconds=0;stopClock();document.getElementById('jClockDisplay').classList.add('warn');}
+    }else{jClockSeconds++;}
+    updateClockDisplay();
+  },1000);
+}
+function stopClock(){
+  jClockRunning=false;clearInterval(jClockInterval);
+  document.getElementById('jClockStartBtn').textContent='Start';
+  document.getElementById('jClockDisplay').classList.remove('running');
+}
+function resetClock(){
+  stopClock();jClockSeconds=jClockMode==='down'?jClockMax:0;
+  document.getElementById('jClockDisplay').classList.remove('warn');
+  updateClockDisplay();
+}
+function updateClockDisplay(){
+  const m=Math.floor(Math.abs(jClockSeconds)/60);const s=Math.abs(jClockSeconds)%60;
+  document.getElementById('jClockDisplay').textContent=m+':'+(s<10?'0':'')+s;
+}
+
+
+// ── POOL RESULTS ──
+function renderPoolResults(){
+  if(!jPool){document.getElementById('jResultsContent').innerHTML='<div class="empty-state">No pool data</div>';return;}
+  const standings={};
+  jPool.fighterIds.forEach(id=>{standings[id]={id,name:fighterName(id),w:0,l:0,d:0,ps:0,pt:0,bouts:0};});
+  jPool.bouts.filter(b=>b.completed).forEach(b=>{
+    standings[b.redId].ps+=b.redScore;standings[b.redId].pt+=b.goldScore;standings[b.redId].bouts++;
+    standings[b.goldId].ps+=b.goldScore;standings[b.goldId].pt+=b.redScore;standings[b.goldId].bouts++;
+    if(b.redScore>b.goldScore){standings[b.redId].w++;standings[b.goldId].l++;}
+    else if(b.goldScore>b.redScore){standings[b.goldId].w++;standings[b.redId].l++;}
+    else{standings[b.redId].d++;standings[b.goldId].d++;}
+  });
+  const sorted=Object.values(standings).sort((a,b)=>b.w-a.w||(b.ps-b.pt)-(a.ps-a.pt)||b.ps-a.ps);
+  let h='<table class="j-results-table"><thead><tr><th>#</th><th>Fighter</th><th>W</th><th>L</th><th>D</th><th>PF</th><th>PA</th><th>Diff</th></tr></thead><tbody>';
+  sorted.forEach((s,i)=>{
+    h+='<tr><td>'+(i+1)+'</td><td style="font-weight:600">'+esc(s.name)+'</td><td>'+s.w+'</td><td>'+s.l+'</td><td>'+s.d+'</td><td class="text-gold">'+s.ps+'</td><td class="text-blood">'+s.pt+'</td><td>'+(s.ps-s.pt)+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  h+='<hr class="divider"><div class="section-title">Bout Details</div>';
+  jPool.bouts.forEach((b,i)=>{
+    if(!b.completed)return;
+    const rn=fighterName(b.redId),gn=fighterName(b.goldId);
+    h+='<div class="card" style="padding:10px"><div class="flex-between"><span><span class="text-blood">'+esc(rn)+'</span> <span class="text-smoke">vs</span> <span class="text-gold">'+esc(gn)+'</span></span><span style="font-family:Cinzel,serif;font-weight:700"><span class="text-blood">'+b.redScore+'</span> — <span class="text-gold">'+b.goldScore+'</span></span></div></div>';
+  });
+  document.getElementById('jResultsContent').innerHTML=h;
+}
+function exportPoolResults(){
+  if(!jPool)return alert('No pool to export');
+  const data={pool:jPool.name,date:new Date().toISOString(),scoreLimit:jPool.scoreLimit,afterblowPts:jPool.afterblowPts,clockMode:jPool.clockMode,clockMax:jPool.clockMax,
+  fighters:jPool.fighterIds.map(id=>({id,name:fighterName(id)})),
+  bouts:jPool.bouts.map(b=>({red:fighterName(b.redId),gold:fighterName(b.goldId),redScore:b.redScore,goldScore:b.goldScore,completed:b.completed,
+  hits:b.hits.map(h=>({scorer:h.scorerSide,attack:h.attack,zone:ZONES.find(z=>z.id===h.zone)?.name||'?',pts:h.pts,isAfterblow:!!h.isAfterblow}))}))};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=jPool.name.replace(/\s+/g,'-')+'-results.json';a.click();
+}
+function exportPoolCSV(){
+  if(!jPool)return alert('No pool to export');
+  const standings={};
+  jPool.fighterIds.forEach(id=>{standings[id]={name:fighterName(id),w:0,l:0,d:0,ps:0,pt:0};});
+  jPool.bouts.filter(b=>b.completed).forEach(b=>{
+    standings[b.redId].ps+=b.redScore;standings[b.redId].pt+=b.goldScore;
+    standings[b.goldId].ps+=b.goldScore;standings[b.goldId].pt+=b.redScore;
+    if(b.redScore>b.goldScore){standings[b.redId].w++;standings[b.goldId].l++;}
+    else if(b.goldScore>b.redScore){standings[b.goldId].w++;standings[b.redId].l++;}
+    else{standings[b.redId].d++;standings[b.goldId].d++;}
+  });
+  const sorted=Object.values(standings).sort((a,b)=>b.w-a.w||(b.ps-b.pt)-(a.ps-a.pt));
+  let csv='Rank,Fighter,Wins,Losses,Draws,Points For,Points Against,Diff\n';
+  sorted.forEach((s,i)=>{csv+=(i+1)+',"'+s.name+'",'+s.w+','+s.l+','+s.d+','+s.ps+','+s.pt+','+(s.ps-s.pt)+'\n';});
+  csv+='\nBout,Red,Gold,Red Score,Gold Score,Winner\n';
+  jPool.bouts.forEach((b,i)=>{
+    if(!b.completed)return;
+    const winner=b.redScore>b.goldScore?fighterName(b.redId):(b.goldScore>b.redScore?fighterName(b.goldId):'Draw');
+    csv+=(i+1)+',"'+fighterName(b.redId)+'","'+fighterName(b.goldId)+'",'+b.redScore+','+b.goldScore+',"'+winner+'"\n';
+  });
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=jPool.name.replace(/\s+/g,'-')+'-results.csv';a.click();
+}
+
+
+// ── INIT ──
+load();ensureMe();updateSessionLabel();renderDashboard();
+
+
+// ── PWA SERVICE WORKER ──
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+
+</script>
+</body>
+</html>
