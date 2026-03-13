@@ -242,19 +242,16 @@
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
   .j-pool-fighter .opp-avatar { width: 36px; height: 36px; font-size: 14px; }
-  .j-pool-cb { width: 20px; height: 20px; accent-color: var(--gold); flex-shrink: 0; }
   .j-bracket-card {
     background: var(--steel); border: 1px solid var(--steel-light);
     border-radius: 6px; padding: 10px 12px; margin-bottom: 8px;
     display: flex; align-items: center; gap: 10px; cursor: pointer;
   }
   .j-bracket-card.completed { opacity: 0.6; }
-  .j-bracket-card.current { border-color: var(--gold); box-shadow: 0 0 12px rgba(201,168,76,0.2); }
   .j-bc-vs { color: var(--smoke); font-size: 12px; flex-shrink: 0; }
   .j-bc-name { font-weight: 600; font-size: 14px; }
   .j-bc-name-red { color: var(--blood); }
   .j-bc-name-gold { color: var(--gold); }
-  .j-bc-score { font-family: 'Cinzel', serif; font-weight: 700; font-size: 14px; }
   .j-bc-result { font-size: 11px; color: var(--smoke); margin-left: auto; }
   .j-results-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .j-results-table th {
@@ -556,12 +553,12 @@
 
     <hr class="divider">
     <div class="flex-between mb-8">
-      <label style="margin:0">Select Fighters for Pool</label>
-      <button class="btn btn-sm" onclick="openAddFighterModal()">+ Add</button>
+      <label style="margin:0">Fighters in Pool</label>
+      <button class="btn btn-sm" onclick="openAddToPoolModal()">+ Add to Pool</button>
     </div>
     <div id="jFighterSelect"></div>
 
-    <div class="mt-16">
+    <div class="mt-16" id="jPoolButtons">
       <button class="btn" onclick="generatePool()">Generate Round Robin</button>
     </div>
   </div>
@@ -569,9 +566,8 @@
   <div class="judge-sub" id="jSub-bracket">
     <div class="flex-between mb-8">
       <div class="section-title" style="margin:0;border:none;padding:0" id="jPoolTitle">Pool</div>
-      <button class="btn btn-sm btn-ghost" onclick="showJudgeSub('setup')">← Edit Pool</button>
+      <button class="btn btn-sm btn-ghost" onclick="showJudgeSub('setup');renderJudgeSetup()">← Edit Pool</button>
     </div>
-    <div id="jPoolFighters" class="mb-8"></div>
     <div id="jBracketList"></div>
     <hr class="divider">
     <div style="display:flex;gap:8px">
@@ -741,6 +737,17 @@
     <div class="form-group"><label>Ruleset Name</label><input type="text" id="presetName" placeholder="e.g. HEMA Longsword"></div>
     <button class="btn" onclick="savePreset()">Save Ruleset</button>
     <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('savePresetModal')">Cancel</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addToPoolModal">
+  <div class="modal">
+    <div class="modal-title">Add to Pool</div>
+    <div class="form-group"><input type="text" id="poolFighterSearch" placeholder="Search fighters..." oninput="renderAddToPoolList()"></div>
+    <div id="addToPoolList" style="max-height:300px;overflow-y:auto"></div>
+    <hr class="divider">
+    <button class="btn btn-sm" onclick="closeModal('addToPoolModal');openAddFighterModal()" style="width:100%">+ Create New Fighter</button>
+    <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('addToPoolModal')">Done</button></div>
   </div>
 </div>
 
@@ -1297,24 +1304,171 @@ function showJudgeSub(name){
   if(name==='results')renderPoolResults();
 }
 
+// Staged fighter IDs for pool setup
+var jPoolStagedIds=[];
+
 function renderJudgeSetup(){
   ensureMe();
-  const rSel=document.getElementById('jPoolRuleset');
+  var rSel=document.getElementById('jPoolRuleset');
   rSel.innerHTML='<option value="">— Use current config —</option>'+state.presets.map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join('');
-  const el=document.getElementById('jFighterSelect');
-  const pool=state.fighters.filter(f=>f.id!=='__me__');
-  if(!pool.length){el.innerHTML='<div class="empty-state text-sm">Add fighters first (from Fighters tab)</div>';return;}
-  el.innerHTML=pool.map(f=>{
-    const checked=jPool&&jPool.fighterIds.includes(f.id)?'checked':'';
-    return'<div class="j-pool-fighter"><input type="checkbox" class="j-pool-cb" value="'+f.id+'" '+checked+'><div class="opp-avatar" style="width:36px;height:36px;font-size:13px">'+fighterInitials(f.id)+'</div><div style="flex:1"><div style="font-size:15px;font-weight:600">'+esc(f.name)+'</div>'+(f.club?'<div class="text-sm text-smoke">'+esc(f.club)+'</div>':'')+'</div></div>';
-  }).join('');
+
+  // Restore form values from existing pool
+  if(jPool){
+    document.getElementById('jPoolName').value=jPool.name||'';
+    document.getElementById('jClockMode').value=jPool.clockMode||'down';
+    document.getElementById('jClockTime').value=jPool.clockMax||180;
+    document.getElementById('jClockTimeGroup').style.display=(jPool.clockMode==='down')?'block':'none';
+    document.getElementById('jScoreLimit').value=jPool.scoreLimit||0;
+    document.getElementById('jAfterblowPts').value=jPool.afterblowPts||0;
+  }
+
+  // Initialize staged IDs from existing pool or empty
+  if(jPool&&jPool.fighterIds.length){
+    jPoolStagedIds=jPool.fighterIds.slice();
+  } else if(!jPoolStagedIds.length){
+    jPoolStagedIds=[];
+  }
+
+  renderPoolFighterList();
+
+  // Show appropriate buttons
+  var btnArea=document.getElementById('jPoolButtons');
+  btnArea.innerHTML='';
   if(jPool&&jPool.bouts.length){
+    var btnRow=document.createElement('div');
+    btnRow.style.cssText='display:flex;gap:8px';
+    var updateBtn=document.createElement('button');
+    updateBtn.className='btn';
+    updateBtn.style.flex='1';
+    updateBtn.textContent='Update Pool';
+    updateBtn.onclick=function(){updatePool();};
+    var backBtn=document.createElement('button');
+    backBtn.className='btn btn-ghost';
+    backBtn.style.flex='1';
+    backBtn.textContent='Back to Bracket';
+    backBtn.onclick=function(){showJudgeSub('bracket');renderBracketList();};
+    btnRow.appendChild(updateBtn);
+    btnRow.appendChild(backBtn);
+    btnArea.appendChild(btnRow);
+  } else {
+    var genBtn=document.createElement('button');
+    genBtn.className='btn';
+    genBtn.textContent='Generate Round Robin';
+    genBtn.onclick=function(){generatePool();};
+    btnArea.appendChild(genBtn);
+  }
+
+  if(jPool&&jPool.bouts.length&&!document.getElementById('jSub-setup').classList.contains('active')){
     showJudgeSub('bracket');
     renderBracketList();
   }
   document.getElementById('jClockMode').onchange=function(){
     document.getElementById('jClockTimeGroup').style.display=this.value==='down'?'block':'none';
   };
+}
+
+function renderPoolFighterList(){
+  var el=document.getElementById('jFighterSelect');
+  if(!jPoolStagedIds.length){
+    el.innerHTML='<div class="empty-state text-sm">No fighters in pool yet. Tap "+ Add to Pool" above.</div>';
+    return;
+  }
+  el.innerHTML='';
+  jPoolStagedIds.forEach(function(id){
+    var f=state.fighters.find(function(x){return x.id===id;});
+    if(!f)return;
+    var hasBouts=jPool&&jPool.bouts.some(function(b){return(b.redId===id||b.goldId===id)&&b.completed;});
+    var row=document.createElement('div');
+    row.className='j-pool-fighter';
+    var avi=document.createElement('div');
+    avi.className='opp-avatar';
+    avi.style.cssText='width:36px;height:36px;font-size:13px';
+    avi.textContent=fighterInitials(id);
+    row.appendChild(avi);
+    var info=document.createElement('div');
+    info.style.flex='1';
+    var nameDiv=document.createElement('div');
+    nameDiv.style.cssText='font-size:15px;font-weight:600';
+    nameDiv.textContent=f.name;
+    if(hasBouts) nameDiv.textContent+=' (has results)';
+    info.appendChild(nameDiv);
+    if(f.club){
+      var clubDiv=document.createElement('div');
+      clubDiv.className='text-sm text-smoke';
+      clubDiv.textContent=f.club;
+      info.appendChild(clubDiv);
+    }
+    row.appendChild(info);
+    if(!hasBouts){
+      var btn=document.createElement('button');
+      btn.className='delete-btn';
+      btn.style.cssText='font-size:18px;padding:4px 8px';
+      btn.textContent='×';
+      btn.onclick=function(){
+        jPoolStagedIds=jPoolStagedIds.filter(function(x){return x!==id;});
+        renderPoolFighterList();
+      };
+      row.appendChild(btn);
+    }
+    el.appendChild(row);
+  });
+}
+
+function openAddToPoolModal(){
+  document.getElementById('poolFighterSearch').value='';
+  document.getElementById('addToPoolModal').classList.add('active');
+  renderAddToPoolList();
+}
+
+function renderAddToPoolList(){
+  var search=(document.getElementById('poolFighterSearch').value||'').toLowerCase();
+  var available=state.fighters.filter(function(f){
+    if(f.id==='__me__')return false;
+    if(jPoolStagedIds.indexOf(f.id)>=0)return false;
+    if(search&&f.name.toLowerCase().indexOf(search)<0&&(f.club||'').toLowerCase().indexOf(search)<0)return false;
+    return true;
+  });
+  var el=document.getElementById('addToPoolList');
+  if(!available.length){
+    el.innerHTML='<div class="text-sm text-smoke text-center" style="padding:16px">'+(search?'No matches':'All fighters are in the pool already')+'</div>';
+    return;
+  }
+  el.innerHTML='';
+  available.forEach(function(f){
+    var row=document.createElement('div');
+    row.className='j-pool-fighter';
+    row.style.cursor='pointer';
+    var avi=document.createElement('div');
+    avi.className='opp-avatar';
+    avi.style.cssText='width:36px;height:36px;font-size:13px';
+    avi.textContent=fighterInitials(f.id);
+    row.appendChild(avi);
+    var info=document.createElement('div');
+    info.style.flex='1';
+    var nameDiv=document.createElement('div');
+    nameDiv.style.cssText='font-size:15px;font-weight:600';
+    nameDiv.textContent=f.name;
+    info.appendChild(nameDiv);
+    if(f.club){
+      var clubDiv=document.createElement('div');
+      clubDiv.className='text-sm text-smoke';
+      clubDiv.textContent=f.club;
+      info.appendChild(clubDiv);
+    }
+    row.appendChild(info);
+    var addBtn=document.createElement('button');
+    addBtn.className='btn btn-sm';
+    addBtn.style.cssText='padding:4px 12px;font-size:10px';
+    addBtn.textContent='+ Add';
+    addBtn.onclick=function(e){
+      e.stopPropagation();
+      jPoolStagedIds.push(f.id);
+      renderAddToPoolList();
+      renderPoolFighterList();
+    };
+    row.appendChild(addBtn);
+    el.appendChild(row);
+  });
 }
 
 // Balanced round robin: minimize consecutive appearances
@@ -1349,10 +1503,9 @@ function balancedRoundRobin(ids){
 }
 
 function generatePool(){
-  const name=document.getElementById('jPoolName').value.trim()||'Pool';
-  const checks=document.querySelectorAll('.j-pool-cb:checked');
-  const ids=[...checks].map(c=>c.value);
-  if(ids.length<2)return alert('Select at least 2 fighters');
+  var name=document.getElementById('jPoolName').value.trim()||'Pool';
+  var ids=jPoolStagedIds.slice();
+  if(ids.length<2)return alert('Add at least 2 fighters to the pool');
 
   const presetId=document.getElementById('jPoolRuleset').value;
   jClockMode=document.getElementById('jClockMode').value;
@@ -1386,25 +1539,66 @@ function generatePool(){
   renderBracketList();
 }
 
+function updatePool(){
+  if(!jPool)return;
+  var newIds=jPoolStagedIds.slice();
+  if(newIds.length<2)return alert('Pool needs at least 2 fighters');
+
+  // Update pool settings from form
+  jPool.name=document.getElementById('jPoolName').value.trim()||jPool.name;
+  jPool.clockMode=document.getElementById('jClockMode').value;
+  jPool.clockMax=parseInt(document.getElementById('jClockTime').value)||180;
+  jPool.scoreLimit=parseInt(document.getElementById('jScoreLimit').value)||0;
+  jPool.afterblowPts=parseInt(document.getElementById('jAfterblowPts').value)||0;
+
+  // Find removed fighters (were in pool, now removed)
+  var removed=jPool.fighterIds.filter(function(id){return newIds.indexOf(id)<0;});
+  // Find added fighters (newly checked)
+  var added=newIds.filter(function(id){return jPool.fighterIds.indexOf(id)<0;});
+
+  // Remove unchecked fighters and their incomplete bouts
+  removed.forEach(function(id){
+    jPool.bouts=jPool.bouts.filter(function(b){
+      if((b.redId===id||b.goldId===id)&&!b.completed)return false;
+      return true;
+    });
+  });
+  jPool.fighterIds=newIds;
+
+  // Add new pairings for added fighters
+  if(added.length){
+    var newPairs=[];
+    added.forEach(function(newId){
+      newIds.forEach(function(otherId){
+        if(otherId===newId)return;
+        if(added.indexOf(otherId)>=0&&otherId<newId)return; // avoid duplicate pair between two new fighters
+        // Check if bout already exists
+        var exists=jPool.bouts.some(function(b){
+          return(b.redId===newId&&b.goldId===otherId)||(b.redId===otherId&&b.goldId===newId);
+        });
+        if(!exists){
+          newPairs.push({
+            id:uid(),redId:newId,goldId:otherId,
+            hits:[],redScore:0,goldScore:0,completed:false,clockTime:0
+          });
+        }
+      });
+    });
+    jPool.bouts=jPool.bouts.concat(newPairs);
+  }
+
+  showJudgeSub('bracket');
+  renderBracketList();
+}
+
 function renderBracketList(){
   document.getElementById('jPoolTitle').textContent=jPool.name;
-
-  // Render pool fighters with remove buttons
-  const fEl=document.getElementById('jPoolFighters');
-  fEl.innerHTML='<label style="margin-bottom:6px">Fighters in Pool</label><div style="display:flex;flex-wrap:wrap;gap:6px">'+
-    jPool.fighterIds.map(id=>{
-      const name=fighterName(id);
-      const club=state.fighters.find(f=>f.id===id)?.club;
-      const hasBouts=jPool.bouts.some(b=>(b.redId===id||b.goldId===id)&&b.completed);
-      return'<div style="display:flex;align-items:center;gap:4px;background:var(--steel);border:1px solid var(--steel-light);border-radius:4px;padding:4px 8px;font-size:13px"><span>'+esc(name)+(club?' <span class="text-smoke text-sm">'+esc(club)+'</span>':'')+'</span>'+(hasBouts?'':'<button class="delete-btn" onclick="event.stopPropagation();removeFromPool(\''+id+'\')" style="font-size:14px;padding:0 2px;margin-left:4px">×</button>')+'</div>';
-    }).join('')+'</div>';
-
-  const el=document.getElementById('jBracketList');
-  const completed=jPool.bouts.filter(b=>b.completed).length;
+  var el=document.getElementById('jBracketList');
+  var completed=jPool.bouts.filter(function(b){return b.completed;}).length;
   el.innerHTML='<p class="text-sm text-smoke mb-8">'+completed+' / '+jPool.bouts.length+' bouts complete</p>'+
-  jPool.bouts.map((b,i)=>{
-    const rn=fighterName(b.redId),gn=fighterName(b.goldId);
-    const cls=b.completed?'completed':'';
+  jPool.bouts.map(function(b,i){
+    var rn=fighterName(b.redId),gn=fighterName(b.goldId);
+    var cls=b.completed?'completed':'';
     return'<div class="j-bracket-card '+cls+'" onclick="startBout('+i+')">'+
     '<span class="j-bc-name j-bc-name-red">'+esc(rn)+'</span>'+
     '<span class="j-bc-vs">vs</span>'+
@@ -1412,20 +1606,6 @@ function renderBracketList(){
     (b.completed?'<span class="j-bc-result">'+b.redScore+' — '+b.goldScore+'</span>':'<span class="j-bc-result">Tap to start</span>')+
     '</div>';
   }).join('');
-}
-
-function removeFromPool(id){
-  if(!jPool)return;
-  const name=fighterName(id);
-  // Check if they have any completed bouts
-  const hasBouts=jPool.bouts.some(b=>(b.redId===id||b.goldId===id)&&b.completed);
-  if(hasBouts)return alert(name+' has completed bouts and cannot be removed.');
-  if(!confirm('Remove '+name+' from this pool? Their uncompleted bouts will be deleted.'))return;
-  // Remove their bouts
-  jPool.bouts=jPool.bouts.filter(b=>!(b.redId===id||b.goldId===id));
-  // Remove from fighter list
-  jPool.fighterIds=jPool.fighterIds.filter(x=>x!==id);
-  renderBracketList();
 }
 
 function startBout(idx){
@@ -1560,23 +1740,28 @@ function updateBoutScores(){
   document.getElementById('jGoldScore').textContent=b.goldScore;
 }
 
+var jFlashTimeout=null;
+
 function checkScoreLimit(){
   if(!jPool.scoreLimit||jPool.scoreLimit<=0)return;
   const b=jPool.bouts[jBoutIdx];
   if(b.redScore>=jPool.scoreLimit||b.goldScore>=jPool.scoreLimit){
     if(!jScoreLimitReached){
       jScoreLimitReached=true;
+      stopClock();
       document.getElementById('jScoreLimitBanner').style.display='block';
-      // Also flash it big
+      // Flash it big — clear any existing flash first
+      clearTimeout(jFlashTimeout);
       const el=document.getElementById('jHitFlash');
       el.className='j-hit-flash red show';
       el.textContent='SCORE LIMIT!';
-      setTimeout(()=>el.classList.remove('show'),1200);
+      jFlashTimeout=setTimeout(()=>el.classList.remove('show'),2000);
     }
   }
 }
 
 function showHitFlash(side,pts,atk,zone){
+  clearTimeout(jFlashTimeout);
   const el=document.getElementById('jHitFlash');
   if(!side&&!pts){
     el.className='j-hit-flash red show';
@@ -1585,7 +1770,7 @@ function showHitFlash(side,pts,atk,zone){
     el.className='j-hit-flash '+(side==='red'?'red':'gold-flash')+' show';
     el.textContent=(side==='red'?'RED':'GOLD')+' +'+pts;
   }
-  setTimeout(()=>el.classList.remove('show'),600);
+  jFlashTimeout=setTimeout(()=>el.classList.remove('show'),600);
 }
 
 function renderBoutLog(){
