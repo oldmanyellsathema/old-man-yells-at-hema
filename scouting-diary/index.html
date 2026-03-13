@@ -445,9 +445,15 @@
 
 <!-- FIGHTERS -->
 <div class="screen" id="screen-fighters">
-  <div class="flex-between mb-16">
+  <div class="flex-between mb-8">
     <div class="section-title" style="margin-bottom:0;border:none;padding:0">Fighters</div>
     <button class="btn btn-sm" onclick="openAddFighterModal()">+ Add</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:12px">
+    <input type="text" id="fighterSearch" placeholder="Search name..." oninput="renderFighterList()" style="flex:1;padding:8px 10px;font-size:14px">
+    <select id="fighterClubFilter" onchange="renderFighterList()" style="flex:1;padding:8px 10px;font-size:14px">
+      <option value="">All Clubs</option>
+    </select>
   </div>
   <div id="fighterList" class="cards-grid"></div>
 </div>
@@ -459,6 +465,10 @@
     <div class="detail-title" id="fdName"></div>
   </div>
   <div class="quick-stats" id="fdStats"></div>
+  <div class="form-group">
+    <label>Club / School</label>
+    <input type="text" id="fdClub" placeholder="Club name..." oninput="saveFighterClub()">
+  </div>
   <div class="form-group">
     <label>Notes</label>
     <textarea id="fdNotes" placeholder="Scouting notes..." rows="3" oninput="saveFighterNotes()"></textarea>
@@ -697,7 +707,8 @@
   <div class="modal">
     <div class="modal-title">Add Fighter</div>
     <div class="form-group"><label>Name</label><input type="text" id="newFighterName" placeholder="Fighter name"></div>
-    <div class="form-group"><label>Notes</label><textarea id="newFighterNotes" rows="2" placeholder="Club, style..."></textarea></div>
+    <div class="form-group"><label>Club / School</label><input type="text" id="newFighterClub" placeholder="e.g. Iron Gate HEMA"></div>
+    <div class="form-group"><label>Notes</label><textarea id="newFighterNotes" rows="2" placeholder="Style, weight class..."></textarea></div>
     <button class="btn" onclick="addFighter()">Add Fighter</button>
     <div class="text-center mt-8"><button class="btn btn-sm btn-ghost" onclick="closeModal('addFighterModal')">Cancel</button></div>
   </div>
@@ -889,21 +900,39 @@ function populateFighterDropdowns(){
   if(dv&&state.fighters.find(f=>f.id===dv))d.value=dv;
 }
 function swapFighters(){const a=document.getElementById('logAttacker'),d=document.getElementById('logDefender');const t=a.value;a.value=d.value;d.value=t;}
-function openAddFighterModal(){document.getElementById('newFighterName').value='';document.getElementById('newFighterNotes').value='';document.getElementById('addFighterModal').classList.add('active');}
+function openAddFighterModal(){document.getElementById('newFighterName').value='';document.getElementById('newFighterClub').value='';document.getElementById('newFighterNotes').value='';document.getElementById('addFighterModal').classList.add('active');}
 function addFighter(){
   const name=document.getElementById('newFighterName').value.trim();
   if(!name)return alert('Enter a name');
-  state.fighters.push({id:uid(),name,notes:document.getElementById('newFighterNotes').value.trim()});
-  save();closeModal('addFighterModal');renderLogScreen();renderFighterList();
+  state.fighters.push({id:uid(),name,club:document.getElementById('newFighterClub').value.trim(),notes:document.getElementById('newFighterNotes').value.trim()});
+  save();closeModal('addFighterModal');renderLogScreen();renderFighterList();renderJudgeSetup();
 }
 function renderFighterList(){
   ensureMe();const el=document.getElementById('fighterList');
-  el.innerHTML=state.fighters.map(f=>{
+  const search=(document.getElementById('fighterSearch')?.value||'').toLowerCase();
+  const clubFilter=document.getElementById('fighterClubFilter')?.value||'';
+
+  // Populate club filter dropdown
+  const clubSelect=document.getElementById('fighterClubFilter');
+  if(clubSelect){
+    const clubs=[...new Set(state.fighters.map(f=>f.club).filter(c=>c))].sort();
+    const prevVal=clubSelect.value;
+    clubSelect.innerHTML='<option value="">All Clubs</option>'+clubs.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
+    clubSelect.value=prevVal;
+  }
+
+  let filtered=state.fighters;
+  if(search){filtered=filtered.filter(f=>f.name.toLowerCase().includes(search)||(f.club||'').toLowerCase().includes(search));}
+  if(clubFilter){filtered=filtered.filter(f=>(f.club||'')===clubFilter);}
+
+  if(!filtered.length){el.innerHTML='<div class="empty-state text-sm">'+(search||clubFilter?'No fighters match':'Add fighters to start scouting')+'</div>';return;}
+  el.innerHTML=filtered.map(f=>{
     const asA=state.hits.filter(h=>h.attackerId===f.id).length;
     const asD=state.hits.filter(h=>h.defenderId===f.id).length;
     const pts=state.hits.filter(h=>h.attackerId===f.id).reduce((s,h)=>s+(h.pts||0),0);
     const isMe=f.id==='__me__';
-    return '<div class="card opp-card" onclick="showFighterDetail(\''+f.id+'\')"><div class="opp-avatar '+(isMe?'me-avatar':'')+'">'+fighterInitials(f.id)+'</div><div class="opp-info"><div class="opp-name">'+esc(f.name)+(isMe?' <span class="text-smoke text-sm">(Me)</span>':'')+'</div><div class="opp-stats"><span class="text-gold">'+asA+' dealt</span> · <span class="text-blood">'+asD+' taken</span> · '+pts+' pts</div></div><div class="opp-arrow">›</div></div>';
+    const clubTag=f.club?' <span class="text-smoke text-sm">· '+esc(f.club)+'</span>':'';
+    return '<div class="card opp-card" onclick="showFighterDetail(\''+f.id+'\')"><div class="opp-avatar '+(isMe?'me-avatar':'')+'">'+fighterInitials(f.id)+'</div><div class="opp-info"><div class="opp-name">'+esc(f.name)+(isMe?' <span class="text-smoke text-sm">(Me)</span>':'')+clubTag+'</div><div class="opp-stats"><span class="text-gold">'+asA+' dealt</span> · <span class="text-blood">'+asD+' taken</span> · '+pts+' pts</div></div><div class="opp-arrow">›</div></div>';
   }).join('');
 }
 
@@ -913,6 +942,7 @@ function showFighterDetail(id){
   currentFighterId=id;heatWho='dealt';
   const f=state.fighters.find(x=>x.id===id);
   document.getElementById('fdName').textContent=f.name+(f.id==='__me__'?' (Me)':'');
+  document.getElementById('fdClub').value=f.club||'';
   document.getElementById('fdNotes').value=f.notes||'';
   const asA=state.hits.filter(h=>h.attackerId===id);
   const asD=state.hits.filter(h=>h.defenderId===id);
@@ -945,6 +975,7 @@ function deleteFighter(id){
   showScreen('fighters');
 }
 function saveFighterNotes(){const f=state.fighters.find(x=>x.id===currentFighterId);if(f){f.notes=document.getElementById('fdNotes').value;save();}}
+function saveFighterClub(){const f=state.fighters.find(x=>x.id===currentFighterId);if(f){f.club=document.getElementById('fdClub').value.trim();save();}}
 function setFdTab(name,btn){['heatmap','attacks','zones','history'].forEach(t=>{document.getElementById('fdTab-'+t).style.display=t===name?'block':'none';});btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');}
 function setHeatWho(w){heatWho=w;document.getElementById('heatDealt').className='who-btn'+(w==='dealt'?' active-dealt':'');document.getElementById('heatTaken').className='who-btn'+(w==='taken'?' active-taken':'');renderFdHeatMap();}
 function renderFdHeatMap(){
@@ -1274,7 +1305,7 @@ function renderJudgeSetup(){
   if(!pool.length){el.innerHTML='<div class="empty-state text-sm">Add fighters first (from Fighters tab)</div>';return;}
   el.innerHTML=pool.map(f=>{
     const checked=jPool&&jPool.fighterIds.includes(f.id)?'checked':'';
-    return'<div class="j-pool-fighter"><input type="checkbox" class="j-pool-cb" value="'+f.id+'" '+checked+'><div class="opp-avatar" style="width:36px;height:36px;font-size:13px">'+fighterInitials(f.id)+'</div><div style="flex:1;font-size:15px;font-weight:600">'+esc(f.name)+'</div></div>';
+    return'<div class="j-pool-fighter"><input type="checkbox" class="j-pool-cb" value="'+f.id+'" '+checked+'><div class="opp-avatar" style="width:36px;height:36px;font-size:13px">'+fighterInitials(f.id)+'</div><div style="flex:1"><div style="font-size:15px;font-weight:600">'+esc(f.name)+'</div>'+(f.club?'<div class="text-sm text-smoke">'+esc(f.club)+'</div>':'')+'</div></div>';
   }).join('');
   if(jPool&&jPool.bouts.length){
     showJudgeSub('bracket');
