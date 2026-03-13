@@ -571,6 +571,7 @@
       <div class="section-title" style="margin:0;border:none;padding:0" id="jPoolTitle">Pool</div>
       <button class="btn btn-sm btn-ghost" onclick="showJudgeSub('setup')">← Edit Pool</button>
     </div>
+    <div id="jPoolFighters" class="mb-8"></div>
     <div id="jBracketList"></div>
     <hr class="divider">
     <div style="display:flex;gap:8px">
@@ -1387,6 +1388,17 @@ function generatePool(){
 
 function renderBracketList(){
   document.getElementById('jPoolTitle').textContent=jPool.name;
+
+  // Render pool fighters with remove buttons
+  const fEl=document.getElementById('jPoolFighters');
+  fEl.innerHTML='<label style="margin-bottom:6px">Fighters in Pool</label><div style="display:flex;flex-wrap:wrap;gap:6px">'+
+    jPool.fighterIds.map(id=>{
+      const name=fighterName(id);
+      const club=state.fighters.find(f=>f.id===id)?.club;
+      const hasBouts=jPool.bouts.some(b=>(b.redId===id||b.goldId===id)&&b.completed);
+      return'<div style="display:flex;align-items:center;gap:4px;background:var(--steel);border:1px solid var(--steel-light);border-radius:4px;padding:4px 8px;font-size:13px"><span>'+esc(name)+(club?' <span class="text-smoke text-sm">'+esc(club)+'</span>':'')+'</span>'+(hasBouts?'':'<button class="delete-btn" onclick="event.stopPropagation();removeFromPool(\''+id+'\')" style="font-size:14px;padding:0 2px;margin-left:4px">×</button>')+'</div>';
+    }).join('')+'</div>';
+
   const el=document.getElementById('jBracketList');
   const completed=jPool.bouts.filter(b=>b.completed).length;
   el.innerHTML='<p class="text-sm text-smoke mb-8">'+completed+' / '+jPool.bouts.length+' bouts complete</p>'+
@@ -1400,6 +1412,20 @@ function renderBracketList(){
     (b.completed?'<span class="j-bc-result">'+b.redScore+' — '+b.goldScore+'</span>':'<span class="j-bc-result">Tap to start</span>')+
     '</div>';
   }).join('');
+}
+
+function removeFromPool(id){
+  if(!jPool)return;
+  const name=fighterName(id);
+  // Check if they have any completed bouts
+  const hasBouts=jPool.bouts.some(b=>(b.redId===id||b.goldId===id)&&b.completed);
+  if(hasBouts)return alert(name+' has completed bouts and cannot be removed.');
+  if(!confirm('Remove '+name+' from this pool? Their uncompleted bouts will be deleted.'))return;
+  // Remove their bouts
+  jPool.bouts=jPool.bouts.filter(b=>!(b.redId===id||b.goldId===id));
+  // Remove from fighter list
+  jPool.fighterIds=jPool.fighterIds.filter(x=>x!==id);
+  renderBracketList();
 }
 
 function startBout(idx){
